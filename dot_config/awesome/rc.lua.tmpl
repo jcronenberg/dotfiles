@@ -271,7 +271,12 @@ globalkeys = my_table.join(
               {description = "take a screenshot", group = "hotkeys"}),
 
     -- X screen locker
+    {{- if eq .chezmoi.osRelease.idLike "arch" }}
     awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock-fancy") end,
+    {{- end }}
+    {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
+    awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
+    {{- end }}
               {description = "lock screen", group = "hotkeys"}),
 
     -- Hotkeys
@@ -789,7 +794,12 @@ awful.spawn.with_shell("sh {{ .chezmoi.homedir }}/.screenlayout/2monitor.sh")
 awful.spawn.with_shell("nextcloud")
 awful.spawn.with_shell("barrier")
 awful.spawn.with_shell("keepassxc")
+{{- if eq .chezmoi.osRelease.idLike "arch" }}
 awful.spawn.with_shell("redshift -t 6500:4000 -b 1.0:0.75")
+{{- end }}
+{{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
+awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
+{{- end }}
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("unclutter")
 awful.spawn.with_shell("mpd")
