@@ -1,0 +1,71 @@
+" Syntax
+syntax on
+
+" Better find
+set path+=**
+
+" Indenting
+set autoindent
+
+" Search
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+" Statusline
+set laststatus=2
+set ruler
+set showcmd
+set wildmenu
+
+" Various, selfexplanatory
+set nofixendofline
+set cursorline
+set number
+set colorcolumn=100
+set showmode
+set ttyfast
+set backspace=indent,eol,start
+set confirm
+set nostartofline
+let mapleader = ","
+
+" Set tab
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+" Set path to improve find
+set path +=**
+
+" Cosmetics
+colorscheme koehler
+
+" Mouse enable
+set mouse=a
+
+" Folding
+set foldmethod=indent
+nnoremap <space> za
+set foldlevelstart=10
+set exrc
+
+" Filetype build remap
+autocmd FileType c,cpp map <C-m> :make<cr>
+autocmd FileType rust map <C-m> :!cargo build<cr>
+
+" Remaps
+map <C-s> :w<cr>
+map <C-q> :q<cr>
+map <C-x> :x<cr>
+map <C-h> :tabprevious<cr>
+map <C-l> :tabnext<cr>
+set pastetoggle=<F3>
+
+" netrw in NERDtree style
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
+filetype plugin indent on       " required

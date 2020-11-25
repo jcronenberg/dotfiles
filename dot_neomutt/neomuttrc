@@ -1,0 +1,117 @@
+# paths
+set folder = ~/Mail
+set header_cache = ~/.neomutt/cache/headers
+set message_cachedir = ~/.neomutt/cache/bodies
+set certificate_file = /etc/ssl/certs/ca-certificates.crt
+set mailcap_path = ~/.neomutt/mailcap
+set tmpdir = ~/.neomutt/tmp
+
+# basic options
+set wait_key = no
+set mbox_type = Maildir
+set timeout = 3
+set mail_check = 0
+set delete
+set quit
+set thorough_search
+set mail_check_stats
+unset confirmappend
+unset move
+unset mark_old
+unset beep_new
+
+# compose View Options
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+set askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode                   # decode when forwarding
+set attribution = "On %d, %n wrote:" # format of quoting header
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_quote                    # include message in forwards
+set editor = "nvim"
+set text_flowed
+unset sig_dashes                     # no dashes before sig
+unset mime_forward                   # forward attachments as part of body
+
+# status bar, date format, finding stuff etc.
+set status_chars = " *%A"
+set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set date_format = "%d.%m.%Y %H:%M"
+set index_format = "[%Z] %?X?A&-? %D  %-20.20F  %s"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set uncollapse_jump
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+set charset = "utf-8"
+
+# Pager View Options
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+
+# email headers and attachments
+ignore *
+unignore from: to: cc: bcc: date: subject:
+unhdr_order *
+hdr_order from: to: cc: bcc: date: subject:
+alternative_order text/plain text/enriched text/html
+auto_view text/html
+
+# GPG/PGP 
+set pgp_default_key = "FD702A19657AB22A"
+set crypt_use_gpgme = yes
+set crypt_autosign = no
+set crypt_verify_sig = yes
+set crypt_replysign = yes
+set crypt_replyencrypt = yes
+set crypt_replysignencrypted = yes
+
+# sidebar patch config
+set sidebar_visible
+set sidebar_short_path = yes
+set sidebar_width = 25
+set sidebar_divider_char = ' | '
+set sidebar_indent_string = '  ''
+set sidebar_format = "%D %* [%?N?%N / ?%S]"
+
+# Mailboxes to show in the sidebar.
+# mailbox sidebar
+named-mailboxes "MAILBOX" =mailbox/INBOX \
+    "  Archive" =mailbox/Archive \
+    "    2020" '=mailbox/Archive.2020' \
+    "  Sent" =mailbox/Sent \
+    "  Drafts" =mailbox/Drafts \
+    "  Trash" =mailbox/Trash \
+    "GMAIL" =gmail/INBOX \
+    "  Sent Mail" ='gmail/[Gmail]/Sent Mail' \
+    "  Drafts" ='gmail/[Gmail]/Drafts' \
+    "  Spam" ='gmail/[Gmail]/Spam' \
+    "  Bin" ='gmail/[Gmail]/Bin' \
+    "OUTLOOK" =outlook/Inbox \
+    "  Archive" =outlook/Archive \
+    "  Sent" =outlook/Sent \
+    "  Drafts" =outlook/Drafts \
+    "  Junk" =outlook/Junk \
+    "  Deleted" =outlook/Deleted
+
+# by default, use mailbox
+set spoolfile = "+mailbox/INBOX"
+source ~/.neomutt/accounts/mailbox
+
+source ~/.neomutt/bindings
+source ~/.neomutt/colors
+
+# when changing into other mailboxes, use different adresses etc.
+folder-hook mailbox/* source ~/.neomutt/accounts/mailbox
+folder-hook gmail/* source ~/.neomutt/accounts/gmail
+folder-hook outlook/* source ~/.neomutt/accounts/outlook

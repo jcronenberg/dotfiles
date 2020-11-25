@@ -1,0 +1,3 @@
+export CDPATH='/home/jorik:/home/jorik/git'
+export LANG=en_US.utf8
+export EDITOR=/usr/bin/nvim
