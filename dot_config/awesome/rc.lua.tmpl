@@ -795,7 +795,7 @@ awful.spawn.with_shell("nextcloud")
 awful.spawn.with_shell("barrier")
 awful.spawn.with_shell("keepassxc")
 {{- if eq .chezmoi.osRelease.idLike "arch" }}
-awful.spawn.with_shell("redshift -t 6500:4000 -b 1.0:0.75")
+awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 {{- end }}
 {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
 awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
