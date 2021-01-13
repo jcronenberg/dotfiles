@@ -233,7 +233,7 @@ volumewidget:connect_signal("button::press", function() awful.spawn.with_shell("
 local cpu_icon = wibox.widget.imagebox(theme.cpu)
 local cpu = lain.widget.cpu({
     settings = function()
-        widget:set_markup(space3 .. markup.font(theme.font, "CPU " .. cpu_now.usage
+        widget:set_markup(space3 .. markup.font(theme.font, "CPU " .. string.format("%02d", cpu_now.usage)
                           .. "% ") .. markup.font("Roboto 5", " "))
     end
 })
