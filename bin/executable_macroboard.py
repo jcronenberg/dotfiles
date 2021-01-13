@@ -28,6 +28,9 @@ macros = {
     'KEY_PLAYPAUSE': 'mpc toggle',
     'KEY_PREVIOUSSONG': 'mpc prev',
     'KEY_NEXTSONG': 'mpc next',
+    'KEY_F11': 'mpc toggle',
+    'KEY_F10': 'mpc prev',
+    'KEY_F12': 'mpc next',
     'KEY_INSERT': 'mpc volume -5',
     'KEY_DELETE': 'mpc volume +5',
     # Systemwide volume control
