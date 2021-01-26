@@ -120,3 +120,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Add rofi to PATH
 export PATH="$PATH:/usr/bin/rofi"
+
+#Add go to PATH
+export PATH="$PATH:$HOME/go/bin"
