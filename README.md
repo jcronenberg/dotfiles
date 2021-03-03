@@ -8,6 +8,12 @@ My personal dotfiles
 2. Init repo: `chezmoi init https://github.com/jcronenberg/dotfiles.git`
 3. Check changes it would make: `chezmoi diff`
 4. Apply changes: `chezmoi apply`
+5. To use the awesome configuration clone lain and awesome-freedesktop into .config/awesome
+   ```
+   cd .config/awesome
+   git clone https://github.com/lcpz/awesome-freedesktop.git freedesktop
+   git clone https://github.com/lcpz/lain.git
+   ```
 
 ## Repos to use with these dotfiles
 
