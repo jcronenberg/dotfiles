@@ -259,10 +259,10 @@ awful.screen.connect_for_each_screen(function(s)
     s.quake = lain.util.quake({
         app = "alacritty",
         argname = "--title %s",
-        extra = "--class QuakeDD",
+        extra = "--class QuakeDD -e tmux",
         visible = true,
         followtag = true,
-        height = 0.4
+        height = 0.6
     })
 end)
 -- }}}
@@ -558,13 +558,17 @@ globalkeys = my_table.join(
     -- check https://github.com/DaveDavenport/rofi for more details
     -- rofi
     awful.key({ modkey }, "r", function ()
-           awful.spawn.with_shell("rofi -show combi")
+           awful.spawn.with_shell("rofi -show combi -theme ~/.config/rofi/themes/holo.rasi")
         end,
         {description = "show rofi combi", group = "launcher"}),
     awful.key({ modkey }, "t", function ()
-           awful.spawn.with_shell("rofi -show window")
+           awful.spawn.with_shell("rofi -show window -theme ~/.config/rofi/themes/holo.rasi")
         end,
         {description = "show rofi windows", group = "launcher"}),
+    awful.key({ modkey }, "e", function ()
+           awful.spawn.with_shell("bwmenu -c 10 -- -matching normal")
+        end,
+        {description = "show rofi bitwarden", group = "launcher"}),
     -- Prompt
     --awful.key({ modkey }, "r", function () awful.util.spawn("dmenu_run") end,
     --          {description = "run prompt", group = "launcher"}),
@@ -813,5 +817,5 @@ awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 {{- end }}
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("unclutter")
+--awful.spawn.with_shell("unclutter")
 awful.spawn.with_shell("mpd")
