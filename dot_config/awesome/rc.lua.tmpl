@@ -565,10 +565,16 @@ globalkeys = my_table.join(
            awful.spawn.with_shell("rofi -show window -theme ~/.config/rofi/themes/holo.rasi")
         end,
         {description = "show rofi windows", group = "launcher"}),
+{{- if eq .chezmoi.osRelease.idLike "arch" }}
     awful.key({ modkey }, "e", function ()
-           awful.spawn.with_shell("bwmenu -c 10 -- -matching normal")
+           awful.spawn.with_shell("clipctl disable; bwmenu -c 10 -- -matching normal; clipctl enable")
         end,
         {description = "show rofi bitwarden", group = "launcher"}),
+    awful.key({ modkey }, "g", function ()
+           awful.spawn.with_shell("CM_LAUNCHER=rofi clipmenu -p clipboard")
+        end,
+        {description = "show rofi clipboard", group = "launcher"}),
+{{- end }}
     -- Prompt
     --awful.key({ modkey }, "r", function () awful.util.spawn("dmenu_run") end,
     --          {description = "run prompt", group = "launcher"}),
@@ -809,7 +815,9 @@ end)
 awful.spawn.with_shell("sh {{ .chezmoi.homedir }}/.screenlayout/2monitor.sh")
 awful.spawn.with_shell("nextcloud")
 awful.spawn.with_shell("barrier")
+{{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
 awful.spawn.with_shell("keepassxc")
+{{- end }}
 {{- if eq .chezmoi.osRelease.idLike "arch" }}
 awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 {{- end }}
@@ -819,3 +827,6 @@ awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 awful.spawn.with_shell("picom")
 --awful.spawn.with_shell("unclutter")
 awful.spawn.with_shell("mpd")
+{{- if eq .chezmoi.osRelease.idLike "arch" }}
+awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
+{{- end }}
