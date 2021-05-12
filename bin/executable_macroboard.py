@@ -8,9 +8,11 @@ from evdev import InputDevice, categorize, ecodes
 # Note that commands are run as sudo. For commands that need to be run
 # as another user use 'su username -c "command"'
 macros = {
+    # Programs
     'KEY_C': 'chromium &',
     'KEY_E': 'emacsclient -c -n -a \'\'',
     'KEY_F': 'firefox &',
+    'KEY_M': 'tauon &',
     # git status in terminal
     'KEY_G': 'xdotool key g+s+t+KP_Enter',
     # Keepass global autotype
@@ -25,14 +27,14 @@ macros = {
     'KEY_7': 'wmctrl -s 6',
     'KEY_8': 'wmctrl -s 7',
     # MPD controls
-    'KEY_PLAYPAUSE': 'mpc toggle',
-    'KEY_PREVIOUSSONG': 'mpc prev',
-    'KEY_NEXTSONG': 'mpc next',
-    'KEY_F11': 'mpc toggle',
-    'KEY_F10': 'mpc prev',
-    'KEY_F12': 'mpc next',
-    'KEY_INSERT': 'mpc volume -5',
-    'KEY_DELETE': 'mpc volume +5',
+    'KEY_PLAYPAUSE': 'playerctl -p tauon play-pause',
+    'KEY_PREVIOUSSONG': 'playerctl -p tauon previous',
+    'KEY_NEXTSONG': 'playerctl -p tauon next',
+    'KEY_F11': 'playerctl -p tauon play-pause',
+    'KEY_F10': 'playerctl -p tauon previous',
+    'KEY_F12': 'playerctl -p tauon next',
+    'KEY_INSERT': 'playerctl -p tauon volume 0.05-',
+    'KEY_DELETE': 'playerctl -p tauon volume 0.05+',
     # Systemwide volume control
     'KEY_VOLUMEUP': 'pactl -- set-sink-volume 1 +10%',
     'KEY_VOLUMEDOWN': 'pactl -- set-sink-volume 1 -10%',

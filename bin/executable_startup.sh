@@ -6,5 +6,5 @@ else
 fi
 emacs -nw --daemon
 tmux new-session -d 'neomutt'
-tmux new-window 'ncmpcpp'
+tmux new-window
 tmux attach
