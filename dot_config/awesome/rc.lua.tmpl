@@ -99,10 +99,10 @@ local scrlocker    = "slock"
 
 awful.util.terminal = terminal
 {{- if eq .chezmoi.osRelease.idLike "arch" }}
-awful.util.tagnames = { "Web", "Emacs", "Terminal", "Other" }
+awful.util.tagnames = { "Web", "Emacs", "Terminal" }
 {{- end }}
 {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
-awful.util.tagnames = { "Web", "Emacs", "Terminal", "Email", "Teams", "Other" }
+awful.util.tagnames = { "Web", "Emacs", "Terminal", "Email", "Teams" }
 {{- end }}
 awful.layout.layouts = {
     --awful.layout.suit.floating,
@@ -127,6 +127,12 @@ awful.layout.layouts = {
     --lain.layout.centerwork.horizontal,
     --lain.layout.termfair,
     --lain.layout.termfair.center,
+}
+
+-- define monitor specific tags
+monitor_tags = {
+    { names = { "Other" }, },
+    { names = { "Music", "Chat", "Other" }, },
 }
 
 awful.util.taglist_buttons = my_table.join(
@@ -255,6 +261,12 @@ end)
 awful.screen.connect_for_each_screen(function(s)
     -- wibox
     beautiful.at_screen_connect(s)
+    -- Add monitor specific tags
+    if s.index <= #monitor_tags then
+        for i, name in ipairs(monitor_tags[s.index].names) do
+            awful.tag.add(name, { layout = awful.layout.suit.tile, screen = s, selected = false } )
+        end
+    end
     -- quake setup
     s.quake = lain.util.quake({
         app = "alacritty",
@@ -727,8 +739,8 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { screen = 1, tag = awful.util.tagnames[1] } },
 
-    { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+    { rule = { class = "Signal.*" },
+      properties = { screen = 2, tag = "Chat" } },
 }
 -- {{ "}}}" }}
 
@@ -825,7 +837,6 @@ awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
 {{- end }}
 awful.spawn.with_shell("picom")
---awful.spawn.with_shell("unclutter")
 awful.spawn.with_shell("mpd")
 {{- if eq .chezmoi.osRelease.idLike "arch" }}
 awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
