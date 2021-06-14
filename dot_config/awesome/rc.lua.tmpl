@@ -296,7 +296,7 @@ globalkeys = my_table.join(
 
     -- X screen locker
     {{- if eq .chezmoi.osRelease.idLike "arch" }}
-    awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock-fancy") end,
+    awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -i /home/jorik/.config/awesome/themes/holo/dual_lock.png") end,
     {{- end }}
     {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,

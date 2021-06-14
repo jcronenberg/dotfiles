@@ -38,6 +38,9 @@ macros = {
     # Systemwide volume control
     'KEY_VOLUMEUP': 'pactl -- set-sink-volume 1 +10%',
     'KEY_VOLUMEDOWN': 'pactl -- set-sink-volume 1 -10%',
+    'KEY_DOT': '/home/jorik/bin/alexa_remote_control.sh -e textcommand:\'Mach alle lichter aus\'',
+    'KEY_COMMA': '/home/jorik/bin/alexa_remote_control.sh -e textcommand:\'Mach das Licht an\'',
+    'KEY_SLASH': '/home/jorik/bin/alexa_remote_control.sh -e speak:\'Hallo Jorik\'',
 }
 
 # Input id
