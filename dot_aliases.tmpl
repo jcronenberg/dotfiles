@@ -66,6 +66,12 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     alias e="emacsclient -t -a ''"
     alias ec="emacsclient -c -n -a ''"
 
+# Spotify control
+alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+alias spotnext="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+alias spotprev="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+
+
 {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 function vpncon () {
     if [ "$1" = "up" ]; then

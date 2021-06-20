@@ -26,7 +26,7 @@ macros = {
     'KEY_6': 'wmctrl -s 5',
     'KEY_7': 'wmctrl -s 6',
     'KEY_8': 'wmctrl -s 7',
-    # MPD controls
+    # Music controls
     'KEY_PLAYPAUSE': 'playerctl -p tauon play-pause',
     'KEY_PREVIOUSSONG': 'playerctl -p tauon previous',
     'KEY_NEXTSONG': 'playerctl -p tauon next',
@@ -35,9 +35,12 @@ macros = {
     'KEY_F12': 'playerctl -p tauon next',
     'KEY_INSERT': 'playerctl -p tauon volume 0.05-',
     'KEY_DELETE': 'playerctl -p tauon volume 0.05+',
+    'KEY_CONFIG': 'dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause',
+    'KEY_F9': 'dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause',
     # Systemwide volume control
     'KEY_VOLUMEUP': 'pactl -- set-sink-volume 1 +10%',
     'KEY_VOLUMEDOWN': 'pactl -- set-sink-volume 1 -10%',
+    # Alexa Controls
     'KEY_DOT': '/home/jorik/bin/alexa_remote_control.sh -e textcommand:\'Mach alle lichter aus\'',
     'KEY_COMMA': '/home/jorik/bin/alexa_remote_control.sh -e textcommand:\'Mach das Licht an\'',
     'KEY_SLASH': '/home/jorik/bin/alexa_remote_control.sh -e speak:\'Hallo Jorik\'',
