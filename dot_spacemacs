@@ -65,7 +65,9 @@ values."
      emacs-lisp
      git
      ;; markdown
-     org
+     (org :variables
+          org-enable-roam-support t
+          org-enable-roam-server t)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -84,7 +86,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(gdscript-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -333,6 +335,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq org-roam-directory "/home/jorik/Nextcloud/org/roam")
   )
 
 (defun dotspacemacs/user-config ()
@@ -342,14 +345,14 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (require 'gdscript-mode)
   (spacemacs/declare-prefix "o" "custom")
-  (spacemacs/set-leader-keys "od" 'ranger)
+  (spacemacs/set-leader-keys "or" 'ranger)
   (setq lsp-ui-doc-enable nil)
-  (find-file "~/Nextcloud/Notes/general.org")
   (global-linum-mode)
   (define-key evil-normal-state-map (kbd "TAB") 'evil-toggle-fold)
   (setq auth-sources '("~/.authinfo.gpg"))
-  (setq projectile-project-search-path '("~/git/"))
+  (setq projectile-project-search-path '("~/git/" "~/godot/"))
   (defun my-setup-indent (n)
     (setq evil-shift-width n)
     (setq tab-width n)
@@ -367,6 +370,21 @@ you should place your code here."
     )
   (my-setup-indent 4) ; indent 4 spaces width
   (setq org-agenda-files (list "~/Nextcloud/Notes/general.org"))
+
+  ;; gdscipt ignore errors
+  (defun lsp--gdscript-ignore-errors (original-function &rest args)
+    "Ignore the error message resulting from Godot not replying to the `JSONRPC' request."
+    (if (string-equal major-mode "gdscript-mode")
+        (let ((json-data (nth 0 args)))
+          (if (and (string= (gethash "jsonrpc" json-data "") "2.0")
+                   (not (gethash "id" json-data nil))
+                   (not (gethash "method" json-data nil)))
+              nil ; (message "Method not found")
+            (apply original-function args)))
+      (apply original-function args)))
+  ;; Runs the function `lsp--gdscript-ignore-errors` around `lsp--get-message-type` to suppress unknown notification errors.
+  (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
+  (global-set-key "\C-ci" 'org-roam-insert)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -396,7 +414,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("0fe24de6d37ea5a7724c56f0bb01efcbb3fe999a6e461ec1392f3c3b105cc5ac" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "0685ffa6c9f1324721659a9cd5a8931f4bb64efae9ce43a3dba3801e9412b4d8" "75b8719c741c6d7afa290e0bb394d809f0cc62045b93e1d66cd646907f8e6d43" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "7b3d184d2955990e4df1162aeff6bfb4e1c3e822368f0359e15e2974235d9fa8" "54cf3f8314ce89c4d7e20ae52f7ff0739efb458f4326a2ca075bf34bc0b4f499" "7546a14373f1f2da6896830e7a73674ef274b3da313f8a2c4a79842e8a93953e" "2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "5379937b99998e0510bd37ae072c7f57e26da7a11e9fb7bced8b94ccc766c804" "fd22c8c803f2dac71db953b93df6560b6b058cb931ac12f688def67f08c10640" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "a3bdcbd7c991abd07e48ad32f71e6219d55694056c0c15b4144f370175273d16" "8f5a7a9a3c510ef9cbb88e600c0b4c53cdcdb502cfe3eb50040b7e13c6f4e78e" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995" "b0e446b48d03c5053af28908168262c3e5335dcad3317215d9fdeb8bac5bacf9" "b7e460a67bcb6cac0a6aadfdc99bdf8bbfca1393da535d4e8945df0648fa95fb" "6c386d159853b0ee6695b45e64f598ed45bd67c47f671f69100817d7db64724d" "0fe24de6d37ea5a7724c56f0bb01efcbb3fe999a6e461ec1392f3c3b105cc5ac" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "0685ffa6c9f1324721659a9cd5a8931f4bb64efae9ce43a3dba3801e9412b4d8" "75b8719c741c6d7afa290e0bb394d809f0cc62045b93e1d66cd646907f8e6d43" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "7b3d184d2955990e4df1162aeff6bfb4e1c3e822368f0359e15e2974235d9fa8" "54cf3f8314ce89c4d7e20ae52f7ff0739efb458f4326a2ca075bf34bc0b4f499" "7546a14373f1f2da6896830e7a73674ef274b3da313f8a2c4a79842e8a93953e" "2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "5379937b99998e0510bd37ae072c7f57e26da7a11e9fb7bced8b94ccc766c804" "fd22c8c803f2dac71db953b93df6560b6b058cb931ac12f688def67f08c10640" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "a3bdcbd7c991abd07e48ad32f71e6219d55694056c0c15b4144f370175273d16" "8f5a7a9a3c510ef9cbb88e600c0b4c53cdcdb502cfe3eb50040b7e13c6f4e78e" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(evil-shift-width 4)
  '(evil-want-Y-yank-to-eol nil)
  '(hl-todo-keyword-faces
@@ -415,8 +433,45 @@ This function is called at the very end of Spacemacs initialization."
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
+ '(org-agenda-files nil)
+ '(org-directory "~/Nextcloud/org")
+ '(org-pomodoro-audio-player "/usr/bin/mplayer")
+ '(org-pomodoro-finished-sound-args "-af volume=-20")
+ '(org-pomodoro-length 50)
+ '(org-pomodoro-long-break-length 30)
+ '(org-pomodoro-long-break-sound-args "-af volume=-20")
+ '(org-pomodoro-short-break-length 10)
+ '(org-pomodoro-short-break-sound-args "-af volume=-20")
+ '(org-pomodoro-start-sound-args "-af volume=-20")
+ '(org-pomodoro-start-sound-p t)
+ '(org-roam-capture-templates
+   '(("d" "default" plain #'org-roam-capture--get-point "
+* ${title}%?" :file-name "%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}
+#+roam_tags:
+" :unnarrowed t)
+     ("g" "Roam goal" plain #'org-roam-capture--get-point "
+* ${title}
+** Description
+** Tasks
+*** TODO ${title}
+**** TODO 
+** Notes%?" :file-name "goals/%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}
+#+roam_tags:
+" :unnarrowed t)))
+ '(org-roam-dailies-capture-templates
+   '(("d" "default" entry #'org-roam-capture--get-point "
+overview: [[file:../20210716171454-dailies.org][Dailies]]
+
+* Daily note %<%Y-%m-%d>
+** Things that need to get done
+** Work on today
+*** Random notes%?" :file-name "daily/%<%Y-%m-%d>" :head "#+title: %<%Y-%m-%d>
+#+roam_tags: daily %<%Y> %<%Y-%m>
+")))
+ '(org-roam-db-update-method 'immediate)
+ '(org-roam-server-mode t)
  '(package-selected-packages
-   '(sqlup-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tab-width 4)
  '(treemacs-follow-mode t))
