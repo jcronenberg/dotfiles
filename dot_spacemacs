@@ -476,11 +476,8 @@ This function is called at the very end of Spacemacs initialization."
      (python . t)))
  '(org-capture-templates
    '(("c" "code block" plain
-      (file "~/Nextcloud/org/code.org")
+      (file "~/Nextcloud/org/roam/code_snippets.org")
       "#+begin_src %?
-
-
-
 #+end_src")))
  '(org-ellipsis " ▾")
  '(org-pomodoro-audio-player "/usr/bin/mplayer")
