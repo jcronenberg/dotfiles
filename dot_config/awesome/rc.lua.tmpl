@@ -828,7 +828,9 @@ end)
 --beautiful.gap_single_client = false
 
 -- Autostart
+{{- if eq .chezmoi.osRelease.idLike "arch" }}
 awful.spawn.with_shell("sh ~/.screenlayout/2monitor.sh")
+{{- end }}
 awful.spawn.with_shell("nextcloud")
 awful.spawn.with_shell("barrier")
 {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
