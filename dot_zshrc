@@ -68,7 +68,7 @@ ZSH_THEME="jorik"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions colored-man-pages copyfile zsh-syntax-highlighting z)
+plugins=(git zsh-autosuggestions colored-man-pages copyfile zsh-syntax-highlighting z calc)
 
 ## Plugin configs
 ZSH_AUTOSUGGEST_STRATEGY=(history)

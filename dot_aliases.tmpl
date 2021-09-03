@@ -71,6 +71,8 @@ alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify 
 alias spotnext="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 alias spotprev="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 
+# GUT
+alias gut='godot -s addons/gut/gut_cmdln.gd -d --path $PWD'
 
 {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 function vpncon () {
