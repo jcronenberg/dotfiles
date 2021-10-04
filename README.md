@@ -20,4 +20,9 @@ My personal dotfiles
 Some of these dotfiles depend on other repos to work properly  
 [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)  
 [oh-my-tmux](https://github.com/gpakosz/.tmux)  
-[spacemacs](https://github.com/syl20bnr/spacemacs)
+[spacemacs](https://github.com/syl20bnr/spacemacs)  
+[nord-tmux](https://github.com/arcticicestudio/nord-tmux)
+* recommended way to install it
+  ```git clone https://github.com/arcticicestudio/nord-tmux.git .tmux_themes/nord-tmux/```
+  if you are using nord-tmux in combination with oh-my-tmux run the following command
+  ```echo "run-shell \"~/.tmux_themes/nord-tmux/nord.tmux\"" >> ~/.tmux.conf```

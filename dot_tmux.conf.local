@@ -299,3 +299,4 @@ set -g mode-keys vi
 # move status line to top
 #set -g status-position top
 #run -b '~/.tmux/plugins/tpm/tpm'
+run-shell "~/.tmux_themes/nord-tmux/nord.tmux"
