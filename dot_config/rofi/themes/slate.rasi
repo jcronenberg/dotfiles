@@ -29,6 +29,7 @@ entry {
 }
 
 listview {
+  lines: 10;
   cycle: false;
   margin: 0 0 -1px 0;
   scrollbar: false;

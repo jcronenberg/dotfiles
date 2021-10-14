@@ -1,7 +1,3 @@
-configuration {
-	fullscreen:                     true;
-}
-
 * {
 	background:                     #00000000;
 	background-color:               #000000CC;
@@ -14,6 +10,7 @@ configuration {
 }
 
 window {
+	fullscreen:                     true;
 	transparency:                   "real";
 	background-color:               @background;
 	text-color:                     @foreground;
@@ -99,11 +96,16 @@ element {
 }
 
 element-icon {
+        background-color:               @background;
 	size:                           64px;
+	horizontal-align:               0.5;
+	vertical-align:                 0.5;
 	border:                         0;
 }
 
 element-text {
+        background-color:               @background;
+        text-color:                     @foreground;
 	expand:                         true;
 	horizontal-align:               0.5;
 	vertical-align:                 0.5;
