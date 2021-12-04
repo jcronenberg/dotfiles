@@ -443,44 +443,45 @@ This function is called at the very end of Spacemacs initialization."
  '(delete-selection-mode nil)
  '(display-buffer-alist
    '(("\\*org-roam\\*"
-      (display-buffer-in-direction)
-      (direction . right)
-      (window-width . 0.25)
-      (window-height . fit-window-to-buffer))))
+	  (display-buffer-in-direction)
+	  (direction . right)
+	  (window-width . 0.25)
+	  (window-height . fit-window-to-buffer))))
  '(evil-shift-width 4)
  '(evil-want-Y-yank-to-eol nil)
  '(global-linum-mode t)
  '(global-page-break-lines-mode nil nil (page-break-lines))
  '(hl-todo-keyword-faces
    '(("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#4f97d7")
-     ("OKAY" . "#4f97d7")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#86dc2f")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
+	 ("NEXT" . "#dc752f")
+	 ("THEM" . "#2d9574")
+	 ("PROG" . "#4f97d7")
+	 ("OKAY" . "#4f97d7")
+	 ("DONT" . "#f2241f")
+	 ("FAIL" . "#f2241f")
+	 ("DONE" . "#86dc2f")
+	 ("NOTE" . "#b1951d")
+	 ("KLUDGE" . "#b1951d")
+	 ("HACK" . "#b1951d")
+	 ("TEMP" . "#b1951d")
+	 ("FIXME" . "#dc752f")
+	 ("XXX+" . "#dc752f")
+	 ("\\?\\?\\?+" . "#dc752f")))
+ '(indent-tabs-mode t)
  '(org-agenda-files
    '("/home/jorik/Nextcloud/org/roam/agenda.org" "/home/jorik/Nextcloud/org/roam/daily/"))
  '(org-babel-load-languages
    '((shell . t)
-     (C . t)
-     (ruby . t)
-     (js . t)
-     (sql . t)
-     (emacs-lisp . t)
-     (python . t)))
+	 (C . t)
+	 (ruby . t)
+	 (js . t)
+	 (sql . t)
+	 (emacs-lisp . t)
+	 (python . t)))
  '(org-capture-templates
    '(("c" "code block" plain
-      (file "~/Nextcloud/org/roam/code_snippets.org")
-      "#+begin_src %?
+	  (file "~/Nextcloud/org/roam/code_snippets.org")
+	  "#+begin_src %?
 #+end_src")))
  '(org-ellipsis " ▾")
  '(org-pomodoro-audio-player "/usr/bin/mplayer")
@@ -497,7 +498,7 @@ This function is called at the very end of Spacemacs initialization."
 (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
 #+filetags:")
 :empty-lines-before 1 :unnarrowed t)
-     ("g" "Roam goal" plain "
+	 ("g" "Roam goal" plain "
 * ${title}
 ** Description
 ** Tasks
@@ -521,6 +522,7 @@ This function is called at the very end of Spacemacs initialization."
  '(package-selected-packages
    '(omnisharp csharp-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
+ '(tab-width 4)
  '(treemacs-follow-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
