@@ -6,6 +6,7 @@ alias wetter='curl http://wttr.in/Nuremberg'
 alias vim='nvim'
 alias mkycmconf='~/.vim/bundle/YCM-Generator/config_gen.py'
 alias le="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify"
+alias lt="le --tree --level=2"
 alias start="sh $HOME/bin/startup.sh"
 alias macros="nohup python3 bin/macroboard.py macro > bin/macro.log &"
 alias pubip='curl ifconfig.co'
@@ -73,6 +74,10 @@ alias spotprev="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /o
 
 # GUT
 alias gut='godot -s addons/gut/gut_cmdln.gd -d --path $PWD'
+
+# Calculator
+cc() python3 -c "from math import *; print($*);"
+alias calc='noglob cc'
 
 {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 function vpncon () {
