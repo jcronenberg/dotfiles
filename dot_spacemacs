@@ -46,8 +46,7 @@ values."
      html
      web-beautify
      (ruby :variables
-           ruby-enable-enh-ruby-mode t
-           ruby-version-manager 'rvm)
+           ruby-enable-enh-ruby-mode t)
      rust
      (c-c++ :variables
             c-c++-backend 'lsp-ccls
