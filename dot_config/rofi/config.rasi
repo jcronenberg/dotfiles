@@ -15,5 +15,6 @@ configuration {
 	scroll-method:                  0;
 	disable-history:                false;
 	window-thumbnail:		true;
-        theme:                          "themes/slate.rasi";
 }
+
+@theme "themes/slate.rasi"
