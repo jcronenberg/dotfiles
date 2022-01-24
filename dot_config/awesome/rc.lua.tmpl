@@ -74,19 +74,11 @@ awful.spawn.with_shell(
 -- {{ "{{{" }} Variable definitions
 
 local themes = {
-    "blackburn",       -- 1
-    "copland",         -- 2
-    "dremora",         -- 3
-    "holo",            -- 4
-    "multicolor",      -- 5
-    "powerarrow",      -- 6
-    "powerarrow-dark", -- 7
-    "rainbow",         -- 8
-    "steamburn",       -- 9
-    "vertex",          -- 10
+    "holo",             -- 1
+    "tron"              -- 2
 }
 
-local chosen_theme = themes[4]
+local chosen_theme = themes[2]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "alacritty"
@@ -217,10 +209,10 @@ local mypowermenu = {
 }
 awful.util.mymainmenu = freedesktop.menu.build({
     icon_size = beautiful.menu_height or dpi(16),
-    before = {
-        { "Awesome", myawesomemenu, beautiful.awesome_icon },
-        -- other triads can be put here
-    },
+    --before = {
+    --    { "Awesome", myawesomemenu, beautiful.awesome_icon },
+    --    -- other triads can be put here
+    --},
     after = {
         { "Open terminal", terminal },
         -- other triads can be put here
@@ -272,8 +264,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.quake = lain.util.quake({
         app = "alacritty",
         argname = "--title %s",
-        extra = "--class QuakeDD -e tmux",
-        visible = true,
+        extra = string.format("--config-file %s/.config/alacritty/alacritty_quake.yml --class QuakeDD -e tmux", os.getenv("HOME")),
+        visible = false,
         followtag = true,
         height = 0.6
     })
@@ -297,7 +289,8 @@ globalkeys = my_table.join(
 
     -- X screen locker
     {{- if eq .chezmoi.osRelease.idLike "arch" }}
-    awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -i /home/jorik/.config/awesome/themes/holo/dual_lock.png") end,
+    --awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -i /home/jorik/.config/awesome/themes/" .. chosen_theme .. "/dual_lock.png") end,
+    awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -c 000000") end,
     {{- end }}
     {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
@@ -833,17 +826,13 @@ awful.spawn.with_shell("sh ~/.screenlayout/2monitor.sh")
 {{- end }}
 awful.spawn.with_shell("nextcloud")
 awful.spawn.with_shell("barrier")
-{{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
-awful.spawn.with_shell("keepassxc")
-{{- end }}
-{{- if eq .chezmoi.osRelease.idLike "arch" }}
-awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
-{{- end }}
-{{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
-awful.spawn.with_shell("redshift -t 6500:4000 -l 49.45:11.08 -b 1.0:0.75")
-{{- end }}
+awful.spawn.with_shell("redshift -t 6500:5500 -l 49.45:11.08 -b 1.0:0.85")
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("mpd")
+awful.spawn.with_shell("emacs -nw --daemon")
 {{- if eq .chezmoi.osRelease.idLike "arch" }}
 awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
+awful.spawn.with_shell("nohup python3 bin/macroboard.py macro > bin/macro.log")
+{{- end }}
+{{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
+awful.spawn.with_shell("keepassxc")
 {{- end }}
