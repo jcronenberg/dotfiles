@@ -1,28 +1,29 @@
 # dotfiles
 
-My personal dotfiles
+My personal dotfiles.  
+These files are extremly opinionated and I would not recommend installing them.
+Instead this repo is meant for my personal use and maybe some inspiration to others.
+But who am I to tell you what to do, right?
 
-## Install instructions
+## Installation instructions
 
 1. Install [chezmoi](https://github.com/twpayne/chezmoi/blob/master/docs/INSTALL.md)
 2. Init repo: `chezmoi init https://github.com/jcronenberg/dotfiles.git`
-3. Check changes it would make: `chezmoi diff`
-4. Apply changes: `chezmoi apply`
-5. To use the awesome configuration clone lain and awesome-freedesktop into .config/awesome
-   ```
-   cd .config/awesome
-   git clone https://github.com/lcpz/awesome-freedesktop.git freedesktop
-   git clone https://github.com/lcpz/lain.git
-   ```
+3. Add gpg config to chezmoi config `echo -e "[gpg]\n\trecipient = \"46281506C8CB0C7B595CBB49FD702A19657AB22A\"" >> ~/.config/chezmoi/chezmoi.toml`
+4. Check changes it would make: `chezmoi diff`
+5. Apply changes: `chezmoi apply`
 
-## Repos to use with these dotfiles
+## Extra install steps
 
-Some of these dotfiles depend on other repos to work properly  
-[oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)  
-[oh-my-tmux](https://github.com/gpakosz/.tmux)  
-[spacemacs](https://github.com/syl20bnr/spacemacs)  
-[nord-tmux](https://github.com/arcticicestudio/nord-tmux)
-* recommended way to install it:  
-  ```git clone https://github.com/arcticicestudio/nord-tmux.git ~/.tmux_themes/nord-tmux/```  
-  if you are using nord-tmux in combination with oh-my-tmux run the following command  
-  ```echo "run-shell \"~/.tmux_themes/nord-tmux/nord.tmux\"" >> ~/.tmux.conf```
+### To use oh-my-tmux
+
+```ln -s ~/.tmux/.tmux.conf ~/.tmux.conf```
+
+### To apply the nord-tmux theme
+
+```echo "run-shell \"~/.tmux_themes/nord-tmux/nord.tmux\"" >> ~/.tmux.conf```
+
+### To use fzf
+
+(Recommended to install fzf beforehand to update it via package manager)  
+```~/.fzf/install```
