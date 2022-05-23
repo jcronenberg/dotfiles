@@ -9,6 +9,7 @@ local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
+local beautiful = require("beautiful")
 
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -28,12 +29,13 @@ theme.bg_focus                                  = "#00000000" -- background colo
 theme.bg_normal                                 = "#00000000" -- background color for the whole wibar
 theme.fg_urgent                                 = "#000000" -- text color for alert
 theme.bg_urgent                                 = theme.tron_orange -- background color for alert
+theme.systray_bg                                = "#000000" -- background for the systray ( try to match to wallpaper, as this has not transparency)
 theme.border_width                              = dpi(1)
 theme.border_normal                             = theme.tron_darker_blue
 theme.border_focus                              = theme.tron_darker_blue
 theme.taglist_fg_focus                          = "#000000"
 theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_fg_focus                         = theme.fg_focus .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
+theme.tasklist_fg_focus                         = theme.tron_orange .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
 theme.menu_icon_size                            = dpi(32)
@@ -169,6 +171,27 @@ function theme.at_screen_connect(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(32) })
 
+    -- Create systray
+    s.mysystraywidget = wibox.widget.systray()
+    beautiful.bg_systray = theme.systray_bg
+    mysystraycont = wibox.container.background(s.mysystraywidget, theme.bg_focus, gears.shape.rectangle)
+    s.mysystray = wibox.container.margin(mysystraycont, dpi(0), dpi(0), dpi(5), dpi(5))
+    --mysystraycont = wibox.widget {
+    --    {
+    --        wibox.widget.systray(),
+    --        left   = 10,
+    --        top    = 2,
+    --        bottom = 2,
+    --        right  = 10,
+    --        widget = wibox.container.margin,
+    --    },
+    --    bg         = theme.bg_focus,
+    --    shape      = gears.shape.rounded_rect,
+    --    shape_clip = true,
+    --    widget     = wibox.container.background,
+    --}
+    --s.mysystray = wibox.container.margin(mysystraycont, dpi(0), dpi(0), dpi(5), dpi(5))
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -180,7 +203,7 @@ function theme.at_screen_connect(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
+            s.mysystray,
             {{- if eq .chezmoi.osRelease.idLike "arch" }}
             --bat,
             {{- end }}
