@@ -227,10 +227,10 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             s.mysystray,
-            {{- if eq .chezmoi.osRelease.idLike "arch" }}
+            {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
             --bat,
             {{- end }}
-            {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
+            {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
             bat,
             {{- end }}
             networkwidget,

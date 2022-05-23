@@ -142,10 +142,10 @@ font:
     #style: Bold Italic
 
   # Point size
-  {{- if eq .chezmoi.osRelease.idLike "arch" }}
+  {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
   size: 14.0
   {{- end }}
-  {{- if eq .chezmoi.osRelease.idLike "opensuse suse" }}
+  {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
   size: 9.0
   {{- end }}
 
