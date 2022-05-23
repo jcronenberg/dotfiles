@@ -104,9 +104,6 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.zshenv ] && source $HOME/.zshenv
 [ -f ~/.aliases ] && source $HOME/.aliases
 
-# source /home/jorik/.config/broot/launcher/bash/br
-
-[ -f ~/.config/broot/launcher/bash/br ] && source /home/jorik/.config/broot/launcher/bash/br
 [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # fzf
@@ -123,7 +120,9 @@ z() {
 [ -f /usr/bin/rofi ] && export PATH="$PATH:/usr/bin/rofi"
 
 # Add go to PATH
-[ -d /go/bin ] && export PATH="$PATH:$HOME/go/bin"
+[ -d ~/go/bin ] && export PATH="$PATH:$HOME/go/bin"
 
 # Add dotnet to PATH
 [ -d ~/dotnet ] && export PATH="$PATH:$HOME/dotnet" && export DOTNET_ROOT="$HOME/dotnet"
+
+true
