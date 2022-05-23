@@ -298,57 +298,57 @@ root.buttons(my_table.join(
 -- machi stuff
 local editor = machi.editor.create()
 -- machina
-local machina = require('machina')()
-local machina_methods = require("machina.methods")
+--local machina = require('machina')()
+--local machina_methods = require("machina.methods")
 -- {{ "{{{" }} Key bindings
 globalkeys = my_table.join(
     -- machi
     awful.key({modkey}, "/", editor.start_interactive, {description = "open machi editor", group = "machi"}),
     awful.key({altkey}, "/", function () machi.switcher.start() end, {description = "open machi switcher", group = "machi"}),
 
-    -- machina
-    awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
-              {description = "shuffle in group", group = "machina"}),
-    awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
-              {description = "shuffle in group", group = "machina"}),
-    awful.key({altkey}, "[", machina_methods.my_shifter("backward"),
-              {description = "shift backward", group = "machina"}),
-    awful.key({altkey}, "]", machina_methods.my_shifter("forward"),
-              {description = "shift forward", group = "machina"}),
-    awful.key({altkey, "Shift"}, "[", machina_methods.my_shifter("backward", "swap"),
-              {description = "swap backward", group = "machina"}),
-    awful.key({altkey, "Shift"}, "]", machina_methods.my_shifter("forward", "swap"),
-              {description = "swap forward", group = "machina"}),
+    ---- machina
+    --awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
+    --          {description = "shuffle in group", group = "machina"}),
+    --awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
+    --          {description = "shuffle in group", group = "machina"}),
+    --awful.key({altkey}, "[", machina_methods.my_shifter("backward"),
+    --          {description = "shift backward", group = "machina"}),
+    --awful.key({altkey}, "]", machina_methods.my_shifter("forward"),
+    --          {description = "shift forward", group = "machina"}),
+    --awful.key({altkey, "Shift"}, "[", machina_methods.my_shifter("backward", "swap"),
+    --          {description = "swap backward", group = "machina"}),
+    --awful.key({altkey, "Shift"}, "]", machina_methods.my_shifter("forward", "swap"),
+    --          {description = "swap forward", group = "machina"}),
 
-    -- move
-    awful.key({modkey, "Shift"}, "h", machina_methods.shift_by_direction("left"),
-              {description = "shift left", group = "machina move"}),
-    awful.key({modkey, "Shift"}, "j", machina_methods.shift_by_direction("down"),
-              {description = "shift down", group = "machina move"}),
-    awful.key({modkey, "Shift"}, "k", machina_methods.shift_by_direction("up"),
-              {description = "shift up", group = "machina move"}),
-    awful.key({modkey, "Shift"}, "l", machina_methods.shift_by_direction("right"),
-              {description = "shift right", group = "machina move"}),
+    ---- move
+    --awful.key({modkey, "Shift"}, "h", machina_methods.shift_by_direction("left"),
+    --          {description = "shift left", group = "machina move"}),
+    --awful.key({modkey, "Shift"}, "j", machina_methods.shift_by_direction("down"),
+    --          {description = "shift down", group = "machina move"}),
+    --awful.key({modkey, "Shift"}, "k", machina_methods.shift_by_direction("up"),
+    --          {description = "shift up", group = "machina move"}),
+    --awful.key({modkey, "Shift"}, "l", machina_methods.shift_by_direction("right"),
+    --          {description = "shift right", group = "machina move"}),
 
-    -- swap
-    awful.key({modkey, "Control"}, "h", machina_methods.shift_by_direction("left", "swap"),
-              {description = "swap left", group = "machina swap"}),
-    awful.key({modkey, "Control"}, "j", machina_methods.shift_by_direction("down", "swap"),
-              {description = "swap down", group = "machina swap"}),
-    awful.key({modkey, "Control"}, "k", machina_methods.shift_by_direction("up","swap"),
-              {description = "swap up", group = "machina swap"}),
-    awful.key({modkey, "Control"}, "l", machina_methods.shift_by_direction("right", "swap"),
-              {description = "swap right", group = "machina swap"}),
+    ---- swap
+    --awful.key({modkey, "Control"}, "h", machina_methods.shift_by_direction("left", "swap"),
+    --          {description = "swap left", group = "machina swap"}),
+    --awful.key({modkey, "Control"}, "j", machina_methods.shift_by_direction("down", "swap"),
+    --          {description = "swap down", group = "machina swap"}),
+    --awful.key({modkey, "Control"}, "k", machina_methods.shift_by_direction("up","swap"),
+    --          {description = "swap up", group = "machina swap"}),
+    --awful.key({modkey, "Control"}, "l", machina_methods.shift_by_direction("right", "swap"),
+    --          {description = "swap right", group = "machina swap"}),
 
-    -- expand
-    awful.key({altkey, "Shift"}, "h", machina_methods.expand_horizontal("left"),
-              {description = "expand left", group = "machina expand"}),
-    awful.key({altkey, "Shift"}, "l", machina_methods.expand_horizontal("right"),
-              {description = "expand right", group = "machina expand"}),
-    awful.key({altkey, "Shift"}, "j", machina_methods.expand_vertical("down"),
-              {description = "expand down", group = "machina expand"}),
-    awful.key({altkey, "Shift"}, "k", machina_methods.expand_vertical("up"),
-              {description = "expand up", group = "machina expand"}),
+    ---- expand
+    --awful.key({altkey, "Shift"}, "h", machina_methods.expand_horizontal("left"),
+    --          {description = "expand left", group = "machina expand"}),
+    --awful.key({altkey, "Shift"}, "l", machina_methods.expand_horizontal("right"),
+    --          {description = "expand right", group = "machina expand"}),
+    --awful.key({altkey, "Shift"}, "j", machina_methods.expand_vertical("down"),
+    --          {description = "expand down", group = "machina expand"}),
+    --awful.key({altkey, "Shift"}, "k", machina_methods.expand_vertical("up"),
+    --          {description = "expand up", group = "machina expand"}),
 
     -- X screen locker
     {{- if eq .chezmoi.osRelease.idLike "arch" }}
