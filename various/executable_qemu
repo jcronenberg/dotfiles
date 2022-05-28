@@ -1,0 +1,56 @@
+#!/bin/bash
+
+TOTAL_CORES='0-31'
+TOTAL_CORES_MASK=FFFFFFFF
+HOST_CORES='0-7,16-23'                # Cores reserved for host
+HOST_CORES_MASK=FF00FF              # 0,4, bitmask 0b00010001
+VIRT_CORES='8-15,24-31'            # Cores reserved for virtual machine(s)
+
+command=$2
+
+function shield_vm() {
+    systemctl set-property --runtime -- system.slice AllowedCPUs=$HOST_CORES
+    systemctl set-property --runtime -- user.slice AllowedCPUs=$HOST_CORES
+    systemctl set-property --runtime -- init.scope AllowedCPUs=$HOST_CORES
+}
+
+function unshield_vm() {
+    systemctl set-property --runtime -- system.slice AllowedCPUs=$TOTAL_CORES
+    systemctl set-property --runtime -- user.slice AllowedCPUs=$TOTAL_CORES
+    systemctl set-property --runtime -- init.scope AllowedCPUs=$TOTAL_CORES
+}
+
+# For convenient manual invocation
+if [[ "$command" == "shield" ]]; then
+    shield_vm
+    exit
+elif [[ "$command" == "unshield" ]]; then
+    unshield_vm
+    exit
+fi
+
+if [[ "$command" == "started" ]]; then
+    echo "libvirt-qemu cset: Reserving CPUs $VIRT_CORES" > /dev/kmsg 2>&1
+    shield_vm > /dev/kmsg 2>&1
+
+    cpupower frequency-set -g performance
+    # the kernel's dirty page writeback mechanism uses kthread workers. They introduce
+    # massive arbitrary latencies when doing disk writes on the host and aren't
+    # migrated by cset. Restrict the workqueue to use only cpu 0.
+    echo $HOST_CORES_MASK > /sys/bus/workqueue/devices/writeback/cpumask
+    echo 0 > /sys/bus/workqueue/devices/writeback/numa
+
+    echo "libvirt-qemu cset: Successfully reserved CPUs $VIRT_CORES" > /dev/kmsg 2>&1
+    # Switch monitor
+    ddcutil --model=G34WQC setvcp 60 0x08
+elif [[ "$command" == "release" ]]; then
+    echo "libvirt-qemu cset: Releasing CPUs $VIRT_CORES" > /dev/kmsg 2>&1
+    unshield_vm > /dev/kmsg 2>&1
+
+    cpupower frequency-set -g schedutil
+    # Revert changes made to the writeback workqueue
+    echo $TOTAL_CORES_MASK > /sys/bus/workqueue/devices/writeback/cpumask
+    echo 1 > /sys/bus/workqueue/devices/writeback/numa
+
+    echo "libvirt-qemu cset: Successfully released CPUs $VIRT_CORES" > /dev/kmsg 2>&1
+fi

@@ -16,3 +16,5 @@ export FZF_DEFAULT_OPTS="
 --bind '?:toggle-preview'
 --bind 'ctrl-a:select-all'
 "
+. "$HOME/.cargo/env"
+export LIBVIRT_DEFAULT_URI=qemu:///system

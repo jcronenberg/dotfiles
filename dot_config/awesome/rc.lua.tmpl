@@ -126,9 +126,9 @@ awful.layout.layouts = {
 
 -- define monitor specific tags
 monitor_tags = {}
-monitor_tags["DP-4"] = { "Other" }
-monitor_tags["DP-1"] = { "Music", "Chat", "Other" }
-monitor_tags["HDMI-0"] = { "Macroboard" }
+monitor_tags["DisplayPort-0"] = { "Other" }
+monitor_tags["DisplayPort-1"] = { "Music", "Chat", "Other" }
+monitor_tags["HDMI-A-0"] = { "Macroboard" }
 
 awful.util.taglist_buttons = my_table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -298,8 +298,8 @@ root.buttons(my_table.join(
 -- machi stuff
 local editor = machi.editor.create()
 -- machina
---local machina = require('machina')()
---local machina_methods = require("machina.methods")
+local machina = require('machina')()
+local machina_methods = require("machina.methods")
 -- {{ "{{{" }} Key bindings
 globalkeys = my_table.join(
     -- machi
@@ -307,10 +307,10 @@ globalkeys = my_table.join(
     awful.key({altkey}, "/", function () machi.switcher.start() end, {description = "open machi switcher", group = "machi"}),
 
     ---- machina
-    --awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
-    --          {description = "shuffle in group", group = "machina"}),
-    --awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
-    --          {description = "shuffle in group", group = "machina"}),
+    awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
+              {description = "shuffle in group", group = "machina"}),
+    awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
+              {description = "shuffle in group", group = "machina"}),
     --awful.key({altkey}, "[", machina_methods.my_shifter("backward"),
     --          {description = "shift backward", group = "machina"}),
     --awful.key({altkey}, "]", machina_methods.my_shifter("forward"),
@@ -596,7 +596,7 @@ clientkeys = my_table.join(
             for s in screen do
                 if s.index == new_index then
                     for out, _ in pairs(s.outputs) do
-                        if out == "HDMI-0" then
+                        if out == "HDMI-A-0" then
                             new_index = new_index + 1
                         end
                     end
@@ -604,7 +604,7 @@ clientkeys = my_table.join(
             end
             c.move_to_screen(c, new_index)
         end,
-              {description = "move to screen (ignore HDMI-0)", group = "client"}),
+              {description = "move to screen (ignore HDMI-A-0)", group = "client"}),
     awful.key({ modkey, "Shift" }, "o",
         function (c)
             c.move_to_screen(c, new_index)

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Shutdown Windows 11
+Comment=
+Exec=virsh shutdown win11
+Icon=/home/jorik/.local/share/icons/custom/win11.png
+Terminal=false
+Type=Application

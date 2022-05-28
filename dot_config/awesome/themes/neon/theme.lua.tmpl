@@ -85,7 +85,7 @@ local bat = lain.widget.bat({
 })
 
 -- ALSA volume bar
-theme.volume = lain.widget.alsabar({
+theme.volume = lain.widget.pulsebar({
     notification_preset = { font = "Monospace 9"},
     --togglechannel = "IEC958,3",
     width = dpi(80), height = dpi(10), border_width = dpi(0),
@@ -144,9 +144,9 @@ function theme.at_screen_connect(s)
 
     -- Wallpapers for specific outputs
     local wallpapers = {}
-    wallpapers["DP-1"] = theme.wallpaper2
-    wallpapers["DP-4"] = theme.wallpaper1
-    wallpapers["HDMI-0"] = theme.wallpaper2
+    wallpapers["DisplayPort-1"] = theme.wallpaper2
+    wallpapers["DisplayPort-0"] = theme.wallpaper1
+    wallpapers["HDMI-A-0"] = theme.wallpaper2
 
     theme.wallpaper = function( s )
         -- match s.outputs to a output in wallpapers

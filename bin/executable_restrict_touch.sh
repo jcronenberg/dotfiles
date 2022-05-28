@@ -11,5 +11,5 @@ ids=$(xinput --list | awk -v search="$1" \
 
 for i in $ids
 do
-    xinput map-to-output $i HDMI-0
+    xinput map-to-output $i HDMI-A-0
 done

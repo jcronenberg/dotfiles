@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import evdev
+import os
+import sys
+import asyncio
+
+def exists(path):
+    try:
+        os.stat(path)
+    except OSError:
+        return False
+    return True
+
+async def main():
+    # Init monitor switch
+    if command == "monitor":
+        proc = await asyncio.create_subprocess_exec(
+            'ddcutil','--model=G34WQC', 'setvcp', '60', '0x08',
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE)
+
+    # Get available keyboard
+    if exists('/dev/input/by-id/usb-OBINS_OBINS_AnnePro2_SN0000000001-event-kbd'):
+        dev = evdev.InputDevice('/dev/input/by-id/uinput-persist-keyboard0')
+    elif exists('/dev/input/by-id/usb-Kingston_HyperX_Alloy_FPS_RGB-event-kbd'):
+        dev = evdev.InputDevice('/dev/input/by-id/usb-Kingston_HyperX_Alloy_FPS_RGB-event-kbd')
+    else:
+        print("no specified keyboard connected, either connect one or add a new one")
+        exit(1)
+    
+    # Monitor switch
+    if command == "monitor":
+        stdout, stderr = await proc.communicate()
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTCTRL, 1)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTSHIFT, 1)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTALT, 1)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_RIGHTBRACE, 1)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTCTRL, 0)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTSHIFT, 0)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTALT, 0)
+        dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_RIGHTBRACE, 0)
+        dev.write(evdev.ecodes.EV_SYN, 0, 0)
+
+    # Keyboard switch
+    dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTCTRL, 1)
+    dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_RIGHTCTRL, 1)
+    dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTCTRL, 0)
+    dev.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_RIGHTCTRL, 0)
+    dev.write(evdev.ecodes.EV_SYN, 0, 0)
+
+
+# Only allow one arg
+if len(sys.argv) > 2 or len(sys.argv) < 2:
+    print("call with arg")
+    exit(1)
+
+# Store command
+command = sys.argv[1]
+
+# Run main function
+asyncio.run(main())

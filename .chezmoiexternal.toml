@@ -40,6 +40,10 @@
     type = "git-repo"
     url = "https://github.com/jcronenberg/layout-machi.git"
     refreshPeriod = "168h"
+[".config/awesome/machina"]
+    type = "git-repo"
+    url = "https://github.com/jcronenberg/awesomewm-machina.git"
+    refreshPeriod = "168h"
 [".tmux_themes/nord-tmux"]
     type = "git-repo"
     url = "https://github.com/arcticicestudio/nord-tmux.git"
