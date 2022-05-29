@@ -180,5 +180,9 @@
 				}
 			}
 		}
-	}
+	},
+        "spotify_panel": {
+            "disabled": false,
+            "script_path": "/home/jorik/bin/sp"
+        }
 }
