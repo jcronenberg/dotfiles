@@ -84,36 +84,6 @@
 				}
 			},
 			"row1": {
-				"button0": {
-					"app": "/home/jorik/bin/sp",
-					"arguments": [
-						"prev"
-					],
-					"app_name": "Previous",
-					"icon_path": "previous.png",
-					"straight_shell": true,
-					"show_app_name": false
-				},
-				"button1": {
-					"app": "/home/jorik/bin/sp",
-					"arguments": [
-						"play"
-					],
-					"app_name": "Play/Pause",
-					"icon_path": "play_pause.png",
-					"straight_shell": true,
-					"show_app_name": false
-				},
-				"button2": {
-					"app": "/home/jorik/bin/sp",
-					"arguments": [
-						"next"
-					],
-					"app_name": "Next",
-					"icon_path": "next.png",
-					"straight_shell": true,
-					"show_app_name": false
-				},
 				"button3": {
 					"app": "/home/jorik/bin/evdev_switch",
 					"arguments": [
@@ -154,35 +124,10 @@
 					"straight_shell": true,
 					"show_app_name": true
 				}
-			},
-			"row2": {
-				"button0": {
-					"app": "/home/jorik/bin/sp",
-					"arguments": [
-						"setrelvolume",
-                                                "-5"
-					],
-					"app_name": "Vol -",
-					"icon_path": "vol_down.png",
-					"straight_shell": true,
-					"show_app_name": false
-				},
-				"button1": {
-					"app": "/home/jorik/bin/sp",
-					"arguments": [
-						"setrelvolume",
-                                                "+5"
-					],
-					"app_name": "Vol +",
-					"icon_path": "vol_up.png",
-					"straight_shell": true,
-					"show_app_name": false
-				}
 			}
 		}
 	},
-        "spotify_panel": {
-            "disabled": false,
-            "script_path": "/home/jorik/bin/sp"
-        }
+	"spotify_panel": {
+		"disabled": false,
+	}
 }

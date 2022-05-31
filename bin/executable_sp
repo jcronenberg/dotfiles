@@ -109,7 +109,7 @@ function sp-metadata {
   | sed -E 's/ +/ /g'                            `# Merge consecutive spaces.`
 }
 
-function sp-playstatus {
+function sp-getplay {
   # Prints the playback status.
 
   dbus-send                                                                   \
