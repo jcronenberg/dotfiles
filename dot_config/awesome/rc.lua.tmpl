@@ -91,12 +91,7 @@ local browser      = os.getenv("BROWSER") or "firefox"
 local scrlocker    = "slock"
 
 awful.util.terminal = terminal
-{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
 awful.util.tagnames = { "Web", "Emacs", "Terminal" }
-{{- end }}
-{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-awful.util.tagnames = { "Web", "Emacs", "Terminal", "Email", "Teams" }
-{{- end }}
 local machi = require("layout-machi")
 awful.layout.layouts = {
     machi.default_layout
@@ -126,9 +121,16 @@ awful.layout.layouts = {
 
 -- define monitor specific tags
 monitor_tags = {}
+{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
 monitor_tags["DisplayPort-0"] = { "Other" }
 monitor_tags["DisplayPort-1"] = { "Music", "Chat", "Other" }
 monitor_tags["HDMI-A-0"] = { "Macroboard" }
+{{- end }}
+{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+monitor_tags["DP-1-2-1"] = { "Other" }
+monitor_tags["DP-1-1"] = { "Music", "Chat", "Email", "Teams" }
+monitor_tags["eDP-1"] = { "Macroboard" }
+{{- end }}
 
 awful.util.taglist_buttons = my_table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -351,13 +353,8 @@ globalkeys = my_table.join(
     --          {description = "expand up", group = "machina expand"}),
 
     -- X screen locker
-    {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
     --awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -i /home/jorik/.config/awesome/themes/" .. chosen_theme .. "/dual_lock.png") end,
     awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -c 000000") end,
-    {{- end }}
-    {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-    awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
-    {{- end }}
               {description = "lock screen", group = "hotkeys"}),
 
     -- Hotkeys
@@ -821,9 +818,9 @@ awful.spawn.once("redshift -t 6500:5500 -l 49.45:11.08 -b 1.0:0.85")
 awful.spawn.once("nextcloud")
 awful.spawn.once("picom --experimental-backends")
 awful.spawn.once("emacs -nw --daemon")
+awful.spawn.with_shell("sh ~/.screenlayout/3monitor.sh")
 {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
 awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
-awful.spawn.with_shell("sh ~/.screenlayout/3monitor.sh")
 awful.spawn.with_shell("sh ~/bin/restrict_touch.sh TSTP")
 {{- end }}
 {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}

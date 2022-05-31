@@ -142,12 +142,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
   size: 14.0
-  {{- end }}
-  {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-  size: 9.0
-  {{- end }}
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
