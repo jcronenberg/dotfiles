@@ -399,6 +399,9 @@ you should place your code here."
   (spacemacs/set-leader-keys "odc" 'org-roam-capture)
   (spacemacs/set-leader-keys "odf" 'org-roam-node-find)
   (spacemacs/set-leader-keys "odl" 'org-roam-buffer-toggle)
+  (spacemacs/declare-prefix "os" "switch mode")
+  (spacemacs/set-leader-keys "osh" 'html-mode)
+  (spacemacs/set-leader-keys "osj" 'javascript-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

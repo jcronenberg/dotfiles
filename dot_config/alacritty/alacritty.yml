@@ -63,7 +63,10 @@ window:
   #startup_mode: Windowed
 
   # Window title
-  #title: Alacritty
+  title: Alacritty
+
+  # Allow terminal applications to change Alacritty's window title.
+  dynamic_title: false
 
   # Window class (Linux/BSD only):
   #class:
