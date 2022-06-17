@@ -18,3 +18,4 @@ export FZF_DEFAULT_OPTS="
 "
 . "$HOME/.cargo/env"
 export LIBVIRT_DEFAULT_URI=qemu:///system
+export DISABLE_AUTO_UPDATE=true
