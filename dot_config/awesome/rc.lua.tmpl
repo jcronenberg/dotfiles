@@ -814,7 +814,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.once("barrier")
-awful.spawn.once("redshift -t 6500:5500 -l 49.45:11.08 -b 1.0:0.85")
+awful.spawn.once("redshift -t 6500:4800 -l 49.45:11.08 -b 1.0:0.80")
 awful.spawn.once("nextcloud")
 awful.spawn.once("picom --experimental-backends")
 awful.spawn.once("emacs -nw --daemon")
