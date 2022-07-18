@@ -21,22 +21,22 @@ theme.wallpaper1                                 = os.getenv("HOME") .. "/.confi
 theme.wallpaper2                                 = os.getenv("HOME") .. "/.config/awesome/themes/neon/wall2.jpg"
 theme.font                                      = "Roboto Bold 10"
 theme.taglist_font                              = "Roboto Condensed Regular 10"
-theme.tron_orange                               = "#ff22a5"
-theme.tron_light_blue                           = "#4898f7"
-theme.tron_darker_blue                          = "#4898f7"
-theme.fg_normal                                 = theme.tron_darker_blue -- unselected text color, includes clock, cal etc.
-theme.fg_focus                                  = theme.tron_light_blue
+theme.neon_accent                               = "#ff22a5"
+theme.neon_main_light                           = "#4898f7"
+theme.neon_main_dark                            = "#4898f7"
+theme.fg_normal                                 = theme.neon_main_dark -- unselected text color, includes clock, cal etc.
+theme.fg_focus                                  = theme.neon_main_light
 theme.bg_focus                                  = "#00000000" -- background color for taglist and clock, cal etc.
 theme.bg_normal                                 = "#00000000" -- background color for the whole wibar
 theme.fg_urgent                                 = "#000000" -- text color for alert
-theme.bg_urgent                                 = theme.tron_orange -- background color for alert
+theme.bg_urgent                                 = theme.neon_accent -- background color for alert
 theme.systray_bg                                = "#000032" -- background for the systray (try to match to wallpaper, as this has not transparency)
 theme.border_width                              = dpi(1)
-theme.border_normal                             = theme.tron_darker_blue
-theme.border_focus                              = theme.tron_orange
+theme.border_normal                             = theme.neon_main_dark
+theme.border_focus                              = theme.neon_accent
 theme.taglist_fg_focus                          = "#ffffff"
 theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_fg_focus                         = theme.tron_orange .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
+theme.tasklist_fg_focus                         = theme.neon_accent .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
 theme.menu_icon_size                            = dpi(32)
@@ -45,6 +45,12 @@ theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
 theme.useless_gap                               = dpi(4)
 theme.gap_single_client                         = false
+theme.master_width_factor                       = 0.9
+theme.layout_machi                              = theme.icon_dir .. "/machi.png"
+theme.layout_tile                               = theme.icon_dir .. "/tile.png"
+theme.layout_fairv                              = theme.icon_dir .. "/fairv.png"
+theme.layout_magnifier                          = theme.icon_dir .. "/magnifier.png"
+theme.layout_centerwork                         = theme.icon_dir .. "/centerwork.png"
 
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
 
@@ -80,7 +86,7 @@ local bat = lain.widget.bat({
         if bat_now.ac_status == 1 then
             bat_p = bat_p .. "Plugged  "
         end
-        widget:set_markup(markup.font(theme.font, markup(theme.tron_darker_blue, bat_header .. bat_p)))
+        widget:set_markup(markup.font(theme.font, markup(theme.neon_main_dark, bat_header .. bat_p)))
     end
 })
 
@@ -91,8 +97,8 @@ theme.volume = lain.widget.pulsebar({
     width = dpi(80), height = dpi(10), border_width = dpi(0),
     colors = {
         background = "#383838",
-        unmute     = theme.tron_light_blue,
-        mute       = theme.tron_orange
+        unmute     = theme.neon_main_light,
+        mute       = theme.neon_accent
     },
 })
 theme.volume.bar.paddings = dpi(0)
@@ -238,6 +244,7 @@ function theme.at_screen_connect(s)
             volumewidget,
             calendarwidget,
             clockwidget,
+            s.mylayoutbox,
         },
     }
 end
