@@ -19,10 +19,6 @@ But who am I to tell you what to do, right?
 
 ```ln -s ~/.tmux/.tmux.conf ~/.tmux.conf```
 
-### To apply the nord-tmux theme
-
-```echo "run-shell \"~/.tmux_themes/nord-tmux/nord.tmux\"" >> ~/.tmux.conf```
-
 ### To use fzf
 
 (Recommended to install fzf beforehand to update it via package manager)  

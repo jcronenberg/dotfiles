@@ -44,10 +44,6 @@
     type = "git-repo"
     url = "https://github.com/jcronenberg/awesomewm-machina.git"
     refreshPeriod = "168h"
-[".tmux_themes/nord-tmux"]
-    type = "git-repo"
-    url = "https://github.com/arcticicestudio/nord-tmux.git"
-    refreshPeriod = "168h"
 [".fzf"]
     type = "git-repo"
     url = "https://github.com/junegunn/fzf.git"
