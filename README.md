@@ -7,7 +7,7 @@ But who am I to tell you what to do, right?
 
 ## Installation instructions
 
-1. Install [chezmoi](https://github.com/twpayne/chezmoi/blob/master/docs/INSTALL.md)
+1. Install [chezmoi](https://www.chezmoi.io/install/)
 2. Init repo: `chezmoi init https://github.com/jcronenberg/dotfiles.git`
 3. Add gpg config to chezmoi config `echo -e "[gpg]\n\trecipient = \"46281506C8CB0C7B595CBB49FD702A19657AB22A\"" >> ~/.config/chezmoi/chezmoi.toml`
 4. Check changes it would make: `chezmoi diff`
