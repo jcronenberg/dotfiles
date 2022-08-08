@@ -12,7 +12,6 @@
 				],
 				"app_name": "Spotify",
 				"icon_path": "spotify.png",
-				"straight_shell": false,
 				"show_app_name": false
 			},
 			"button5": {
@@ -25,7 +24,6 @@
 				],
 				"app_name": "Emacs",
 				"icon_path": "emacs.png",
-				"straight_shell": true,
 				"show_app_name": false
 			},
 			"button4": {
@@ -35,7 +33,6 @@
 				],
 				"app_name": "Firefox",
 				"icon_path": "firefox.png",
-				"straight_shell": false,
 				"show_app_name": false
 			},
 			"button3": {
@@ -45,7 +42,6 @@
 				],
 				"app_name": "Chromium",
 				"icon_path": "chromium.png",
-				"straight_shell": false,
 				"show_app_name": false
 			},
 			"button2": {
@@ -55,7 +51,6 @@
 				],
 				"app_name": "Signal",
 				"icon_path": "signal.png",
-				"straight_shell": false,
 				"show_app_name": false
 			},
 			"button1": {
@@ -65,7 +60,6 @@
 				],
 				"app_name": "Thunderbird",
 				"icon_path": "thunderbird.png",
-				"straight_shell": false,
 				"show_app_name": false
 			},
 			"button0": {
@@ -75,7 +69,6 @@
 				],
 				"app_name": "Godot",
 				"icon_path": "godot.png",
-				"straight_shell": false,
 				"show_app_name": false
 			}
 		},
@@ -87,7 +80,6 @@
 				],
 				"app_name": "Switch evdev",
 				"icon_path": "m&kb.png",
-				"straight_shell": true,
 				"show_app_name": false
 			},
 			"button2": {
@@ -97,7 +89,6 @@
 				],
 				"app_name": "Switch monitor",
 				"icon_path": "m&m&kb.png",
-				"straight_shell": true,
 				"show_app_name": false
 			},
 			"button1": {
@@ -108,7 +99,6 @@
 				],
 				"app_name": "Start",
 				"icon_path": "win11.png",
-				"straight_shell": true,
 				"show_app_name": true
 			},
 			"button0": {
@@ -119,7 +109,6 @@
 				],
 				"app_name": "Shutdown",
 				"icon_path": "win11.png",
-				"straight_shell": true,
 				"show_app_name": true
 			},
 			"button5": {
@@ -129,7 +118,6 @@
 					"space"
 				],
 				"app_name": "Press Space",
-				"straight_shell": true,
 				"show_app_name": false
 			},
 			"button6": {
@@ -138,7 +126,6 @@
 
 				],
 				"app_name": "TS Mute",
-				"straight_shell": true,
 				"show_app_name": false
 			}
 		}
