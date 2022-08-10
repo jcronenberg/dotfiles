@@ -29,13 +29,10 @@ set ttyfast
 set backspace=indent,eol,start
 set confirm
 set nostartofline
-let mapleader = ","
+map <SPACE> <leader>
 
 " Set tab
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-
-" Set path to improve find
-set path +=**
 
 " Cosmetics
 colorscheme koehler
@@ -45,7 +42,7 @@ set mouse=a
 
 " Folding
 set foldmethod=indent
-nnoremap <space> za
+map <tab> za
 set foldlevelstart=10
 set exrc
 
@@ -60,12 +57,11 @@ map <C-x> :x<cr>
 map <C-h> :tabprevious<cr>
 map <C-l> :tabnext<cr>
 set pastetoggle=<F3>
-
-" netrw in NERDtree style
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
+" Emulate spacemacs
+map <leader>fs :w<cr>
+map <leader>bd :q<cr>
+map <leader>wh :tabprevious<cr>
+map <leader>wl :tabnext<cr>
+map <leader>wd :q<cr>
 
 filetype plugin indent on       " required
