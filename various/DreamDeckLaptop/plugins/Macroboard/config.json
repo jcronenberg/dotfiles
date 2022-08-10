@@ -1,0 +1,220 @@
+{
+	"button_settings": {
+		"height": 150,
+		"width": 150,
+        },
+	"layout": {
+		"row0": {
+			"button0": {
+				"app": "spotify",
+				"arguments": [
+
+				],
+				"app_name": "Spotify",
+				"icon_path": "spotify.png",
+				"straight_shell": false,
+				"show_app_name": false
+			},
+			"button1": {
+				"app": "emacsclient",
+				"arguments": [
+					"-c",
+					"-n",
+					"-a",
+					"''"
+				],
+				"app_name": "Emacs",
+				"icon_path": "emacs.png",
+				"straight_shell": true,
+				"show_app_name": false
+			},
+			"button2": {
+				"app": "firefox",
+				"arguments": [
+
+				],
+				"app_name": "Firefox",
+				"icon_path": "firefox.png",
+				"straight_shell": false,
+				"show_app_name": false
+			},
+			"button3": {
+				"app": "chromium",
+				"arguments": [
+					""
+				],
+				"app_name": "Chromium",
+				"icon_path": "chromium.png",
+				"straight_shell": false,
+				"show_app_name": false
+			},
+			"button5": {
+				"app": "thunderbird",
+				"arguments": [
+					""
+				],
+				"app_name": "Thunderbird",
+				"icon_path": "thunderbird.png",
+				"straight_shell": false,
+				"show_app_name": false
+			},
+			"button6": {
+				"app": "godot",
+				"arguments": [
+					""
+				],
+				"app_name": "Godot",
+				"icon_path": "godot.png",
+				"straight_shell": false,
+				"show_app_name": false
+			}
+		},
+                "row1": {
+                    "button0": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "spotify"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "spotify.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button1": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "emacs"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "emacs.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button2": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "firefox"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "firefox.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button3": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "chromium"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "chromium.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button4": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "thunderbird"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "thunderbird.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button5": {
+                        "app": "wmctrl",
+                        "arguments": [
+                            "-a",
+                            "godot"
+                        ],
+                        "app_name": "Switch to",
+                        "icon_path": "godot.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    }
+                },
+                "row2": {
+                    "button0": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "Firefox",
+                            "0"
+                        ],
+                        "app_name": "Switch to 1",
+                        "icon_path": "firefox.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button1": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "Firefox",
+                            "1"
+                        ],
+                        "app_name": "Switch to 2",
+                        "icon_path": "firefox.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button2": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "emacs",
+                            "0"
+                        ],
+                        "app_name": "Switch to 1",
+                        "icon_path": "emacs.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button3": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "emacs",
+                            "1"
+                        ],
+                        "app_name": "Switch to 2",
+                        "icon_path": "emacs.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button3": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "emacs",
+                            "1"
+                        ],
+                        "app_name": "Switch to 2",
+                        "icon_path": "emacs.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button4": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "Alacritty",
+                            "0"
+                        ],
+                        "app_name": "Switch to 1",
+                        "icon_path": "alacritty.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    },
+                    "button5": {
+                        "app": "/home/jorik/bin/switch_window.sh",
+                        "arguments": [
+                            "Alacritty",
+                            "1"
+                        ],
+                        "app_name": "Switch to 2",
+                        "icon_path": "alacritty.png",
+                        "straight_shell": true,
+                        "show_app_name": true
+                    }
+                }
+	}
+}

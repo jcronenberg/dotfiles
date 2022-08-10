@@ -1,0 +1,11 @@
+{
+        "settings": {
+                "enable_touch": true,
+                "default_device": "Wacom HID 48E3 Finger",
+                "screen_divide_by": 6.12
+        },
+        "spotify_panel": {
+            "legacy": false,
+            "disabled": false
+        }
+}
