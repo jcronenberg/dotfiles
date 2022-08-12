@@ -625,6 +625,9 @@ you should place your code here."
                                   (local-unset-key (kbd "SPC"))
                                   ))
 
+  ;; disable helm-ls-git-rebase-todo-mode
+  (setq auto-mode-alist (delete '("/git-rebase-todo$" . helm-ls-git-rebase-todo-mode) auto-mode-alist))
+
   ;; theme config
   (setq doom-themes-treemacs-theme "doom-atom")
   (doom-themes-treemacs-config)
