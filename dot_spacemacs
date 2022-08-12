@@ -772,7 +772,7 @@ This function is called at the very end of Spacemacs initialization."
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tab-width 8)
  '(treemacs-follow-mode t)
- '(warning-suppress-types '((comp) (comp))))
+ '(warning-suppress-types '((use-package) (comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
