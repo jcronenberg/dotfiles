@@ -64,8 +64,14 @@ mkcd () {
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # Emacs
-    alias e="emacsclient -t -a ''"
-    alias ec="emacsclient -c -n -a ''"
+# Open in terminal
+alias e="emacsclient -t -a ''"
+# Open in standalone window
+alias ec="emacsclient -c -n -a ''"
+# Open in existing window, or start server
+eo() {
+    emacsclient -n "$@" 2>/dev/null || ec "$@"
+}
 
 # Spotify control
 alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
