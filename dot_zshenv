@@ -1,4 +1,4 @@
-export CDPATH='/home/jorik:/home/jorik/git'
+export CDPATH="$HOME:$HOME/git"
 export LANG=en_US.utf8
 export EDITOR=/usr/bin/nvim
 # FZF
