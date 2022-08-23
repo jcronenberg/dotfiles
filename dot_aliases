@@ -1,0 +1,70 @@
+# Standard aliases
+alias watchcpu='watch -n 1 "cat /proc/cpuinfo | grep \"^[c]pu MHz\""'
+alias wetter2='curl http://v2.wttr.in/Nuremberg'
+alias wetter='curl http://wttr.in/Nuremberg'
+if [ -x "$(command -v nvim)" ]; then
+    alias vim='nvim'
+fi
+if [ -x "$(command -v exa)" ]; then
+    alias le="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify"
+    alias lt="le --tree --level=2"
+else
+    alias le="ls -l"
+    if [ -x "$(command -v tree)" ]; then
+        alias lt="tree -L 2"
+    fi
+fi
+alias pubip='curl ifconfig.co'
+alias pubipv4='curl ifconfig.me'
+if [ -x "$(command -v bat)" ]; then
+    alias cat="bat -pp"
+fi
+
+# fzf
+if [ -x "$(command -v fzf)" ]; then
+    ## fzf git aliases
+    # Select a branch with fzf and switch to it
+    alias gckof='git branch | fzf | cut --characters=3- | xargs --no-run-if-empty git checkout'
+    # Select a branch with fzf and merge it in the current branch
+    alias gmerf='git branch | fzf | cut --characters=3- | xargs --no-run-if-empty git merge'
+    # Output: abbreviated_commit_hash (%h) | commit_message (%s) | author_name (%an, in yellow) | commit_date_relative (%cr, in green)
+    alias glo='git log --pretty=format:"%h %C(bold)|%C(reset) %s %C(bold)|%C(reset) %C(yellow)%an%C(reset) %C(bold)|%C(reset) %C(green)%cr%C(reset)" --max-count=100'
+    # From the output of the glo alias, select with fzf the commit hash to rebase on
+    alias grebi='glo | fzf --ansi --no-sort | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty -I % bash -c "</dev/tty git rebase --interactive %"'
+    # Select a commit with fzf and revert it
+    alias grevf='glo | fzf --ansi --no-sort | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git revert'
+    # Select a commit with fzf and show it
+    alias gshf='glo | fzf --ansi --no-sort --preview "echo {} | cut --delimiter=\" \" --fields=1 | xargs git show" | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git show'
+    # Select a stash with fzf and show it
+    alias gstaf='git stash list | fzf --no-sort | sed -n "s/^stash@{\(.*\)}.*/\1/p" | xargs --no-run-if-empty git stash show'
+
+    ## fzf docker aliases
+    # Select Docker containers and remove them (with its volumes)
+    alias drmf='docker ps --all | fzf --header-lines=1 --multi | tr --squeeze-repeats " " | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty docker rm --volumes'
+    # Select Docker containers and stop them
+    alias dstopf='docker ps | fzf --header-lines=1 --multi | tr --squeeze-repeats " " | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty docker stop'
+    # Select a Docker container and start shell in it
+    alias dexecf='docker ps | fzf --header-lines=1 --multi | tr --squeeze-repeats " " | rev | cut --delimiter=" " --fields=1 | rev | xargs --no-run-if-empty -I % bash -c "</dev/tty docker exec --interactive --tty % bash --login"'
+    # Select Docker images and remove them
+    alias drmif='docker image ls | fzf --header-lines=1 --multi | tr --squeeze-repeats " " | cut --delimiter=" " --fields=3 | xargs --no-run-if-empty docker rmi --force'
+fi
+
+# Functions
+mkcd () {
+    mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}
+
+# Allow sudo to use user aliases
+alias sudo='sudo '
+
+# SUSE internal build service instance
+if [ -x "$(command -v osc)" ]; then
+    alias isc='osc -A https://api.suse.de'
+fi
+
+# ssh with automatic sourcing of aliases
+# Be very careful with this, as it sources external files and can do a lot of damage
+function sshs() {
+    ssh -t $1 "bash --rcfile <(curl https://w3.suse.de/~jcronenberg/aliases || curl https://raw.githubusercontent.com/jcronenberg/dotfiles/master/dot_aliases)"
+}

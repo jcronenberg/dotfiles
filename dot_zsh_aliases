@@ -1,0 +1,61 @@
+# Import generic aliases
+source $HOME/.aliases
+# ZSH specific aliases
+## Suffix aliases
+### Code
+alias -s {c,cpp,rs}=nvim
+### Text
+alias -s {md,txt}=nvim
+### Git
+alias -s git='git clone'
+
+## Global aliases
+### Pipes
+alias -g G='| grep'
+alias -g L='| less'
+alias -g V='| vim -'
+alias -g Z='| fzf'
+### New File
+alias -g NF='./*(oc[1])'
+
+## Calculator
+cc() python3 -c "from math import *; print($*);"
+alias calc='noglob cc'
+
+# Aliases that are only relevant on my personal machine
+## Emacs
+## Open in terminal
+alias e="emacsclient -t -a ''"
+## Open in standalone window
+alias ec="emacsclient -c -n -a ''"
+## Open in existing window, or start server
+eo() {
+    emacsclient -n "$@" 2>/dev/null || ec "$@"
+}
+
+## Spotify control
+alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+alias spotnext="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+alias spotprev="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+
+## GUT
+alias gut='godot -s addons/gut/gut_cmdln.gd -d --path $PWD'
+
+## vpn connection to internal VPN
+function vpncon () {
+    if [ "$1" = "up" ]; then
+        nmcli c up ac078c9b-8b7a-4a00-9b0b-22fd35f8a6f9
+    elif [ "$1" = "down" ]; then
+        nmcli c down ac078c9b-8b7a-4a00-9b0b-22fd35f8a6f9
+    else
+        echo "Wrong input"
+    fi
+}
+
+# Copy local .aliases to remote, source it and then delete it
+# This has the disadvantage of needing to enter a pw twice if it is required
+# but it's a safer option since it doesn't source remote files
+function s() {
+        ssh $@ "cat > /tmp/.aliases_temp" < ~/.aliases
+        ssh -t $@ "bash --rcfile /tmp/.aliases_temp ; rm /tmp/.aliases_temp"
+}
