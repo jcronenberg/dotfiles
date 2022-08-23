@@ -92,6 +92,7 @@ local scrlocker    = "slock"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "Web", "Emacs", "Terminal" }
+awful.util.layouts = { awful.layout.suit.tile, awful.layout.suit.tile.bottom, awful.layout.suit.tile }
 local machi = require("layout-machi")
 awful.layout.layouts = {
     machi.default_layout,
@@ -121,15 +122,22 @@ awful.layout.layouts = {
 
 -- define monitor specific tags
 monitor_tags = {}
+monitor_layouts = {}
 {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
 monitor_tags["DisplayPort-0"] = { "Other" }
+monitor_layouts["DisplayPort-0"] = { awful.layout.suit.fair }
 monitor_tags["DisplayPort-1"] = { "Music", "Chat", "Other" }
+monitor_layouts["DisplayPort-1"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["HDMI-A-0"] = { "Macroboard" }
+monitor_layouts["HDMI-A-0"] = { awful.layout.suit.fair }
 {{- end }}
 {{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-monitor_tags["DP-1-2"] = { "Other" }
-monitor_tags["DP-1-1-1"] = { "Music", "Chat", "Email", "Teams" }
+monitor_tags["HDMI-1"] = { "Email", "Other" }
+monitor_layouts["HDMI-1"] = { awful.layout.suit.fair, awful.layout.suit.fair }
+monitor_tags["DP-2-1-1"] = { "Music", "Chat", "Meeting" }
+monitor_layouts["DP-2-1-1"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["eDP-1"] = { "Macroboard" }
+monitor_layouts["eDP-1"] = { awful.layout.suit.fair }
 {{- end }}
 
 awful.util.taglist_buttons = my_table.join(
@@ -264,8 +272,8 @@ awful.screen.connect_for_each_screen(function(s)
     for output, tags in pairs(monitor_tags) do
         for out, _ in pairs(s.outputs) do
             if out == output then
-                for _, tag in ipairs(tags) do
-                    awful.tag.add(tag, { layout = awful.layout.layouts[1],
+                for i, tag in ipairs(tags) do
+                    awful.tag.add(tag, { layout = monitor_layouts[output][i],
 	    	    	          screen = s, selected = false } )
                 end
             end
@@ -589,7 +597,12 @@ clientkeys = my_table.join(
             for s in screen do
                 if s.index == new_index then
                     for out, _ in pairs(s.outputs) do
+{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
                         if out == "HDMI-A-0" then
+{{- end }}
+{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+                        if out == "eDP-1" then
+{{- end }}
                             new_index = new_index + 1
                         end
                     end
@@ -597,7 +610,7 @@ clientkeys = my_table.join(
             end
             c.move_to_screen(c, new_index)
         end,
-              {description = "move to screen (ignore HDMI-A-0)", group = "client"}),
+              {description = "move to screen (ignore Macroboard monitor)", group = "client"}),
     awful.key({ modkey, "Shift" }, "o",
         function (c)
             c.move_to_screen(c, new_index)
