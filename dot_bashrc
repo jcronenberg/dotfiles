@@ -1,0 +1,3 @@
+[ -f ~/.aliases ] && source $HOME/.aliases
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
