@@ -104,8 +104,6 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.zshenv ] && source $HOME/.zshenv
 [ -f ~/.zsh_aliases ] && source $HOME/.zsh_aliases
 
-[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
-
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## z with fzf
