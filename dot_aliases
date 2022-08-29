@@ -6,8 +6,9 @@ if [ -x "$(command -v nvim)" ]; then
     alias vim='nvim'
 fi
 if [ -x "$(command -v exa)" ]; then
-    alias le="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify"
-    alias lt="le --tree --level=2"
+    alias ll="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify"
+    alias l="ll -a"
+    alias lt="ll --tree --level=2"
 else
     alias le="ls -l"
     if [ -x "$(command -v tree)" ]; then
