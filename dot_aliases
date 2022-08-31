@@ -10,7 +10,8 @@ if [ -x "$(command -v exa)" ]; then
     alias l="ll -a"
     alias lt="ll --tree --level=2"
 else
-    alias le="ls -l"
+    alias ll="ls -l"
+    alias l="ll -a"
     if [ -x "$(command -v tree)" ]; then
         alias lt="tree -L 2"
     fi
