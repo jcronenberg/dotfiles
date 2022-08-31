@@ -130,8 +130,7 @@ monitor_tags["DisplayPort-1"] = { "Music", "Chat", "Other" }
 monitor_layouts["DisplayPort-1"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["HDMI-A-0"] = { "Macroboard" }
 monitor_layouts["HDMI-A-0"] = { awful.layout.suit.fair }
-{{- end }}
-{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 monitor_tags["HDMI-1"] = { "Email", "Other" }
 monitor_layouts["HDMI-1"] = { awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["DP-2-1-1"] = { "Music", "Chat", "Meeting" }
@@ -599,9 +598,10 @@ clientkeys = my_table.join(
                     for out, _ in pairs(s.outputs) do
 {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
                         if out == "HDMI-A-0" then
-{{- end }}
-{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
                         if out == "eDP-1" then
+{{- else }}
+                        if out == "HDMI-A-0" then
 {{- end }}
                             new_index = new_index + 1
                         end
@@ -831,7 +831,6 @@ awful.spawn.with_shell("sh ~/.screenlayout/3monitor.sh")
 {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
 awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
 awful.spawn.with_shell("sh ~/bin/restrict_touch.sh TSTP")
-{{- end }}
-{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 awful.spawn.with_shell("keepassxc")
 {{- end }}
