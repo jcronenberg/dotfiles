@@ -11,10 +11,10 @@ Again this isn't recommended, but if you want to apply my configs, you'll have t
 encrypted files.
 
 1. Install [chezmoi](https://www.chezmoi.io/install/)
-2. Init repo: `chezmoi init https://github.com/jcronenberg/dotfiles.git`
-3. First only apply chezmoi config as this is needed to set up gpg `chezmoi apply .config/chezmoi/chezmoi.toml`
-4. Check changes it would make: `chezmoi diff`
-5. Apply changes: `chezmoi apply`
+2. `chezmoi init https://github.com/jcronenberg/dotfiles.git` Init repo
+3. `chezmoi apply .config/chezmoi/chezmoi.toml` First only apply chezmoi config as this is needed to set up gpg
+4. `chezmoi diff` Check changes it would make
+5. `chezmoi apply` Apply changes
 
 ## Extra install steps
 
