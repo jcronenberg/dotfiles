@@ -1,0 +1,22 @@
+#!/bin/bash
+
+sel=$(virsh list --all \
+| fzf --header-lines=2 --no-sort \
+| tr -s ' ' \
+| cut -c 2-)
+
+IFS=$'\n'
+for line in $sel; do
+    IFS=' ' read -rd '' -a linearr <<<"$line"
+    machine=${linearr[1]}
+    state=${linearr[2]}
+    # a newline is after running that's why we catch it with *
+    if [[ $state == "running"* ]]; then
+        echo Shutting down $machine now...
+        virsh shutdown $machine
+    elif [[ $state == "shut" ]]; then
+        echo Starting $machine now...
+        virsh start $machine
+    fi
+done
+unset IFS
