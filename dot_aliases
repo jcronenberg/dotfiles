@@ -74,3 +74,7 @@ fi
 function sshs() {
     ssh -t $1 "bash --rcfile <(curl https://w3.suse.de/~jcronenberg/aliases || curl https://raw.githubusercontent.com/jcronenberg/dotfiles/master/dot_aliases)"
 }
+
+function todo() {
+    echo "**** TODO $@" >> /home/jcronenberg/Nextcloud/org/roam/agenda.org
+}
