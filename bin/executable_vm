@@ -1,0 +1,116 @@
+#!/bin/bash
+# Script that utilises fzf to interact with VMs
+
+# Commands that allow only single selection
+no_multi=(
+    "ssh"
+)
+
+# Commands that are restricted to running VMs
+restrict_running=(
+    "ssh"
+)
+
+# Converts $sel into seperate arrays
+# ids: the VMs id
+# machines: the VMs name
+# state: the VMs state, note that for multi word states like 'shut off' it is just 'shut'
+# num_vms: the number of VMs selected, for iterating over the arrays
+function handle-sel {
+    IFS=$'\n'
+    ids=()
+    machines=()
+    states=()
+    num_vms=0
+    for line in $sel; do
+        IFS=' ' read -rd '' -a linearr <<<"$line"
+        ids+=("${linearr[0]}")
+        machines+=("${linearr[1]}")
+        states+=("${linearr[2]}")
+        ((num_vms=num_vms+1))
+    done
+    unset IFS
+}
+
+# List vms and make the user select which they want
+# full list is stored in $sel
+# but it also invokes handle-sel, see above what vars this stores
+function vm-list {
+    if [[ "${restrict_running[*]}" =~ "$1" ]]; then
+        vmlist=$(virsh list | head -n -1)
+    else
+        vmlist=$(virsh list --all | head -n -1)
+    fi
+    if [[ "$1" == "list" || "$1" == "l" ]]; then
+        printf '%s\n' "$vmlist"
+        exit 0;
+    fi
+    sel=$(fzf --header-lines=2 --no-sort `# Invoke fzf` \
+    $(if [[ "${no_multi[*]}" =~ "$1" ]]; then echo --multi=1; fi) `# Check if command allows multi-select` \
+    <<< "$vmlist" `# Input vmlist to fzf` \
+    | tr -s ' ' `# Trim all excess space chars` \
+    | cut -c 2-) `# Cut beginning chars`
+
+    handle-sel
+}
+
+function vm-l {
+    eval "vm-list $@"
+}
+
+# Toggle the state of VMs
+function vm-toggle {
+    for i in "${!ids[@]}"; do
+        # a newline is after running that's why we catch it with *
+        if [[ ${states[i]} == "running"* ]]; then
+            echo Shutting down ${machines[i]} now...
+            virsh shutdown ${machines[i]}
+        elif [[ ${states[i]} == "shut" ]]; then
+            echo Starting ${machines[i]} now...
+            virsh start ${machines[i]}
+        fi
+    done
+}
+
+function vm-t {
+    eval "vm-toggle $@"
+}
+
+# SSH into a VM
+function vm-ssh {
+    for i in "${!states[@]}"; do
+        ssh root@$(virsh domifaddr ${machines[i]} \
+        | grep -oP '192.168.*.+?(?=\/)' \
+        || grep -oP '10.*.+?(?=\/)' \
+        || grep -oP '172.*.+?(?=\/)')
+    done
+}
+
+function vm-s {
+    eval "vm-ssh $@"
+}
+
+# Print help
+function vm-help {
+    echo "Usage: vm [command]"
+    echo "Control libvirt VMs interactively via fzf."
+    echo ""
+    echo " vm l, list           - List all VMs (basically 'virsh list --all')"
+    echo " vm t, toggle         - Toggle state of selected VMs"
+    echo " vm s, ssh            - SSH into selected VM, note that it only lists running VMs"
+}
+
+subcommand="$1"
+if [[ -z "$subcommand" || "$subcommand" == "help" ]]; then
+    vm-help
+else
+    if $(type vm-$subcommand > /dev/null 2> /dev/null); then
+        shift
+        # First create the list of VMs
+        eval "vm-list $subcommand"
+        # Then execute the subcommand
+        eval "vm-$subcommand $@"
+    else
+        vm-help
+    fi
+fi
