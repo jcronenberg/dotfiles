@@ -20,4 +20,3 @@ export FZF_DEFAULT_OPTS="
 export LIBVIRT_DEFAULT_URI=qemu:///system
 export DISABLE_AUTO_UPDATE=true
 [ -d ~/bin/ ] && export PATH=$PATH:$HOME/bin
-[ -d /var/lib/flatpak/exports/share ] && XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share"
