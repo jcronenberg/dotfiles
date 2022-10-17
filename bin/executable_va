@@ -1,0 +1,79 @@
+#!/bin/bash
+
+VAGRANT_DIR="/home/jcronenberg/vagrant"
+CWD=$(pwd)
+
+# Commands that allow only single selection
+no_multi=(
+    "ssh"
+    "s"
+    "ssh-copy-id"
+    "sci"
+)
+
+# Commands that are restricted to running VMs
+restrict_running=(
+    "ssh"
+    "s"
+    "ssh-copy-id"
+    "sci"
+)
+
+# Converts $sel into seperate arrays
+# ids: the VMs id
+# machines: the VMs name
+# state: the VMs state, note that for multi word states like 'shut off' it is just 'shut'
+# num_vms: the number of VMs selected, for iterating over the arrays
+function handle-sel {
+    IFS=$'\n'
+    ids=()
+    machines=()
+    states=()
+    num_vms=0
+    for line in $sel; do
+        IFS=' ' read -rd '' -a linearr <<<"$line"
+        ids+=("${linearr[0]}")
+        machines+=("${linearr[1]}")
+        states+=("${linearr[2]}")
+        ((num_vms=num_vms+1))
+    done
+    unset IFS
+}
+
+# List vms and make the user select which they want
+# full list is stored in $sel
+# but it also invokes handle-sel, see above what vars this stores
+function va-list {
+    valist=""
+    dirs=$(ls -d $VAGRANT_DIR/*/)
+    for dir in $dirs; do
+        dir_basename=$(basename $dir)
+        valist+="$dir_basename
+"
+    done
+
+    # If a argument is supplied, check if it is in valist then use that as sel
+    # Needs to be before trimming last line as we need the last empty line
+    if [[ ! -z "$1" && "$valist" == *$'\n'"$1"$'\n'* ]]; then
+        sel="$1"
+        return
+    elif [ ! -z "$1" ]; then
+        echo "$1 not found in vagrant list"
+    fi
+
+    # Trim last empty line for fzf selection
+    valist=$(head -n -1 <<< "$valist")
+
+    sel=$(fzf --no-sort \
+          $(if [[ "${no_multi[*]}" =~ "$1" ]]; then echo --multi=1; fi) `# Check if command allows multi-select` \
+          <<< "$valist")
+
+    # exit if none selected
+    if [ -z $sel ]; then
+        exit 0
+    fi
+}
+va-list $@
+cd "$VAGRANT_DIR/$sel"
+vagrant up
+vagrant ssh
