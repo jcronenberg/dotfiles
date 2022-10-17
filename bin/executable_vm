@@ -4,11 +4,17 @@
 # Commands that allow only single selection
 no_multi=(
     "ssh"
+    "s"
+    "ssh-copy-id"
+    "sci"
 )
 
 # Commands that are restricted to running VMs
 restrict_running=(
     "ssh"
+    "s"
+    "ssh-copy-id"
+    "sci"
 )
 
 # Converts $sel into seperate arrays
@@ -51,6 +57,11 @@ function vm-list {
     | tr -s ' ' `# Trim all excess space chars` \
     | cut -c 2-) `# Cut beginning chars`
 
+    # Check if no entry was selected
+    if [ -z "$sel" ]; then
+        exit
+    fi
+
     handle-sel
 }
 
@@ -78,16 +89,29 @@ function vm-t {
 
 # SSH into a VM
 function vm-ssh {
-    for i in "${!states[@]}"; do
-        ssh root@$(virsh domifaddr ${machines[i]} \
-        | grep -oP '192.168.*.+?(?=\/)' \
-        || grep -oP '10.*.+?(?=\/)' \
-        || grep -oP '172.*.+?(?=\/)')
-    done
+    ssh root@$((virsh domifaddr ${machines[0]} \
+    | grep -oP '192.168.*.+?(?=\/)' \
+    || grep -oP '10.*.+?(?=\/)' \
+    || grep -oP '172.*.+?(?=\/)') \
+    | head -n 1)
 }
 
 function vm-s {
     eval "vm-ssh $@"
+}
+
+# Copy ssh id to vm, then ssh into said vm
+function vm-ssh-copy-id {
+    ssh-copy-id root@$(virsh domifaddr ${machines[0]} \
+    | grep -oP '192.168.*.+?(?=\/)' \
+    || grep -oP '10.*.+?(?=\/)' \
+    || grep -oP '172.*.+?(?=\/)')
+
+    eval "vm-ssh $@"
+}
+
+function vm-sci {
+    eval "vm-ssh-copy-id $@"
 }
 
 # Print help
@@ -98,6 +122,7 @@ function vm-help {
     echo " vm l, list           - List all VMs (basically 'virsh list --all')"
     echo " vm t, toggle         - Toggle state of selected VMs"
     echo " vm s, ssh            - SSH into selected VM, note that it only lists running VMs"
+    echo " vm sci, ssh-copy-id  - Copy ssh id to vm, then ssh into said vm"
 }
 
 subcommand="$1"
