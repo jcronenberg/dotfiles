@@ -622,9 +622,9 @@ you should place your code here."
   (global-set-key "\C-ci" 'org-roam-node-insert)
 
   ;; org roam config
-  (org-roam-setup)
-  (define-key org-roam-mode-map (kbd "RET") (kbd "C-0 <C-return>"))
-  (define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing)
+  ;;(org-roam-setup)
+  ;;(define-key org-roam-mode-map (kbd "RET") (kbd "C-0 <C-return>"))
+  ;;(define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing)
   (add-hook 'org-roam-mode-hook (lambda () ;;(page-break-lines-mode 0)
                                   ;;(org-roam-buffer-render) ;; sadly doesn't work seems you need to set global-page-break-lines-mode
                                   (local-unset-key (kbd "h"))
