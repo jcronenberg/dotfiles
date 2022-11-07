@@ -67,4 +67,6 @@ map <leader>wh :tabprevious<cr>
 map <leader>wl :tabnext<cr>
 map <leader>wd :q<cr>
 
+filetype on
+filetype plugin on
 filetype plugin indent on       " required
