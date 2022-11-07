@@ -23,7 +23,6 @@ set wildmenu
 set nofixendofline
 set cursorline
 set number
-set colorcolumn=100
 set showmode
 set ttyfast
 set backspace=indent,eol,start
