@@ -32,55 +32,55 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(lua
-     ;;(csharp :variables csharp-backend 'lsp)
-     ;;(php :variables php-backend 'lsp)
-     ;;(sql :variables
-     ;;     sql-backend nil
-     ;;     sql-capitalize-keywords t)
-     yaml
+   '(
+     (lua :variables lua-backend nil)
      lsp
-     (javascript :variables
-                 javascript-backend 'tide
-                 javascript-lsp-linter nil
-                 javascript-fmt-tool 'prettier
-                 javascript-repl 'nodejs)
-     html
-     web-beautify
-     (go :variables go-backend 'lsp)
-     ;;(ruby :variables
-     ;;      ruby-enable-enh-ruby-mode t)
      rust
-     (c-c++ :variables
-            c-c++-backend 'lsp-ccls
-            flycheck-select-checker 'c/c++-gcc)
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
-     ;; `M-m f e R' (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
+     (c-c++ :variables c-c++-backend nil)
      spacemacs-layouts
      helm
      auto-completion
      better-defaults
      emacs-lisp
      git
-     ;; markdown
      (org :variables
           org-enable-roam-support t)
+     syntax-checking
+     dap
+     semantic
+     ranger
+     treemacs
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
+     ;; `M-m f e R' (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+     ;;(csharp :variables csharp-backend 'lsp)
+     ;;(php :variables php-backend 'lsp)
+     ;;(sql :variables
+     ;;     sql-backend nil
+     ;;     sql-capitalize-keywords t)
+     ;; yaml
+     ;; (javascript :variables
+     ;;             javascript-backend 'tide
+     ;;             javascript-lsp-linter nil
+     ;;             javascript-fmt-tool 'prettier
+     ;;             javascript-repl 'nodejs)
+     ;; html
+     ;; web-beautify
+     ;; (go :variables go-backend 'lsp)
+     ;;(ruby :variables
+     ;;      ruby-enable-enh-ruby-mode t)
+     ;; (c-c++ :variables
+     ;;        c-c++-backend 'lsp-ccls
+     ;;        flycheck-select-checker 'c/c++-gcc)
+     ;; markdown
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     syntax-checking
-     dap
-     semantic
-     ;; (shell :variables
-     ;;        shell-default-height 40)
      ;; version-control
-     ranger
      ;;(cmake :variables cmake-enable-ide-support t)
-     treemacs
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
