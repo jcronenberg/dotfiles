@@ -1,7 +1,5 @@
 Xcursor.size: 16
-{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
-Xft.dpi: 96
-{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+{{- if eq .mainMonitorWidth 3840 }}
 Xft.dpi: 120
 {{- else }}
 Xft.dpi: 96
