@@ -4,7 +4,7 @@
         command = "emacsclient"
         args = ["--eval", "(ediff3 \"{{ "{{" }} .Destination {{ "}}" }}\" \"{{ "{{" }} .Source {{ "}}" }}\" \"{{ "{{" }} .Target {{ "}}" }}\")"]
 [data]
-{{- if eq .chezmoi.hostname "arch-jorik" }}
+{{- if eq .chezmoi.hostname "pc-arch-jorik" }}
         mainMonitorWidth=3440
         mainMonitorHeight=1440
 {{- else if eq .chezmoi.hostname "tmpworkstation" }}
