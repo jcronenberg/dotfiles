@@ -7,10 +7,13 @@
 {{- if eq .chezmoi.hostname "pc-arch-jorik" }}
         mainMonitorWidth=3440
         mainMonitorHeight=1440
+        useEncrypted=true
 {{- else if eq .chezmoi.hostname "tmpworkstation" }}
         mainMonitorWidth=3840
         mainMonitorHeight=2160
+        useEncrypted=true
 {{- else }}
         mainMonitorWidth=1920
         mainMonitorHeight=1080
+        useEncrypted=false
 {{- end }}

@@ -3,3 +3,5 @@ LICENSE
 .config/awesome/lain
 .config/awesome/freedesktop
 .oh-my-zsh/cache
+{{- if eq .useEncrypted false }}
+{{- end }}
