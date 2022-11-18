@@ -33,9 +33,6 @@ map <SPACE> <leader>
 " Set tab
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
-" Cosmetics
-silent! colorscheme koehler
-
 " Mouse enable
 set mouse=a
 
