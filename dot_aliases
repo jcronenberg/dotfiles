@@ -60,6 +60,12 @@ mkcd () {
     mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
+## Spell check if aspell is installed
+if [ -x "$(command -v aspell)" ]; then
+    sc () {
+        echo "$@" | aspell -a
+    }
+fi
 
 # Allow sudo to use user aliases
 alias sudo='sudo '
