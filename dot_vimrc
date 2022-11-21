@@ -18,6 +18,8 @@ set laststatus=2
 set ruler
 set showcmd
 set wildmenu
+" transparent status line
+hi StatusLine ctermbg=NONE cterm=NONE 
 
 " Various, selfexplanatory
 set nofixendofline
