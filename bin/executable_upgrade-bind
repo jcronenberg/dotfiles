@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e
+
+bul=$(tput bold smul)
+normal=$(tput sgr0)
+
+print-help() {
+    echo -e "Usage: ./upgrade-bind.sh [FROM_VERSION] [TO_VERSION]\n"
+    echo -e "Version format should be like \"9.18.8\""
+}
+
+confirmation() {
+    confirm="n"
+    echo "You are going to upgrade bind  ${bul}v$1${normal}  ->  ${bul}v$2${normal}"
+    echo -n "Is is correct and are you ${bul}sure${normal}? (y) "
+    read confirm
+    if [ ${confirm:-n} != "y" ]; then
+        echo "Confirmation failed, exiting..."
+        exit 1
+    fi
+}
+
+if [ -z $1 ] || [ -z $2 ]; then
+    print-help
+    exit 1
+fi
+
+confirmation $@
+
+# Remove old version
+rm bind-$1.tar.xz bind-$1.tar.xz.sha512.asc
+
+# Download new version
+wget https://downloads.isc.org/isc/bind9/$2/bind-$2.tar.xz
+wget https://downloads.isc.org/isc/bind9/$2/bind-$2.tar.xz.sha512.asc
+
+# Add new files and remove old
+osc ar
+
+# Create changes entry
+osc vc -m "Update to release $2"
+
+# Replace version in specfile
+sed -i "s/$1/$2/g" bind.spec
+
+echo "Modified everything that's doable by this script"
+echo "Please add the changes from ISC's release notes manually!"
+echo "They are likely at:"
+echo "https://downloads.isc.org/isc/bind9/$2/doc/arm/html/notes.html#notes-for-bind-${2//./-}"
