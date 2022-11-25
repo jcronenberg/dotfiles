@@ -81,6 +81,12 @@ function sshs() {
     ssh -t $1 "bash --rcfile <(curl https://w3.suse.de/~jcronenberg/aliases || curl https://raw.githubusercontent.com/jcronenberg/dotfiles/master/dot_aliases)"
 }
 
+# Add a TODO entry to agenda from cli
 function todo() {
     echo "**** TODO $@" >> /home/jcronenberg/Nextcloud/org/roam/agenda.org
+}
+
+# git interactive rebase $1 amount from HEAD
+function gri() {
+    git rebase -i HEAD~$1
 }
