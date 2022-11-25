@@ -12,9 +12,8 @@ encrypted files.
 
 1. Install [chezmoi](https://www.chezmoi.io/install/)
 2. `chezmoi init https://github.com/jcronenberg/dotfiles.git` Init repo
-3. `chezmoi apply .config/chezmoi/chezmoi.toml` First only apply chezmoi config as this is needed to set up gpg
-4. `chezmoi diff` Check changes it would make
-5. `chezmoi apply` Apply changes
+3. `chezmoi diff` Check changes it would make
+4. `chezmoi apply` Apply changes
 
 ## Extra install steps
 
