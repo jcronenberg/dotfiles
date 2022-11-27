@@ -294,6 +294,9 @@ awful.screen.connect_for_each_screen(function(s)
         followtag = true,
         height = 0.6
     })
+    for out, _ in pairs(s.outputs) do
+        if out == "HDMI-A-0" then s.mywibox.visible = not s.mywibox.visible end
+    end
 end)
 -- {{ "}}}" }}
 
@@ -419,6 +422,20 @@ globalkeys = my_table.join(
     --     end,
     --     {description = "cycle with previous/go back", group = "client"}),
 
+    -- Show/Hide Wibox
+    awful.key({ modkey, "Shift" }, "b", function ()
+            for s in screen do
+                for out, _ in pairs(s.outputs) do
+                    if out ~= "HDMI-A-0" then goto continue end
+                end
+                s.mywibox.visible = not s.mywibox.visible
+                if s.mybottomwibox then
+                    s.mybottomwibox.visible = not s.mybottomwibox.visible
+                end
+                ::continue::
+            end
+        end,
+        {description = "toggle wibox only on HDMI-A-0", group = "awesome"}),
     -- Show/Hide Wibox
     awful.key({ modkey }, "b", function ()
             for s in screen do
