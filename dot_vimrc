@@ -65,6 +65,9 @@ map <leader>wh :tabprevious<cr>
 map <leader>wl :tabnext<cr>
 map <leader>wd :q<cr>
 
+" Set clipboard to system clipboard
+set clipboard+=unnamedplus
+
 filetype on
 filetype plugin on
 filetype plugin indent on       " required
