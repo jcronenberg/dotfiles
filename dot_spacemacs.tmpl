@@ -86,7 +86,7 @@ This function should only modify configuration layer settings."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(gdscript-mode org-tree-slide)
+   dotspacemacs-additional-packages '(gdscript-mode org-tree-slide good-scroll)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -658,6 +658,22 @@ you should place your code here."
   (spacemacs/declare-prefix "os" "switch mode")
   (spacemacs/set-leader-keys "osh" 'html-mode)
   (spacemacs/set-leader-keys "osj" 'javascript-mode)
+  (defun good-scroll-up-half-screen ()
+    (interactive)
+    (good-scroll-move (/ (good-scroll--window-usable-height) 2)))
+  (defun good-scroll-down-half-screen ()
+    (interactive)
+    (good-scroll-move (- (/ (good-scroll--window-usable-height) 2))))
+  (use-package good-scroll
+                :after evil
+                :config
+                (good-scroll-mode 1)
+                (evil-define-key nil evil-motion-state-map (kbd "C-d") #'good-scroll-up-half-screen)
+                (evil-define-key nil evil-motion-state-map (kbd "C-u") #'good-scroll-down-half-screen)
+                (evil-define-key nil evil-motion-state-map (kbd "C-e") #'good-scroll-up)
+                (evil-define-key nil evil-motion-state-map (kbd "C-y") #'good-scroll-down)
+                (evil-define-key nil evil-motion-state-map (kbd "C-f") #'good-scroll-up-full-screen)
+                (evil-define-key nil evil-motion-state-map (kbd "C-b") #'good-scroll-down-full-screen))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
