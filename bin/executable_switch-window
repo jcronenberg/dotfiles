@@ -1,0 +1,22 @@
+#!/bin/bash
+# Switch to windows by case sensitive matching the title
+# Usage:
+# Switch to all windows matching Firefox in the title:
+#       switch_window.sh Firefox
+# Switch only to the first window matching Firefox in the title:
+#       switch_window.sh Firefox 0
+
+# Search for all matching windows
+# (Case sensitive)
+id=( $(wmctrl -l | awk "/$1/"'{print $1}') )
+
+# Iterate through all matching windows
+for (( i=0; i<=${#id[@]}; i++ )) ;do
+    if [ -n "${id[i]}" ]; then
+        # If a second argument is given, skip all windows not matching the index
+        if [ -n "$2" ] && [ "$2" -ne "$i" ]; then
+            continue
+        fi
+        wmctrl -i -a ${id[i]}
+    fi
+done
