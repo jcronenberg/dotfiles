@@ -1,21 +1,27 @@
 #!/bin/bash
 
 # This is the git pre-commit hook. It runs automatically before every commit.
+# This script, especially the tmpfile part, may seem unnecessarily complicated
+# since it is possible to just pipe the git diff to typos
+# However this doesn't handle filetypes nicely and you can't see
+# where the file is that has the typo
 
 # Set a flag to indicate whether any typos were found
 HAS_TYPOS=false
 
 # Check for typos in all of the changed files
 for FILE in `git diff --cached --name-only`; do
+  # If a file was fully deleted git diff would error
+  # And we don't need to check for typos anyway
   if [ ! -f $FILE ]; then
     continue
   fi
+
   # Use git diff to get the lines that have been changed in the file
-  DIFF=`git diff --cached $FILE | tail -n +5`
+  DIFF=`git diff --cached $FILE | tail -n +5 | sed -n -e '/^+/p'`
 
   # Get the file name and extension of the original file
   FILENAME=$(basename -- "$FILE")
-  FILE_EXTENSION="${FILENAME##*.}"
 
   # Save the diff to a temporary file with the same file name and extension as the original file
   TMPFILE=`mktemp -t "XXXXXX.$FILENAME"`
