@@ -6,6 +6,11 @@
 # However this doesn't handle filetypes nicely and you can't see
 # where the file is that has the typo
 
+# Only execute this script if typos-cli is available
+if [ ! -x "$(command -v typos)" ]; then
+    exit 0
+fi
+
 # Set a flag to indicate whether any typos were found
 HAS_TYPOS=false
 

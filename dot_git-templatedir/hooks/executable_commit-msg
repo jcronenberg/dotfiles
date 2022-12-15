@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# Only execute this script if typos-cli is available
+if [ ! -x "$(command -v typos)" ]; then
+    exit 0
+fi
 
 # Filter to only look at the commit message
 output=$(cat "$1" | sed -n '1,/# Please enter the commit message for your changes./p' | head -n -1)
