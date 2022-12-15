@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Filter to only look at the commit message
+output=$(cat "$1" | sed -n '1,/# Please enter the commit message for your changes./p' | head -n -1)
+
+# We write this to the file, so we can automatically correct with the -w option
+echo "$output" > "$1"
+
+# Although we could use `typos $1`
+# I prefer this output as it doesn't clutter the output with the filename
+# as that isn't useful
+cat "$1" | typos -
+
+# If the "typos" command returns a non-zero exit code, print an error message
+# and prompt the user how they want to continue
+if [ $? -ne 0 ]; then
+    exec < /dev/tty
+    echo -e "\nERROR: Commit message has typos.\n"
+    echo "You can either correct them automatically (c)"
+    echo "Apply the current commit message as is (a)"
+    echo "Or you can abort (q) (DEFAULT)"
+    read -p "What do you want to do? (c/a/q): " choice
+    if [ "$choice" = "c" ]; then
+        typos -w $1
+        exit 0
+    elif [ "$choice" = "a" ]; then
+        exit 0
+    fi
+    exit 1
+fi
