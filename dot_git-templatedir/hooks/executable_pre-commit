@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# This is the git pre-commit hook. It runs automatically before every commit.
+
+# Set a flag to indicate whether any typos were found
+HAS_TYPOS=false
+
+# Check for typos in all of the changed files
+for FILE in `git diff --cached --name-only`; do
+  if [ ! -f $FILE ]; then
+    continue
+  fi
+  # Use git diff to get the lines that have been changed in the file
+  DIFF=`git diff --cached $FILE | tail -n +5`
+
+  # Get the file name and extension of the original file
+  FILENAME=$(basename -- "$FILE")
+  FILE_EXTENSION="${FILENAME##*.}"
+
+  # Save the diff to a temporary file with the same file name and extension as the original file
+  TMPFILE=`mktemp -t "XXXXXX.$FILENAME"`
+  echo "$DIFF" > $TMPFILE
+
+  # Run typos on the temporary file
+  typos $TMPFILE
+
+  # Check the exit code of the typos command
+  if [ "$?" -ne "0" ]; then
+    # Set the HAS_TYPOS flag to true if typos were found
+    HAS_TYPOS=true
+    # Print original filename to allow better editing
+    echo -e "Original file is $FILE\n"
+  fi
+
+  # Delete the temporary file
+  rm $TMPFILE
+done
+
+# Ask the user whether they want to continue with the commit if typos were found
+if [ "$HAS_TYPOS" = true ]; then
+  exec < /dev/tty
+  read -p "Typos were found in one or more files. Do you want to continue with the commit? [y/N] " CONTINUE_COMMIT
+
+  if [ "$CONTINUE_COMMIT" != "y" ]; then
+    # Abort the commit if the user did not specify "y"
+    echo "Aborting commit due to potential typos."
+    exit 1
+  fi
+fi

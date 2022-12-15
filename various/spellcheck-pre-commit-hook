@@ -1,3 +1,0 @@
-#!/bin/sh
-
-git diff --cached --name-only --diff-filter=ACM -z | xargs -i -n1 -0 sh -c 'aspell check {} < /dev/tty' aspell
