@@ -50,7 +50,8 @@ done
 # Ask the user whether they want to continue with the commit if typos were found
 if [ "$HAS_TYPOS" = true ]; then
   exec < /dev/tty
-  read -p "Typos were found in one or more files. Do you want to continue with the commit? [y/N] " CONTINUE_COMMIT
+  echo "Typos were found in one or more files."
+  read -p "Do you want to continue with the commit? [y/N] " CONTINUE_COMMIT
 
   if [ "$CONTINUE_COMMIT" != "y" ]; then
     # Abort the commit if the user did not specify "y"
