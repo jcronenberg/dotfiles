@@ -5,6 +5,8 @@
 # since it is possible to just pipe the git diff to typos
 # However this doesn't handle filetypes nicely and you can't see
 # where the file is that has the typo
+# This script is designed to nicely integrate with magit
+# But also work on the commandline
 
 # Only execute this script if typos-cli is available
 if [ ! -x "$(command -v typos)" ]; then
@@ -13,6 +15,10 @@ fi
 
 # Set a flag to indicate whether any typos were found
 HAS_TYPOS=false
+
+# Save all typos to output them later
+# This is necessary for magit to display them in the prompt
+TYPOS=
 
 # Check for typos in all of the changed files
 for FILE in `git diff --cached --name-only`; do
@@ -33,14 +39,17 @@ for FILE in `git diff --cached --name-only`; do
   echo "$DIFF" > $TMPFILE
 
   # Run typos on the temporary file
-  typos $TMPFILE
+  TYPOS+=$(typos $TMPFILE)
 
   # Check the exit code of the typos command
   if [ "$?" -ne "0" ]; then
     # Set the HAS_TYPOS flag to true if typos were found
     HAS_TYPOS=true
     # Print original filename to allow better editing
-    echo -e "Original file is $FILE\n"
+    TYPOS+="
+Original file is $FILE
+
+"
   fi
 
   # Delete the temporary file
@@ -50,6 +59,7 @@ done
 # Ask the user whether they want to continue with the commit if typos were found
 if [ "$HAS_TYPOS" = true ]; then
   exec < /dev/tty
+  echo "$TYPOS"
   echo "Typos were found in one or more files."
   read -p "Do you want to continue with the commit? [y/N] " CONTINUE_COMMIT
 
