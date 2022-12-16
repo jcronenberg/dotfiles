@@ -19,7 +19,7 @@ restrict_running=(
     "sci"
 )
 
-# Converts $sel into seperate arrays
+# Converts $sel into separate arrays
 # ids: the VMs id
 # machines: the VMs name
 # state: the VMs state, note that for multi word states like 'shut off' it is just 'shut'

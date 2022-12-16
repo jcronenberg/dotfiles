@@ -176,7 +176,7 @@
 ## scheme is described below in section about color definitions), it can be done
 ## with the syntax $(COLOR), e.g. to set the artist tag to one of the
 ## non-standard colors and make it have yellow background, you need to write
-## $(197_yellow)%a$(end). Note that for standard colors this is interchangable
+## $(197_yellow)%a$(end). Note that for standard colors this is interchangeable
 ## with attributes listed above.
 ##
 ## Note: colors can be nested.

@@ -1,7 +1,7 @@
 # dotfiles
 
 My personal dotfiles.  
-These files are extremly opinionated and I would not recommend installing them.
+These files are extremely opinionated and I would not recommend installing them.
 Instead this repo is meant for my personal use and maybe some inspiration to others.
 But who am I to tell you what to do, right?
 
