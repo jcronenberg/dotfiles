@@ -32,6 +32,8 @@ alias ec="emacsclient -c -n -a ''"
 eo() {
     emacsclient -n "$@" 2>/dev/null || ec "$@"
 }
+## Open magit buffer from terminal
+alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
 
 ## Spotify control
 alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
