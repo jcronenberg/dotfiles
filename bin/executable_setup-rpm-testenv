@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+if [ ! -f $PWD/*.spec ]; then
+    echo "No specfile in current directory found!"
+    echo "This script is meant to be executed from the dir"
+    echo "where all files for a package that needs to be tested"
+    echo "are located"
+    exit 1
+fi
+
+RPMBUILDDIR="$HOME/rpmbuild"
+rm -rf "$RPMBUILDDIR"
+for d in /usr/src/packages/*; do
+    d=${d##*/}
+    mkdir -p "$RPMBUILDDIR/$d"
+done
+cp ./* "$RPMBUILDDIR/SOURCES"
+SPECFILE=$(ls ./*.spec)
+ln -s "$RPMBUILDDIR/SOURCES/$SPECFILE" "$RPMBUILDDIR/SPECS/"
