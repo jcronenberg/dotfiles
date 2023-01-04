@@ -3,3 +3,5 @@
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.cargo/env ] && source "$HOME/.cargo/env"
 [ -f /usr/bin/nvim ] && export EDITOR=/usr/bin/nvim
+
+export MAKEFLAGS="-j $(grep -c '^processor' /proc/cpuinfo)"
