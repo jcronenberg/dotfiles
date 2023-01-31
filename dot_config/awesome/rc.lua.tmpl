@@ -292,6 +292,7 @@ awful.screen.connect_for_each_screen(function(s)
         extra = string.format("--config-file %s/.config/alacritty/alacritty_quake.yml --class QuakeDD -e tmux", os.getenv("HOME")),
         visible = false,
         followtag = true,
+        overlap = true,
         height = 0.6
     })
     for out, _ in pairs(s.outputs) do
