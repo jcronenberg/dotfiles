@@ -3,47 +3,15 @@
 VAGRANT_DIR="/home/jcronenberg/vagrant"
 CWD=$(pwd)
 
-# Commands that allow only single selection
-no_multi=(
-    "ssh"
-    "s"
-    "ssh-copy-id"
-    "sci"
+dont_require_select=(
+    "list"
+    "l"
+    "help"
 )
-
-# Commands that are restricted to running VMs
-restrict_running=(
-    "ssh"
-    "s"
-    "ssh-copy-id"
-    "sci"
-)
-
-# Converts $sel into separate arrays
-# ids: the VMs id
-# machines: the VMs name
-# state: the VMs state, note that for multi word states like 'shut off' it is just 'shut'
-# num_vms: the number of VMs selected, for iterating over the arrays
-function handle-sel {
-    IFS=$'\n'
-    ids=()
-    machines=()
-    states=()
-    num_vms=0
-    for line in $sel; do
-        IFS=' ' read -rd '' -a linearr <<<"$line"
-        ids+=("${linearr[0]}")
-        machines+=("${linearr[1]}")
-        states+=("${linearr[2]}")
-        ((num_vms=num_vms+1))
-    done
-    unset IFS
-}
 
 # List vms and make the user select which they want
 # full list is stored in $sel
-# but it also invokes handle-sel, see above what vars this stores
-function va-list {
+function va-select {
     valist=""
     dirs=$(ls -d $VAGRANT_DIR/*/)
     for dir in $dirs; do
@@ -54,26 +22,112 @@ function va-list {
 
     # If a argument is supplied, check if it is in valist then use that as sel
     # Needs to be before trimming last line as we need the last empty line
-    if [[ ! -z "$1" && "$valist" == *$'\n'"$1"$'\n'* ]]; then
-        sel="$1"
-        return
-    elif [ ! -z "$1" ]; then
-        echo "$1 not found in vagrant list"
-    fi
+    while [ ! -z "$1" ]; do
+        if [[ ! -z "$1" && "$valist" == *$'\n'"$1"$'\n'* ]]; then
+            sel="$1"
+            return
+        fi
+        shift
+    done
 
     # Trim last empty line for fzf selection
     valist=$(head -n -1 <<< "$valist")
 
-    sel=$(fzf --no-sort \
-          $(if [[ "${no_multi[*]}" =~ "$1" ]]; then echo --multi=1; fi) `# Check if command allows multi-select` \
-          <<< "$valist")
+    sel=$(fzf --no-sort --multi=1 <<< "$valist")
 
     # exit if none selected
     if [ -z $sel ]; then
         exit 0
     fi
 }
-va-list $@
-cd "$VAGRANT_DIR/$sel"
-vagrant up
-vagrant ssh
+
+function va-up {
+    vagrant up
+}
+
+function va-ssh {
+    vagrant ssh
+}
+
+function va-s {
+    va-ssh
+}
+
+function va-provision {
+    vagrant provision
+}
+
+function va-pr {
+    va-provision
+}
+
+function va-destroy {
+    vagrant destroy
+}
+
+function va-de {
+    va-destroy
+}
+
+function va-list {
+    valist=""
+    dirs=$(ls -d $VAGRANT_DIR/*/)
+    for dir in $dirs; do
+        dir_basename=$(basename $dir)
+        valist+="$dir_basename
+"
+    done
+
+    echo "$valist"
+}
+
+function va-l {
+    va-list
+}
+
+function va-help {
+    echo "Usage: va [commands] [VM]"
+    echo "Control vagrant all available vagrant VMs in dir ~/vagrant"
+    echo "Multiple commands can be supplied and will be executed in order"
+    echo "Only one VM is allowed currently"
+    echo ""
+    echo " va l, list           - List all available VMs/dirs in ~/vagrant"
+    echo " va up                - Bring up VM"
+    echo " va s, ssh            - SSH into selected VM (will fail if VM isn't up)"
+    echo " va pr, provision     - Provision VM"
+    echo " va de, destroy       - Destroy current VM"
+}
+
+#va-select $@
+#cd "$VAGRANT_DIR/$sel"
+if [ -z "$1" ]; then
+    va-select $@
+    cd "$VAGRANT_DIR/$sel"
+    vagrant up
+    vagrant ssh
+    exit 0
+fi
+executed=false
+while [ ! -z "$1" ]; do
+    if $(type va-$1 > /dev/null 2> /dev/null); then
+        if [[ ! "${dont_require_select[*]}" =~ "$1" ]]; then
+            if [ -z $sel ]; then
+                va-select $@
+                cd "$VAGRANT_DIR/$sel"
+            fi
+        fi
+        # Then execute the subcommand
+        eval "va-$1"
+        executed=true
+        shift
+    elif [ "$executed" == "false" ]; then
+        executed=true
+        va-select $@
+        cd "$VAGRANT_DIR/$sel"
+        vagrant up
+        vagrant ssh
+        shift
+    else
+        shift
+    fi
+done
