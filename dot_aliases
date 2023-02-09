@@ -99,7 +99,7 @@ fi
 # Open file on host if the session is a SSH connection
 # This is highly not portable and basically is only designed
 # to work with my vagrant dev box
-if [ ! -z $SSH_CLIENT ]; then
+if [ ! -z "$SSH_CLIENT" ]; then
     function eos() {
         for file in "$@"; do
             ssh jcronenberg@`echo $SSH_CLIENT | awk '{print $1}'` -i ~/.ssh/jcronenberg_private emacsclient -n `print -rD $PWD`/$file
