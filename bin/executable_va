@@ -85,6 +85,18 @@ function va-l {
     va-list
 }
 
+function va-halt {
+    vagrant halt
+}
+
+function va-h {
+    va-halt
+}
+
+function va-shutdown {
+    va-halt
+}
+
 function va-help {
     echo "Usage: va [commands] [VM]"
     echo "Control vagrant all available vagrant VMs in dir ~/vagrant"
@@ -93,6 +105,7 @@ function va-help {
     echo ""
     echo " va l, list           - List all available VMs/dirs in ~/vagrant"
     echo " va up                - Bring up VM"
+    echo " va h, halt, shutdown - Halt/Shutdown VM"
     echo " va s, ssh            - SSH into selected VM (will fail if VM isn't up)"
     echo " va pr, provision     - Provision VM"
     echo " va de, destroy       - Destroy current VM"
@@ -110,7 +123,7 @@ fi
 executed=false
 while [ ! -z "$1" ]; do
     if $(type va-$1 > /dev/null 2> /dev/null); then
-        if [[ ! "${dont_require_select[*]}" =~ "$1" ]]; then
+        if [[ ! " ${dont_require_select[*]} " =~ " $1 " ]]; then
             if [ -z $sel ]; then
                 va-select $@
                 cd "$VAGRANT_DIR/$sel"
