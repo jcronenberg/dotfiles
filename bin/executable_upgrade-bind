@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 bul=$(tput bold smul)
 normal=$(tput sgr0)
@@ -29,11 +29,11 @@ fi
 confirmation $@
 
 # Remove old version
-rm bind-$1.tar.xz bind-$1.tar.xz.sha512.asc
+rm bind-$1.tar.xz bind-$1.tar.xz.asc
 
 # Download new version
 wget https://downloads.isc.org/isc/bind9/$2/bind-$2.tar.xz
-wget https://downloads.isc.org/isc/bind9/$2/bind-$2.tar.xz.sha512.asc
+wget https://downloads.isc.org/isc/bind9/$2/bind-$2.tar.xz.asc
 
 # Add new files and remove old
 osc ar
