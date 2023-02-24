@@ -23,7 +23,7 @@ async def main():
     # Get available keyboard
     if exists('/dev/input/by-id/usb-OBINS_OBINS_AnnePro2_SN0000000001-event-kbd'):
         dev = evdev.InputDevice('/dev/input/by-id/uinput-persist-keyboard0')
-    elif exists('/dev/input/by-id/usb-Kingston_HyperX_Alloy_FPS_RGB-event-kbd'):
+    elif exists('/dev/input/by-id/usb-Keychron_K4_Keychron_K4-event-kbd'):
         dev = evdev.InputDevice('/dev/input/by-id/uinput-persist-keyboard1')
     else:
         print("no specified keyboard connected, either connect one or add a new one")
