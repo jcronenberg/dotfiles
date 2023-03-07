@@ -105,15 +105,23 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.zshenv ] && source $HOME/.zshenv
 [ -f ~/.zsh_aliases ] && source $HOME/.zsh_aliases
 
+unalias z
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-## z with fzf
-## like normal z when used with arguments but displays an fzf prompt when used without.
-unalias z 2> /dev/null
-z() {
-    [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
+if [ -x "$(command -v fzf)" ]; then
+    # Auto-completion
+    [[ $- == *i* ]] && source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
+
+    # Key bindings
+    source "$HOME/.fzf/shell/key-bindings.zsh"
+    ## z with fzf
+    ## like normal z when used with arguments but displays an fzf prompt when used without.
+    z() {
+        [ $# -gt 0 ] && _z "$*" && return
+        cd "$(zshz 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+    }
+else
+    alias z='zshz 2>&1'
+fi
 
 # Add rofi to PATH
 [ -f /usr/bin/rofi ] && export PATH="$PATH:/usr/bin/rofi"
