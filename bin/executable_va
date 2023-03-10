@@ -97,6 +97,18 @@ function va-shutdown {
     va-halt
 }
 
+function va-box-update {
+    vagrant box update
+}
+
+function va-bup {
+    va-box-update
+}
+
+function va-cd {
+    exec $SHELL
+}
+
 function va-help {
     echo "Usage: va [commands] [VM]"
     echo "Control vagrant all available vagrant VMs in dir ~/vagrant"
@@ -109,6 +121,9 @@ function va-help {
     echo " va s, ssh            - SSH into selected VM (will fail if VM isn't up)"
     echo " va pr, provision     - Provision VM"
     echo " va de, destroy       - Destroy current VM"
+    echo " va bup, box-update   - Update box of VM"
+    echo " va cd                - Change dir to VMs dir"
+    echo "                        Note: this spawns a new subshell"
 }
 
 #va-select $@
