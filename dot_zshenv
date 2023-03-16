@@ -16,7 +16,7 @@ export FZF_DEFAULT_OPTS="
 --bind '?:toggle-preview'
 --bind 'ctrl-a:select-all'
 "
-[ -f ~/.cargo/env ] && source "$HOME/.cargo/env"
+[ -d ~/.cargo/bin/ ] && export PATH="$HOME/.cargo/bin:$PATH"
 export LIBVIRT_DEFAULT_URI=qemu:///system
 export DISABLE_AUTO_UPDATE=true
 [ -d ~/bin/ ] && export PATH=$PATH:$HOME/bin
