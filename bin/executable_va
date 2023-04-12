@@ -109,6 +109,14 @@ function va-cd {
     exec $SHELL
 }
 
+function va-pr-extra {
+    EXTRA_PROVISION=yes vagrant provision
+}
+
+function va-pre {
+    va-pr-extra
+}
+
 function va-help {
     echo "Usage: va [commands] [VM]"
     echo "Control vagrant all available vagrant VMs in dir ~/vagrant"
@@ -124,6 +132,7 @@ function va-help {
     echo " va bup, box-update   - Update box of VM"
     echo " va cd                - Change dir to VMs dir"
     echo "                        Note: this spawns a new subshell"
+    echo " va pre, pr-extra     - Additional provisioning"
 }
 
 #va-select $@
