@@ -14,10 +14,3 @@ encrypted files.
 2. `chezmoi init https://github.com/jcronenberg/dotfiles.git` Init repo
 3. `chezmoi diff` Check changes it would make
 4. `chezmoi apply` Apply changes
-
-## Extra install steps
-
-### To use fzf
-
-(Recommended to install fzf beforehand to update it via package manager)  
-```~/.fzf/install```
