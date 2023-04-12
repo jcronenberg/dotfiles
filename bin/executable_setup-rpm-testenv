@@ -10,11 +10,11 @@ if [ ! -f $PWD/*.spec ]; then
 fi
 
 RPMBUILDDIR="$HOME/rpmbuild"
-rm -rf "$RPMBUILDDIR"
+rm -vrf "$RPMBUILDDIR"
 for d in /usr/src/packages/*; do
     d=${d##*/}
-    mkdir -p "$RPMBUILDDIR/$d"
+    mkdir -vp "$RPMBUILDDIR/$d"
 done
-cp ./* "$RPMBUILDDIR/SOURCES"
+cp -v ./* "$RPMBUILDDIR/SOURCES"
 SPECFILE=$(ls ./*.spec)
-ln -s "$RPMBUILDDIR/SOURCES/$SPECFILE" "$RPMBUILDDIR/SPECS/"
+ln -vs "$RPMBUILDDIR/SOURCES/$SPECFILE" "$RPMBUILDDIR/SPECS/"
