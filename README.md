@@ -17,10 +17,6 @@ encrypted files.
 
 ## Extra install steps
 
-### To use oh-my-tmux
-
-```ln -s ~/.tmux/.tmux.conf ~/.tmux.conf```
-
 ### To use fzf
 
 (Recommended to install fzf beforehand to update it via package manager)  
