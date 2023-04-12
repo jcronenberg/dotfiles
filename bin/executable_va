@@ -98,7 +98,7 @@ function va-shutdown {
 }
 
 function va-box-update {
-    vagrant box update
+    vagrant box update --force
 }
 
 function va-bup {
