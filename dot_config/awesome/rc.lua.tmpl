@@ -842,15 +842,11 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.notification_icon_size = 20
 
 -- Autostart
-awful.spawn.once("barrier")
-awful.spawn.once("redshift -t 6500:4800 -l 49.45:11.08 -b 1.0:0.80")
-awful.spawn.once("nextcloud")
-awful.spawn.once("picom")
-awful.spawn.once("emacs -nw --daemon")
-awful.spawn.with_shell("sh ~/.screenlayout/3monitor.sh")
-{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
-awful.spawn.with_shell("CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud")
-awful.spawn.with_shell("sh ~/bin/restrict_touch.sh TSTP")
-{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-awful.spawn.with_shell("keepassxc")
-{{- end }}
+--awful.spawn.once("barrier")
+--awful.spawn.once("redshift -t 6500:4800 -l 49.45:11.08 -b 1.0:0.80")
+--awful.spawn.once("nextcloud")
+--awful.spawn.once("picom")
+--awful.spawn.once("emacs -nw --daemon")
+--awful.spawn.with_shell("sh ~/.screenlayout/3monitor.sh")
+--awful.spawn.with_shell("keepassxc")
+awful.spawn.with_shell("~/bin/startup")

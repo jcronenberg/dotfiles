@@ -1,0 +1,23 @@
+#!/bin/bash
+sh ~/.screenlayout/3monitor.sh
+if [ -x "$(command -v barrier)" ] && ! ps aux | grep "[b]arrier" > /dev/null; then
+    barrier &
+fi
+if [ -x "$(command -v redshift)" ] && ! ps aux | grep "[r]edshift" > /dev/null; then
+    redshift -t 6500:4800 -l 49.45:11.08 -b 1.0:0.80 &
+fi
+if [ -x "$(command -v nextcloud)" ] && ! ps aux | grep "[n]extcloud" > /dev/null; then
+    nextcloud &
+fi
+if [ -x "$(command -v picom)" ] && ! ps aux | grep "[p]icom" > /dev/null; then
+    picom &
+fi
+if [ -x "$(command -v emacs)" ] && ! ps aux | grep "[e]macs" > /dev/null; then
+    emacs -nw --daemon &
+fi
+if [ -x "$(command -v keepassxc)" ] && ! ps aux | grep "[k]eepassxc" > /dev/null; then
+    keepassxc &
+fi
+if [ -x "$(command -v clipmenud)" ] && ! ps aux | grep "[c]lipmenud" > /dev/null; then
+    CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud &
+fi
