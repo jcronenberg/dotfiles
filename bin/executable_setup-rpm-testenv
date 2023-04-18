@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 
 if [ ! -f $PWD/*.spec ]; then
     echo "No specfile in current directory found!"
@@ -16,5 +16,12 @@ for d in /usr/src/packages/*; do
     mkdir -vp "$RPMBUILDDIR/$d"
 done
 cp -v ./* "$RPMBUILDDIR/SOURCES"
-SPECFILE=$(ls ./*.spec)
+SPECFILE=$(ls *.spec)
+if ! grep '%bcond_with check' $SPECFILE > /dev/null; then 
+    echo "Specfile doesn't contain testing, adding it now..."
+    echo $RPMBUILDDIR/SOURCES/$SPECFILE
+    sed -i 's/%sysusers_requires/#%sysusers_requires/' $RPMBUILDDIR/SOURCES/$SPECFILE
+    sed -i 's/--enable-full-report/--enable-full-report \\\n\t--enable-querytrace/' $RPMBUILDDIR/SOURCES/$SPECFILE
+    sed -i 's/%preun/%check\nsudo bin\/tests\/system\/ifconfig.sh up\nmake test\n\n%preun/' $RPMBUILDDIR/SOURCES/$SPECFILE
+fi
 ln -vs "$RPMBUILDDIR/SOURCES/$SPECFILE" "$RPMBUILDDIR/SPECS/"
