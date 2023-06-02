@@ -125,10 +125,10 @@ awful.layout.layouts = {
 monitor_tags = {}
 monitor_layouts = {}
 {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
-monitor_tags["DisplayPort-0"] = { "Other" }
-monitor_layouts["DisplayPort-0"] = { awful.layout.suit.fair }
-monitor_tags["DisplayPort-1"] = { "Music", "Chat", "Other" }
-monitor_layouts["DisplayPort-1"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
+monitor_tags["DisplayPort-1"] = { "Other" }
+monitor_layouts["DisplayPort-1"] = { awful.layout.suit.fair }
+monitor_tags["DisplayPort-0"] = { "Music", "Chat", "Other" }
+monitor_layouts["DisplayPort-0"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["HDMI-A-0"] = { "Macroboard" }
 monitor_layouts["HDMI-A-0"] = { awful.layout.suit.fair }
 {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
