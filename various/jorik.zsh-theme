@@ -11,6 +11,8 @@ function _user_host() {
     me="%n@%m"
   elif [[ $LOGNAME != $USERNAME ]]; then
     me="%n"
+  elif [[ -n $CONTAINER_ID ]]; then
+    me="%m"
   fi
   if [[ -n $me ]]; then
     echo "$me"
