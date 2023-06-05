@@ -91,6 +91,10 @@ function gri() {
     git rebase -i HEAD~$1
 }
 
+function typos-patch() {
+    cat $1 | sed -n -e '/^+/p' | typos -
+}
+
 # Build a local rpm at ~/rpmbuild
 if [ -x "$(command -v rpmbuild)" ]; then
     alias local-rpmbuild='rpmbuild -bi --with check ~/rpmbuild/SPECS/*.spec'
