@@ -1,5 +1,7 @@
 #!/bin/bash
-sh ~/.screenlayout/3monitor.sh
+if [ -f ~/.screenlayout/2monitor_touch.sh ]; then
+    sh ~/.screenlayout/2monitor_touch.sh
+fi
 if [ -x "$(command -v barrier)" ] && ! ps aux | grep "[b]arrier" > /dev/null; then
     barrier &
 fi
