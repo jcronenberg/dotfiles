@@ -23,3 +23,6 @@ fi
 if [ -x "$(command -v clipmenud)" ] && ! ps aux | grep "[c]lipmenud" > /dev/null; then
     CM_IGNORE_WINDOW=\"KeePassXC\" clipmenud &
 fi
+if [ -x "$(command -v distrobox)" ]; then
+    xhost +si:localuser:$USER
+fi
