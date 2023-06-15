@@ -29,11 +29,17 @@ alias e="emacsclient -t -a ''"
 ## Open in standalone window
 alias ec="emacsclient -c -n -a ''"
 ## Open in existing window, or start server
-eo() {
+function eo() {
     emacsclient -n "$@" 2>/dev/null || ec "$@"
 }
 ## Open magit buffer from terminal
-alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
+if [ -x "$(command -v distrobox)" ]; then
+    function magit() {
+        distrobox enter dev -- bash ~/bin/emacsclient-magit "$PWD" 
+    }
+else
+    alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
+fi
 
 ## Spotify control
 alias spottoggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
