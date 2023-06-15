@@ -55,6 +55,13 @@ if [ -x "$(command -v fzf)" ]; then
     alias sf='ssh $(grep "Host " ~/.ssh/config | cut -c 6- | fzf --no-sort --multi=1)'
 fi
 
+# Distrobox
+if [ -x "$(command -v distrobox)" ]; then
+    alias de='distrobox enter'
+    alias emacsclient='distrobox enter dev -- emacsclient'
+    alias emacs='distrobox enter dev -- emacs'
+fi
+
 # Functions
 mkcd () {
     mkdir -p -- "$1" &&
