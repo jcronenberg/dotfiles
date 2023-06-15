@@ -113,7 +113,7 @@ fi
 if [ ! -z "$SSH_CLIENT" ]; then
     function eos() {
         for file in "$@"; do
-            ssh jcronenberg@`echo $SSH_CLIENT | awk '{print $1}'` -i ~/.ssh/jcronenberg_private emacsclient -n `print -rD $PWD`/$file
+            ssh jcronenberg@`echo $SSH_CLIENT | awk '{print $1}'` -i ~/.ssh/jcronenberg_private "emacsclient -n `print -rD $PWD`/$file &> /dev/null || distrobox enter dev -- emacsclient -n `print -rD $PWD`/$file &> /dev/null"
         done
     }
 fi
