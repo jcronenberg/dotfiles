@@ -8,12 +8,12 @@ fi
 if [ -x "$(command -v exa)" ]; then
     alias l="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify --icons"
     alias ll="l -a"
-    alias lt="l --tree --level=2"
+    alias lt="l --tree"
 else
     alias l="ls -l"
     alias ll="l -a"
     if [ -x "$(command -v tree)" ]; then
-        alias lt="tree -L 2"
+        alias lt="tree"
     fi
 fi
 alias pubip='curl ifconfig.co'
