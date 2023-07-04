@@ -23,7 +23,7 @@ function va-select {
     # If a argument is supplied, check if it is in valist then use that as sel
     # Needs to be before trimming last line as we need the last empty line
     while [ ! -z "$1" ]; do
-        if [[ ! -z "$1" && "$valist" == *$'\n'"$1"$'\n'* ]]; then
+        if [[ ! -z "$1" && "$valist" == *"$1"$'\n'* ]]; then
             sel="$1"
             return
         fi
@@ -117,6 +117,14 @@ function va-pre {
     va-pr-extra
 }
 
+function va-console {
+    virsh console "$sel"
+}
+
+function va-c {
+    va-console
+}
+
 function va-help {
     echo "Usage: va [commands] [VM]"
     echo "Control vagrant all available vagrant VMs in dir ~/vagrant"
@@ -133,6 +141,7 @@ function va-help {
     echo " va cd                - Change dir to VMs dir"
     echo "                        Note: this spawns a new subshell"
     echo " va pre, pr-extra     - Additional provisioning"
+    echo " va c, console        - Spawn serial console"
 }
 
 #va-select $@
