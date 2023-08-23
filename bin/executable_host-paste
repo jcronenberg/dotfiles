@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ ! -z "$SSH_CLIENT" ]; then
+    ssh jcronenberg@`echo $SSH_CLIENT | awk '{print $1}'` -i ~/.ssh/jcronenberg_private DISPLAY=:0 xsel -b -o
+else
+    xsel -b -o
+fi

@@ -67,6 +67,20 @@ map <leader>wd :q<cr>
 
 " Set clipboard to system clipboard
 set clipboard+=unnamedplus
+" Custom clipboard functions
+" Invokes scripts located at bin/
+let g:clipboard = {
+      \   'name': 'SSHClipboard',
+      \   'copy': {
+      \      '+': ["host-copy", "-"],
+      \      '*': ["host-copy", "-"],
+      \    },
+      \   'paste': {
+      \      '+': ["host-paste", "-"],
+      \      '*': ["host-paste", "-"],
+      \   },
+      \   'cache_enabled': 1,
+      \ }
 
 filetype on
 filetype plugin on
