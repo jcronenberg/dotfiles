@@ -69,7 +69,8 @@ map <leader>wd :q<cr>
 set clipboard+=unnamedplus
 " Custom clipboard functions
 " Invokes scripts located at bin/
-let g:clipboard = {
+if !empty($SSH_CLIENT)
+    :let g:clipboard = {
       \   'name': 'SSHClipboard',
       \   'copy': {
       \      '+': ["host-copy", "-"],
@@ -81,6 +82,7 @@ let g:clipboard = {
       \   },
       \   'cache_enabled': 1,
       \ }
+endif
 
 filetype on
 filetype plugin on
