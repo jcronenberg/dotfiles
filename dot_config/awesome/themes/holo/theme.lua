@@ -322,13 +322,7 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
             --bat,
-            {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-            bat,
-            {{- else }}
-            --bat,
-            {{- end }}
             netdown_icon,
             networkwidget,
             netup_icon,

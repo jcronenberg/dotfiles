@@ -1,6 +1,6 @@
 --[[
 
-     Neon AwesomeWM Theme
+     Tron AwesomeWM Theme
 
 --]]
 
@@ -16,27 +16,26 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
-theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/neon/icons"
-theme.wallpaper1                                 = os.getenv("HOME") .. "/.config/awesome/themes/neon/wall.jpg"
-theme.wallpaper2                                 = os.getenv("HOME") .. "/.config/awesome/themes/neon/wall2.jpg"
+theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/tron/icons"
+theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/tron/wall.png"
 theme.font                                      = "Roboto Bold 10"
 theme.taglist_font                              = "Roboto Condensed Regular 10"
-theme.neon_accent                               = "#ff22a5"
-theme.neon_main_light                           = "#4898f7"
-theme.neon_main_dark                            = "#4898f7"
-theme.fg_normal                                 = theme.neon_main_dark -- unselected text color, includes clock, cal etc.
-theme.fg_focus                                  = theme.neon_main_light
+theme.tron_orange                               = "#ffcc00"
+theme.tron_light_blue                           = "#d8fdfc"
+theme.tron_darker_blue                          = "#b3ebe2"
+theme.fg_normal                                 = theme.tron_darker_blue -- unselected text color, includes clock, cal etc.
+theme.fg_focus                                  = theme.tron_light_blue
 theme.bg_focus                                  = "#00000000" -- background color for taglist and clock, cal etc.
 theme.bg_normal                                 = "#00000000" -- background color for the whole wibar
 theme.fg_urgent                                 = "#000000" -- text color for alert
-theme.bg_urgent                                 = theme.neon_accent -- background color for alert
-theme.systray_bg                                = "#000032" -- background for the systray (try to match to wallpaper, as this has not transparency)
+theme.bg_urgent                                 = theme.tron_orange -- background color for alert
+theme.systray_bg                                = "#000000" -- background for the systray ( try to match to wallpaper, as this has not transparency)
 theme.border_width                              = dpi(1)
-theme.border_normal                             = theme.neon_main_dark
-theme.border_focus                              = theme.neon_accent
-theme.taglist_fg_focus                          = "#ffffff"
+theme.border_normal                             = theme.tron_darker_blue
+theme.border_focus                              = theme.tron_darker_blue
+theme.taglist_fg_focus                          = "#000000"
 theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_fg_focus                         = theme.neon_accent .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
+theme.tasklist_fg_focus                         = theme.tron_orange .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
 theme.menu_icon_size                            = dpi(32)
@@ -45,13 +44,6 @@ theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
 theme.useless_gap                               = dpi(4)
 theme.gap_single_client                         = false
-theme.master_width_factor                       = 0.5
-theme.layout_machi                              = theme.icon_dir .. "/machi.png"
-theme.layout_tile                               = theme.icon_dir .. "/tile.png"
-theme.layout_fairv                              = theme.icon_dir .. "/fairv.png"
-theme.layout_magnifier                          = theme.icon_dir .. "/magnifier.png"
-theme.layout_centerwork                         = theme.icon_dir .. "/centerwork.png"
-theme.layout_tilebottom                         = theme.icon_dir .. "/tilebottom.png"
 
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
 
@@ -73,7 +65,7 @@ theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
     notification_preset = {
         fg = theme.fg_normal,
-        bg = theme.bg_normal,
+        bg = "#000000",
         position = "top_right",
         font = "Monospace 10"
     }
@@ -87,19 +79,19 @@ local bat = lain.widget.bat({
         if bat_now.ac_status == 1 then
             bat_p = bat_p .. "Plugged  "
         end
-        widget:set_markup(markup.font(theme.font, markup(theme.neon_main_dark, bat_header .. bat_p)))
+        widget:set_markup(markup.font(theme.font, markup(theme.tron_darker_blue, bat_header .. bat_p)))
     end
 })
 
 -- ALSA volume bar
-theme.volume = lain.widget.pulsebar({
+theme.volume = lain.widget.alsabar({
     notification_preset = { font = "Monospace 9"},
     --togglechannel = "IEC958,3",
     width = dpi(80), height = dpi(10), border_width = dpi(0),
     colors = {
         background = "#383838",
-        unmute     = theme.neon_main_light,
-        mute       = theme.neon_accent
+        unmute     = "#aeefff",
+        mute       = theme.tron_orange
     },
 })
 theme.volume.bar.paddings = dpi(0)
@@ -146,28 +138,6 @@ function theme.at_screen_connect(s)
     --     height = 0.4
     -- })
 
-    theme.wallpapers = {theme.wallpaper1,
-		        theme.wallpaper2}
-
-    -- Wallpapers for specific outputs
-    local wallpapers = {}
-    wallpapers["DisplayPort-1"] = theme.wallpaper2
-    wallpapers["DisplayPort-0"] = theme.wallpaper1
-    wallpapers["HDMI-A-0"] = theme.wallpaper2
-
-    theme.wallpaper = function( s )
-        -- match s.outputs to a output in wallpapers
-        for output, wp in pairs(wallpapers) do
-            for out, _ in pairs(s.outputs) do
-                if out == output then
-                    return wp
-                end
-            end
-        end
-        -- default if output not in wallpapers
-        return theme.wallpapers[2]
-    end
-
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
     if type(wallpaper) == "function" then
@@ -176,7 +146,7 @@ function theme.at_screen_connect(s)
     gears.wallpaper.maximized(wallpaper, s, true)
 
     -- Tags
-    awful.tag(awful.util.tagnames, s, awful.util.layouts)
+    awful.tag(awful.util.tagnames, s, awful.layout.layouts)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -234,19 +204,12 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             s.mysystray,
-            {{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
             --bat,
-            {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-            bat,
-            {{- else }}
-            --bat,
-            {{- end }}
             networkwidget,
             cpuwidget,
             volumewidget,
             calendarwidget,
             clockwidget,
-            s.mylayoutbox,
         },
     }
 end
