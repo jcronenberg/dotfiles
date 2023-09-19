@@ -1,15 +1,19 @@
 [user]
 	signingkey = 46281506C8CB0C7B595CBB49FD702A19657AB22A
+	{{- if .work }}
 	email = jcronenberg@suse.de
+	{{- else }}
+	email = jorikcronenberg@mailbox.org
+	{{- end }}
 	name = Jorik Cronenberg
 [core]
 	excludesfile = ~/.gitignore
 [commit]
 	gpgSign = true
 [filter "lfs"]
-        clean = git-lfs clean -- %f
-        smudge = git-lfs smudge -- %f
-        process = git-lfs filter-process
-        required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [init]
 	templatedir = ~/.git-templatedir

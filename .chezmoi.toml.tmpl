@@ -22,3 +22,8 @@
         mainMonitorHeight=1080
         useEncrypted=false
 {{- end }}
+{{- if or (eq .chezmoi.hostname "tmpworkstation") (eq (trunc 4 .chezmoi.hostname) "work") }}
+        work=true
+{{- else }}
+        work=false
+{{- end }}
