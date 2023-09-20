@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VAGRANT_DIR="/home/jcronenberg/vagrant"
+VAGRANT_DIR="$HOME/vagrant"
 CWD=$(pwd)
 
 dont_require_select=(
