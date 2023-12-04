@@ -21,6 +21,10 @@ set wildmenu
 " transparent status line
 hi StatusLine ctermbg=NONE cterm=NONE 
 
+" I like the light color theme better and the background should be transparent
+" and dark with that anyway
+set background=light
+
 " Various, selfexplanatory
 set nofixendofline
 set cursorline
@@ -40,8 +44,8 @@ set mouse=a
 
 " Folding
 set foldmethod=indent
+set foldlevelstart=100
 map <tab> za
-set foldlevelstart=10
 set exrc
 
 " Filetype build remap
