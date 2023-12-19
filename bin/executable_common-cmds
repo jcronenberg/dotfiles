@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+if [[ "$1" == "add" ]]; then
+    shift
+    echo "$@" >> $0
+    exit 0
+elif [[ "$1" == "remove" ]]; then
+    shift
+    rep_string="s/$@//"
+    # this will leave empty lines
+    sed -e "$rep_string" -i $0
+    # clean up empty lines in the command section
+    sed -e "1,$((`grep -v 'sed.*CMDs section' $0 | grep -n "CMDs section" | cut -f1 -d:`+1))b" -e '/^\s*$/d' -i $0
+    exit 0
+fi
+
+# filter code before command section
+search_string="$@"
+sed -e "1,$((`grep -v 'sed.*CMDs section' $0 | grep -n "CMDs section" | cut -f1 -d:`+2))d" $0 | grep "$search_string"
+
+exit 0
+# CMDs section
+SUSEConnect -r $product_code -e $suse_com_with_dot_email
+SUSEConnect -p sle-module-desktop-applications/$SLE_VERSION/x86_64
+SUSEConnect -p sle-module-development-tools/$SLE_VERSION/x86_64
+~/shared/bin/submit-update home:jcronenberg:branches:network/bind/ network/bind/
+upgrade-bind 9.18.19 9.18.20
+distrobox create -i registry.opensuse.org/systemsmanagement/agama/staging/containers/opensuse/agama-testing:latest --unshare-all --init --additional-packages "fzf eza ripgrep neovim bat libcurl-devl" -n agama
