@@ -6,10 +6,7 @@ if [ -x "$(command -v nvim)" ]; then
     alias vim='nvim'
 fi
 if [ -x "$(command -v eza)" ]; then
-    alias exa="eza"
-fi
-if [ -x "$(command -v exa)" ] || [ -x "$(command -v eza)" ]; then
-    alias l="exa --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify --icons"
+    alias l="eza --color auto --group-directories-first --group --long --header --modified --sort=name --git --time-style=long-iso --classify --icons always"
     alias ll="l -a"
     alias lt="l --tree"
 else
