@@ -6,7 +6,7 @@ elif [[ "$1" = "cargo-fmt" ]]; then
 elif [[ "$1" = "godot-dreamdeck" ]]; then
     cd ~/godot/DreamDeck && godot --confdir=local_config
 elif [[ "$1" = "godot-switch-run" ]]; then
-    ~/bin/switch-window Godot && sleep 0.2 && xdotool key F5
+    ~/bin/switch-window " - Godot Engine" && sleep 0.2 && xdotool key F5
 else
     echo "Unknown command"
     exit 1
