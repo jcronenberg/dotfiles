@@ -289,7 +289,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.quake = lain.util.quake({
         app = "alacritty",
         argname = "--title %s",
-        extra = string.format("--config-file %s/.config/alacritty/alacritty_quake.yml --class QuakeDD -e tmux", os.getenv("HOME")),
+        extra = string.format("--config-file %s/.config/alacritty/alacritty_quake.toml --class QuakeDD -e tmux", os.getenv("HOME")),
         visible = false,
         followtag = true,
         overlap = true,
