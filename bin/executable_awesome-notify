@@ -1,0 +1,3 @@
+#!/bin/bash
+message="$@"
+awesome-client 'naughty = require("naughty")naughty.notify({text="'"$message"'",fg="#DA012D",font="Roboto 40",position="top_middle",timeout=120})'
