@@ -119,4 +119,15 @@ if [ ! -z "$SSH_CLIENT" ]; then
     function scopy() {
         cat "$@" | ~/bin/host-copy
     }
+    function host-exec () {
+        ssh jcronenberg@`echo $SSH_CLIENT | awk '{print $1}'` -i ~/.ssh/jcronenberg_private $@
+    }
+fi
+
+# Awesome notification when command is finished
+if [ -x "$(command -v awesome-notify)" ]; then
+    notify-after() {
+        $@
+        awesome-notify "\\\"$@\\\" has finished"
+    }
 fi
