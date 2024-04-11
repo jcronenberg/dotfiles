@@ -30,14 +30,14 @@ if [ -x "$(command -v fzf)" ]; then
     ## Select a branch with fzf and merge it in the current branch
     alias gmerf='git branch | fzf | cut --characters=3- | xargs --no-run-if-empty git merge'
     ## Output: abbreviated_commit_hash (%h) | commit_message (%s) | author_name (%an, in yellow) | commit_date_relative (%cr, in green)
-    alias glo='git log --pretty=format:"%h %C(bold)|%C(reset) %s %C(bold)|%C(reset) %C(yellow)%an%C(reset) %C(bold)|%C(reset) %C(green)%cr%C(reset)" --max-count=100'
+    alias glo='git lo'
     ## From the output of the glo alias, select with fzf the commit hash to rebase on
     alias grebi='glo | fzf --ansi --no-sort | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty -I % bash -c "</dev/tty git rebase --interactive %"'
     ## Select a commit with fzf and revert it
     alias grevf='glo | fzf --ansi --no-sort | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git revert'
     ## Select a commit with fzf and show it
-    alias gshf='glo | fzf --ansi --no-sort --preview "echo {} | cut --delimiter=\" \" --fields=1 | xargs git show" | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git show'
-    alias gshft='glo | fzf --ansi --no-sort --preview "echo {} | cut --delimiter=\" \" --fields=1 | xargs git dshow" | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git dshow'
+    alias gshf='git shf'
+    alias gshft='git shft'
     ## Select a stash with fzf and show it
     alias gstaf='git stash list | fzf --no-sort | sed -n "s/^stash@{\(.*\)}.*/\1/p" | xargs --no-run-if-empty git stash show'
 
