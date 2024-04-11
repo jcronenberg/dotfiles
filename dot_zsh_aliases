@@ -37,6 +37,9 @@ if [ -x "$(command -v distrobox)" ]; then
     function magit() {
         distrobox enter dev -- bash ~/bin/emacsclient-magit "$PWD" 
     }
+    function magitt() {
+        distrobox enter dev -- bash ~/bin/emacsclient-magit "$PWD" "terminal"
+    }
 else
     alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
 fi
