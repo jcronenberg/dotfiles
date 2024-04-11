@@ -3,7 +3,7 @@
 [merge]
 {{- if(eq .chezmoi.hostname "pc-arch-jorik" "tmpworkstation") }}
         command = "distrobox-enter"
-        args = ["dev", "--", "~/bin/emacsclient-merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+        args = ["dev", "--", "$HOME/bin/emacsclient-merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
 {{- else }}
         command = "emacsclient"
         args = ["--eval", "(ediff3 \"{{ "{{" }} .Destination {{ "}}" }}\" \"{{ "{{" }} .Source {{ "}}" }}\" \"{{ "{{" }} .Target {{ "}}" }}\")"]
