@@ -12,6 +12,10 @@ fi
 # Filter to only look at the commit message
 output=$(cat "$1" | sed -n '1,/# Please enter the commit message for your changes./p' | head -n -1)
 
+# If commit message is empty no need to continue
+# This is necessary for git commit --fixup=<commit>
+test -z "$output" && exit 0
+
 # We write this to the file, so we can automatically correct with the -w option
 echo "$output" > "$1"
 
