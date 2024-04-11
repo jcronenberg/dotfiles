@@ -17,3 +17,20 @@
 	required = true
 [init]
 	templatedir = ~/.git-templatedir
+
+# difftastic
+[diff]
+	tool = difftastic
+
+[difftool]
+	prompt = false
+
+[difftool "difftastic"]
+	cmd = distrobox enter dev -- difft --display inline "$LOCAL" "$REMOTE"
+
+[pager]
+	difftool = true
+
+[alias]
+	dft = difftool
+	dshow = "-c diff.external=\"distrobox enter dev -- difft --display inline --color always\" show --ext-diff"

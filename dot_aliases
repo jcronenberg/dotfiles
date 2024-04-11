@@ -37,6 +37,7 @@ if [ -x "$(command -v fzf)" ]; then
     alias grevf='glo | fzf --ansi --no-sort | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git revert'
     ## Select a commit with fzf and show it
     alias gshf='glo | fzf --ansi --no-sort --preview "echo {} | cut --delimiter=\" \" --fields=1 | xargs git show" | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git show'
+    alias gshft='glo | fzf --ansi --no-sort --preview "echo {} | cut --delimiter=\" \" --fields=1 | xargs git dshow" | cut --delimiter=" " --fields=1 | xargs --no-run-if-empty git dshow'
     ## Select a stash with fzf and show it
     alias gstaf='git stash list | fzf --no-sort | sed -n "s/^stash@{\(.*\)}.*/\1/p" | xargs --no-run-if-empty git stash show'
 
