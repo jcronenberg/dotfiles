@@ -27,3 +27,4 @@ SUSEConnect -p sle-module-development-tools/$SLE_VERSION/x86_64
 ~/shared/bin/submit-update home:jcronenberg:branches:network/bind/ network/bind/
 upgrade-bind 9.18.19 9.18.20
 distrobox create -i registry.opensuse.org/systemsmanagement/agama/staging/containers/opensuse/agama-testing:latest --unshare-all --init --additional-packages "fzf eza ripgrep neovim bat libcurl-devel" -n agama
+git config remote.origin.fetch '+refs/pull/*:refs/remotes/origin/pull/*'
