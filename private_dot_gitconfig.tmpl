@@ -19,6 +19,8 @@
 	templatedir = ~/.git-templatedir
 [rebase]
         updateRefs = true
+[rerere]
+	enabled = true
 [alias]
 	lo = "log --pretty=format:\"%h %C(bold)|%C(reset) %s %C(bold)|%C(reset) %C(yellow)%an%C(reset) %C(bold)|%C(reset) %C(green)%cr%C(reset)\" --max-count=100"
 	shf = "! git lo | fzf --ansi --no-sort --preview \"echo {} | cut --delimiter=' ' --fields=1 | xargs git show --color=always\" | cut --delimiter=\" \" --fields=1 | xargs --no-run-if-empty git show"
