@@ -1,3 +1,3 @@
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] && [ -x "$(command -v startx)" ]; then
 	exec startx
 fi
