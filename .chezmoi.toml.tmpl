@@ -1,7 +1,7 @@
 [gpg]
 	recipient = "46281506C8CB0C7B595CBB49FD702A19657AB22A"
 [merge]
-{{- if(eq .chezmoi.hostname "pc-arch-jorik" "tmpworkstation") }}
+{{- if(eq .chezmoi.hostname "pc-arch-jorik" "tmpworkstation" "ws-laptop") }}
         command = "distrobox-enter"
         args = ["dev", "--", "$HOME/bin/emacsclient-merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
 {{- else }}
@@ -12,14 +12,14 @@
 {{- if eq .chezmoi.hostname "pc-arch-jorik" }}
         mainMonitorWidth=3840
         mainMonitorHeight=2160
-{{- else if eq .chezmoi.hostname "tmpworkstation" }}
+{{- else if(eq .chezmoi.hostname "tmpworkstation" "ws-laptop") }}
         mainMonitorWidth=3840
         mainMonitorHeight=2160
 {{- else }}
         mainMonitorWidth=1920
         mainMonitorHeight=1080
 {{- end }}
-{{- if or (eq .chezmoi.hostname "tmpworkstation") (eq (trunc 4 .chezmoi.hostname) "work") }}
+{{- if or (eq .chezmoi.hostname "tmpworkstation" "ws-laptop") (eq (trunc 4 .chezmoi.hostname) "work") }}
         work=true
 {{- else }}
         work=false

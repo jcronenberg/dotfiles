@@ -131,13 +131,21 @@ monitor_tags["DisplayPort-0"] = { "Music", "Chat", "Other" }
 monitor_layouts["DisplayPort-0"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["HDMI-A-0"] = { "Macroboard" }
 monitor_layouts["HDMI-A-0"] = { awful.layout.suit.fair }
-{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+{{- end }}
+{{- if (eq .chezmoi.hostname "tmpworkstation") }}
 monitor_tags["DP-2"] = { "Email", "VMs", "Other" }
 monitor_layouts["DP-2"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["DP-0.1"] = { "Spotify", "Other" }
 monitor_layouts["DP-0.1"] = { awful.layout.suit.fair, awful.layout.suit.fair }
 monitor_tags["eDP-1"] = { "Macroboard" }
 monitor_layouts["eDP-1"] = { awful.layout.suit.fair }
+{{- else if (eq .chezmoi.hostname "ws-laptop") }}
+monitor_tags["DisplayPort-8"] = { "Email", "VMs", "Other" }
+monitor_layouts["DisplayPort-8"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
+monitor_tags["DisplayPort-7"] = { "Music", "Other" }
+monitor_layouts["DisplayPort-7"] = { awful.layout.suit.fair, awful.layout.suit.fair }
+monitor_tags["eDP"] = { "Email", "VMs", "Music", "Other" }
+monitor_layouts["eDP"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
 {{- end }}
 
 awful.util.taglist_buttons = my_table.join(
