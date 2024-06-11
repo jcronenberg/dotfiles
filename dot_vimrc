@@ -21,9 +21,13 @@ set wildmenu
 " transparent status line
 hi StatusLine ctermbg=NONE cterm=NONE 
 
-" I like the light color theme better and the background should be transparent
-" and dark with that anyway
-set background=light
+" Theming
+" highlight Normal guibg=NONE guifg=NONE ctermbg=NONE ctermfg=NONE
+set background=dark
+try
+    colorscheme vim
+    catch
+endtry
 
 " Various, selfexplanatory
 set nofixendofline
