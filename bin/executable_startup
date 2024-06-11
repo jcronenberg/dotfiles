@@ -2,8 +2,12 @@
 if [ -f ~/.screenlayout/main.sh ]; then
     sh ~/.screenlayout/main.sh
 fi
-if [ -x "$(command -v barrier)" ] && ! ps aux | grep "[b]arrier" > /dev/null; then
-    barrier &
+if [ -x "$(command -v barrier)" ] || [ -n "$(flatpak list | grep barrier)" ]  && ! ps aux | grep "[b]arrier" > /dev/null; then
+    if [ -x "$(command -v barrier)" ]; then
+        barrier &
+    else
+        flatpak run com.github.debauchee.barrier &
+    fi
 fi
 if [ -x "$(command -v redshift)" ] && ! ps aux | grep "[r]edshift" > /dev/null; then
     redshift -t 6500:4800 -l 49.45:11.08 -b 1.0:0.80 &
