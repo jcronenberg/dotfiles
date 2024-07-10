@@ -584,7 +584,7 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "g", function ()
            awful.spawn.with_shell("CM_LAUNCHER=rofi clipmenu -p clipboard")
         end,
-        {description = "show rofi clipboard", group = "launcher"})
+        {description = "show rofi clipboard", group = "launcher"}),
 
     -- awful.key({ modkey }, "x",
     --           function ()
@@ -597,6 +597,28 @@ globalkeys = my_table.join(
     --           end,
     --           {description = "lua execute prompt", group = "awesome"})
     --]]
+    awful.key({ modkey, "Shift" }, "p", function ()
+            -- Desired dimensions
+            -- If something in e.g. firefox changes adjust these values
+            local desired_width = 1920
+            local desired_height = 1173
+
+            -- Get the currently focused (active) window
+            local c = client.focus
+
+            if c then
+                local wa = c.screen.workarea
+
+                -- Set the master width factor
+                local new_mwfact = desired_width / wa.width
+                c.screen.selected_tag.master_width_factor = new_mwfact
+
+                -- Set the client's height
+                local hfact = desired_height / wa.height
+                awful.client.setwfact(hfact, c)
+            end
+        end,
+        {description = "Set firefox window to 1080p plus tabbar", group = "layout"})
 )
 
 clientkeys = my_table.join(
