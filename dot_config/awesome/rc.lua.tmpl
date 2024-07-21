@@ -618,7 +618,11 @@ globalkeys = my_table.join(
                 awful.client.setwfact(hfact, c)
             end
         end,
-        {description = "Set firefox window to 1080p plus tabbar", group = "layout"})
+        {description = "set firefox window to 1080p plus tabbar", group = "layout"}),
+    awful.key({ modkey, "Control" }, "m", function ()
+           awful.spawn.with_shell("sh ~/.screenlayout/main.sh")
+        end,
+        {description = "apply monitor layout main", group = "screen"})
 )
 
 clientkeys = my_table.join(
