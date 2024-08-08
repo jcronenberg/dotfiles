@@ -23,7 +23,7 @@
 	enabled = true
 [alias]
 	lo = "log --pretty=format:\"%h %C(bold)|%C(reset) %s %C(bold)|%C(reset) %C(yellow)%an%C(reset) %C(bold)|%C(reset) %C(green)%cr%C(reset)\" --max-count=100"
-	shf = "! git lo | fzf --ansi --no-sort --preview \"echo {} | cut --delimiter=' ' --fields=1 | xargs git show --color=always\" | cut --delimiter=\" \" --fields=1 | xargs --no-run-if-empty git show"
+	shf = "! git lo | fzf --ansi --no-sort --preview \"echo {} | cut --delimiter=' ' --fields=1 | xargs git show -m --color=always\" | cut --delimiter=\" \" --fields=1 | xargs --no-run-if-empty git show -m"
 
 # difftastic
 [diff]
@@ -40,5 +40,5 @@
 
 [alias]
 	dft = difftool
-	dshow = "-c diff.external=\"distrobox enter dev -- difft --display inline --color always\" show --ext-diff"
+	dshow = "-c diff.external=\"distrobox enter dev -- difft --display inline --color always\" show -m --ext-diff"
 	shft = "! git lo | fzf --ansi --no-sort --preview \"echo {} | cut --delimiter=' ' --fields=1 | xargs git dshow\" | cut --delimiter=\" \" --fields=1 | xargs --no-run-if-empty git dshow"
