@@ -48,3 +48,7 @@
     type = "git-repo"
     url = "https://github.com/junegunn/fzf.git"
     refreshPeriod = "168h"
+[".emacs.d/private/pkgs/intuitive-tab-line-mode"]
+    type = "git-repo"
+    url = "https://github.com:thread314/intuitive-tab-line-mode.git"
+    refreshPeriod = "168h"
