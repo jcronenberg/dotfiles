@@ -42,3 +42,7 @@
 	dft = difftool
 	dshow = "-c diff.external=\"distrobox enter dev -- difft --display inline --color always\" show -m --ext-diff"
 	shft = "! git lo | fzf --ansi --no-sort --preview \"echo {} | cut --delimiter=' ' --fields=1 | xargs git dshow\" | cut --delimiter=\" \" --fields=1 | xargs --no-run-if-empty git dshow"
+
+# magit forge
+[github]
+	user = jcronenberg
