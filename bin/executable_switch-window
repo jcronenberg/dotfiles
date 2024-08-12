@@ -8,7 +8,7 @@
 
 # Search for all matching windows
 # (Case sensitive)
-id=( $(wmctrl -l | awk "/$1/"'{print $1}') )
+id=( $(wmctrl -l -x | awk '$3 ~ /'"$1"'/ {print $1}' | xargs) )
 
 # Iterate through all matching windows
 for (( i=0; i<=${#id[@]}; i++ )) ;do
