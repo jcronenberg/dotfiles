@@ -702,6 +702,39 @@ you should place your code here."
     (let ((default-directory project-path))
       ;; Open the Magit status buffer
       (magit-status)))
+
+  ;; close compilation buffer if it is finished without errors
+  (defvar user-compile-process nil
+    "The current compilation process or nil if none.")
+
+  (defun user-bury-buffer (window buffer)
+    "Bury the BUFFER and switch to the previous buffer in WINDOW, ignoring
+errors.
+
+If the previous buffer cannot be found for the WINDOW, then it will simply
+delete the WINDOW."
+    (ignore-errors
+      (unless (switch-to-prev-buffer window)
+        (delete-window window))
+      (bury-buffer buffer)))
+
+  (defun user-compile-start (proc)
+    (when (string-match "*.*compilation*" (buffer-name (current-buffer)))
+      (setq user-compile-process proc)))
+
+  (defun user-compile-done (buffer _msg)
+    (when (string-equal "*rustic-compilation*" (buffer-name buffer))
+      (let* ((exit-status (process-exit-status user-compile-process))
+             (has-errors  (/= 0 exit-status))
+             (window (get-buffer-window buffer)))
+
+        (when (and window (not has-errors))
+          (run-at-time "1 sec" nil #'user-bury-buffer window buffer)))
+
+      (setq user-compile-process nil)))
+
+  (add-hook 'compilation-finish-functions #'user-compile-done)
+  (add-hook 'compilation-start-hook #'user-compile-start)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
