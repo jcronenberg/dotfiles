@@ -688,6 +688,20 @@ you should place your code here."
   (global-set-key (kbd "C-h") 'tab-line-switch-to-prev-tab)
   (global-set-key (kbd "C-l") 'tab-line-switch-to-next-tab)
   (global-set-key (kbd "C-<tab>") 'tab-line-switch-to-next-tab)
+
+  ;; custom function to open a project from cli
+  (defun open-project-magit-in-layout (project-path layout-name)
+    "Open the project at PROJECT-PATH in a new Spacemacs layout named LAYOUT-NAME and open the Magit status buffer."
+    (interactive "DProject Path: \nsLayout Name: ")
+    ;; Create or switch to the layout
+    (persp-switch layout-name)
+    ;; Ensure the project is added to Projectile's known projects
+    (unless (member project-path projectile-known-projects)
+      (projectile-add-known-project project-path))
+    ;; Switch to the project's directory
+    (let ((default-directory project-path))
+      ;; Open the Magit status buffer
+      (magit-status)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
