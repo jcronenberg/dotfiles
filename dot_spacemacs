@@ -828,6 +828,8 @@ This function is called at the very end of Spacemacs initialization."
    '(org-ellipsis " ▾")
    '(org-fontify-done-headline nil)
    '(org-fontify-todo-headline nil)
+   '(org-log-done nil)
+   '(org-log-done-with-time nil)
    '(org-roam-capture-templates
      '(("d" "default" plain "\12* ${title}%?" :if-new
         (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\12#+filetags:")
