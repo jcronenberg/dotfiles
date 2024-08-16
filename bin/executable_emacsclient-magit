@@ -1,7 +1,0 @@
-#/bin/bash
-cd "$1"
-if [ "$2" == "terminal" ]; then
-    emacsclient -t -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"
-else
-    emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"
-fi
