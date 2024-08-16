@@ -32,6 +32,26 @@ alias ec="emacsclient -c -n -a ''"
 function eo() {
     emacsclient -n "$@" 2>/dev/null || ec "$@"
 }
+## Open project in existing window, or start server
+function epo() {( set -e
+    if [ ! -z $1 ]; then
+        if [ ! -d $1 ]; then
+            echo "Not a valid directory"
+            return 1
+        fi
+        cd $1 &>/dev/null
+    fi
+    if ! git status &>/dev/null; then
+        echo "Not a git dir"
+        return 1
+    fi
+    p_dir="$PWD"
+    if ! emacsclient -a false -e 't' &>/dev/null; then
+        ec
+    fi
+    prj_name=$(basename "$(git rev-parse --show-toplevel)")
+    emacsclient -e "(open-project-magit-in-layout '\"$p_dir\" '\"$prj_name\")" 2>/dev/null
+)}
 ## Open magit buffer from terminal in existing window
 alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
 ## Open magit buffer from terminal in terminal
