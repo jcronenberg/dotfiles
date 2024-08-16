@@ -1,14 +1,6 @@
 #!/bin/bash
-if [[ "$1" = "cargo-build" ]]; then
-    emacsclient -e '(with-current-buffer (window-buffer (selected-window)) (rustic-cargo-build))'
-elif [[ "$1" = "cargo-fmt" ]]; then
-    emacsclient -e '(with-current-buffer (window-buffer (selected-window)) (rustic-cargo-fmt))'
-elif [[ "$1" = "godot-dreamdeck" ]]; then
+if [[ "$1" = "godot-dreamdeck" ]]; then
     cd ~/godot/DreamDeck && godot --confdir=local_config
-elif [[ "$1" = "godot-switch-run" ]]; then
-    ~/bin/switch-window " - Godot Engine" && sleep 0.2 && xdotool key F5
-elif [[ "$1" = "godot-switch" ]]; then
-    ~/bin/switch-window " - Godot Engine"
 else
     echo "Unknown command"
     exit 1
