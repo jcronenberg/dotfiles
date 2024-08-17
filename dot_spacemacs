@@ -723,7 +723,7 @@ delete the WINDOW."
       (setq user-compile-process proc)))
 
   (defun user-compile-done (buffer _msg)
-    (when (string-equal "*rustic-compilation*" (buffer-name buffer))
+    (when (string-match "*.*compilation*" (buffer-name buffer))
       (let* ((exit-status (process-exit-status user-compile-process))
              (has-errors  (/= 0 exit-status))
              (window (get-buffer-window buffer)))
