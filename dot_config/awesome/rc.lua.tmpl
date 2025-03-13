@@ -96,7 +96,6 @@ awful.util.tagnames = { "Web", "Emacs", "Terminal" }
 awful.util.layouts = { awful.layout.suit.tile, awful.layout.suit.tile.bottom, awful.layout.suit.fair }
 local machi = require("layout-machi")
 awful.layout.layouts = {
-    machi.default_layout,
     --awful.layout.suit.floating,
     awful.layout.suit.tile,
     --awful.layout.suit.tile.left,
@@ -119,6 +118,7 @@ awful.layout.layouts = {
     --lain.layout.centerwork.horizontal,
     --lain.layout.termfair,
     --lain.layout.termfair.center,
+    machi.default_layout,
 }
 
 -- define monitor specific tags
