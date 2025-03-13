@@ -806,6 +806,8 @@ This function is called at the very end of Spacemacs initialization."
    '(linum-eager nil)
    '(lsp-enable-indentation nil)
    '(lsp-enable-on-type-formatting nil)
+   '(lsp-rust-all-features t)
+   '(lsp-rust-analyzer-cargo-watch-command "clippy")
    '(magit-bury-buffer-function 'magit-mode-quit-window)
    '(magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
    '(magit-status-sections-hook
