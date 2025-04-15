@@ -952,6 +952,7 @@ This function is called at the very end of Spacemacs initialization."
                    "#+title: %<%Y-%m-%d>\12#+filetags: daily %<%Y> %<%Y-%m>")
         :unnarrowed t :prepend t :empty-lines-before 1)))
    '(org-roam-dailies-directory "daily")
+   '(org-safe-remote-resources '("\\`https://fniessen\\.github\\.io\\(?:/\\|\\'\\)"))
    '(org-src-window-setup 'current-window)
    '(package-selected-packages
      '(pyenv-mode pythonic pylookup pytest pyvenv sphinx-doc xcscope yapfify
