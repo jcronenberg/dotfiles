@@ -1,7 +1,7 @@
 [user]
 	signingkey = 46281506C8CB0C7B595CBB49FD702A19657AB22A
 	{{- if .work }}
-	email = jcronenberg@suse.de
+	email = jorik.cronenberg@suse.com
 	{{- else }}
 	email = jorikcronenberg@mailbox.org
 	{{- end }}
@@ -46,3 +46,7 @@
 # magit forge
 [github]
 	user = jcronenberg
+
+# Enforce SSH for openSUSE gitea
+[url "gitea@src.opensuse.org:"]
+	insteadOf = https://src.opensuse.org/
