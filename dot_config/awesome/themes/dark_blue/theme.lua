@@ -287,30 +287,32 @@ function theme.at_screen_connect(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mytag,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            spacing = 4,
-            border_cont(wibox.container.margin(wibox.widget {
+        {
+            layout = wibox.layout.align.horizontal,
+            s.mytag, -- Left widget
+            s.mytasklist, -- Middle widget
+            { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                s.mysystray,
-                s.mysystraybutton,
-                cpuwidget,
-            }, 8, 4)),
-            border_cont(wibox.container.margin(volumewidget, 4, 4)),
-            border_cont(wibox.container.margin(wibox.widget {
-                layout = wibox.layout.fixed.horizontal,
-                calendarwidget,
-                clockwidget,
-            }, 8, 8)),
-            border_cont(wibox.container.margin(s.mylayoutbox, 4, 4)),
+                spacing = 4,
+                border_cont(wibox.container.margin(wibox.widget {
+                    layout = wibox.layout.fixed.horizontal,
+                    s.mysystray,
+                    s.mysystraybutton,
+                    cpuwidget,
+                }, 8, 4)),
+                border_cont(wibox.container.margin(volumewidget, 4, 4)),
+                border_cont(wibox.container.margin(wibox.widget {
+                    layout = wibox.layout.fixed.horizontal,
+                    calendarwidget,
+                    clockwidget,
+                }, 8, 8)),
+                border_cont(wibox.container.margin(s.mylayoutbox, 4, 4)),
+            },
+            expand = "none",
         },
-        expand = "none",
+        left = theme.useless_gap + dpi(3),
+        right = theme.useless_gap + dpi(3),
+        layout = wibox.container.margin,
     }
 end
 
