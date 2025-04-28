@@ -37,4 +37,4 @@ if [ -d /usr/etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-exec awesome
+exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr

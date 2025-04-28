@@ -261,16 +261,17 @@ screen.connect_signal("property::geometry", function(s)
 end)
 
 -- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal("arrange", function (s)
-    local only_one = #s.tiled_clients == 1
-    for _, c in pairs(s.clients) do
-        if only_one and not c.floating or c.maximized then
-            c.border_width = 0
-        else
-            c.border_width = beautiful.border_width
-        end
-    end
-end)
+--screen.connect_signal("arrange", function (s)
+--    --local only_one = #s.tiled_clients == 1
+--    for _, c in pairs(s.clients) do
+--        --if only_one and not c.floating or c.maximized then
+--        if c.maximized then
+--            c.border_width = 0
+--        else
+--            c.border_width = beautiful.border_width
+--        end
+--    end
+--end)
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s)
     -- wibox
@@ -309,7 +310,8 @@ awful.screen.connect_for_each_screen(function(s)
         visible = false,
         followtag = true,
         overlap = true,
-        height = 0.6
+        height = 0.6,
+        border = dpi(1),
     })
     for out, _ in pairs(s.outputs) do
         if out == "HDMI-A-0" then s.mywibox.visible = not s.mywibox.visible end
@@ -382,7 +384,7 @@ globalkeys = my_table.join(
 
     -- X screen locker
     --awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -i /home/jorik/.config/awesome/themes/" .. chosen_theme .. "/dual_lock.png") end,
-    awful.key({ altkey, "Control" }, "l", function () os.execute("i3lock -c 000000") end,
+    awful.key({ altkey, "Control" }, "l", function () os.execute("betterlockscreen -l blur") end,
               {description = "lock screen", group = "hotkeys"}),
 
     -- Hotkeys
@@ -797,6 +799,9 @@ awful.rules.rules = {
 
     { rule = { class = "Signal.*" },
       properties = { screen = 2, tag = "Chat" } },
+
+    { rule = { class = "DreamDeck" },
+      properties = { border_width = dpi(0) } },
 }
 -- {{ "}}}" }}
 
@@ -813,9 +818,9 @@ client.connect_signal("manage", function (c)
         awful.placement.no_offscreen(c)
     end
     -- rounded corners
-    --c.shape = function(cr,w,h)
-    --    gears.shape.rounded_rect(cr,w,h,8)
-    --end
+    c.shape = function(cr,w,h)
+        gears.shape.rounded_rect(cr,w,h,6)
+    end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
