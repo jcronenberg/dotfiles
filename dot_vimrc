@@ -62,7 +62,6 @@ map <C-q> :q<cr>
 map <C-x> :x<cr>
 map <C-h> :tabprevious<cr>
 map <C-l> :tabnext<cr>
-set pastetoggle=<F3>
 " remap j and k to better handle lines spanning multiple lines
 noremap j gj
 noremap k gk
