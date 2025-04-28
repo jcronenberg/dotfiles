@@ -1,7 +1,7 @@
 [gpg]
 	recipient = "46281506C8CB0C7B595CBB49FD702A19657AB22A"
 [merge]
-{{- if(eq .chezmoi.hostname "pc-arch-jorik" "tmpworkstation" "ws-laptop") }}
+{{- if(eq .chezmoi.hostname "pc-arch" "tmpworkstation" "ws-laptop") }}
         command = "distrobox-enter"
         args = ["dev", "--", "emacsclient-merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
 {{- else }}
@@ -9,7 +9,7 @@
         args = ["--eval", "(ediff3 \"{{ "{{" }} .Destination {{ "}}" }}\" \"{{ "{{" }} .Source {{ "}}" }}\" \"{{ "{{" }} .Target {{ "}}" }}\")"]
 {{- end }}
 [data]
-{{- if eq .chezmoi.hostname "pc-arch-jorik" }}
+{{- if eq .chezmoi.hostname "pc-arch" }}
         mainMonitorWidth=3840
         mainMonitorHeight=2160
 {{- else if(eq .chezmoi.hostname "tmpworkstation" "ws-laptop") }}
