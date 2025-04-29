@@ -39,5 +39,5 @@ style = "Regular"
 [window]
 dynamic_padding = true
 dynamic_title = true
-opacity = 0.75
+opacity = 0.6
 title = "Alacritty"

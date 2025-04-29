@@ -52,13 +52,14 @@ theme.tasklist_disable_task_name                = true
 theme.useless_gap                               = dpi(6)
 theme.gap_single_client                         = true
 theme.master_width_factor                       = 0.5
-theme.layout_machi                              = theme.icon_dir .. "/machi.png"
-theme.layout_tile                               = theme.icon_dir .. "/tile.png"
-theme.layout_fairv                              = theme.icon_dir .. "/fairv.png"
-theme.layout_magnifier                          = theme.icon_dir .. "/magnifier.png"
-theme.layout_centerwork                         = theme.icon_dir .. "/centerwork.png"
-theme.layout_tilebottom                         = theme.icon_dir .. "/tilebottom.png"
+theme.layout_machi                              = gears.color.recolor_image(theme.icon_dir .. "/machi.png", theme.dark_blue_main_light)
+theme.layout_tile                               = gears.color.recolor_image(theme.icon_dir .. "/tile.png", theme.dark_blue_main_light)
+theme.layout_fairv                              = gears.color.recolor_image(theme.icon_dir .. "/fairv.png", theme.dark_blue_main_light)
+theme.layout_magnifier                          = gears.color.recolor_image(theme.icon_dir .. "/magnifier.png", theme.dark_blue_main_light)
+theme.layout_centerwork                         = gears.color.recolor_image(theme.icon_dir .. "/centerwork.png", theme.dark_blue_main_light)
+theme.layout_tilebottom                         = gears.color.recolor_image(theme.icon_dir .. "/tilebottom.png", theme.dark_blue_main_light)
 theme.wibar_border_width                        = 2
+theme.border_cont_bg                            = "#000000A0"
 
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
 
@@ -222,7 +223,7 @@ function theme.at_screen_connect(s)
         )
         box.shape_border_width = theme.wibar_border_width
         box.shape_border_color = theme.border_normal
-        box.bg = beautiful.bg_normal
+        box.bg = theme.border_cont_bg
         box.shape_clip = true
         return box
     end
