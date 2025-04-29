@@ -11,6 +11,7 @@ local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
 local beautiful = require("beautiful")
 local pulsearc = require("pulsearc")
+local bat = require("bat")
 
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -86,16 +87,19 @@ theme.cal = lain.widget.cal({
 })
 
 -- Battery
-local bat = lain.widget.bat({
+local battery_indicator = bat({
+    icons = {
+        full = theme.icon_dir .. "/Ic_battery_full_48px.svg",
+        charging = theme.icon_dir .. "/Ic_battery_charging_full_48px.svg"
+    },
+    color = theme.dark_blue_main_dark,
     settings = function()
-        bat_header = " Battery: "
-        bat_p      = bat_now.perc .. "%  "
-        if bat_now.ac_status == 1 then
-            bat_p = bat_p .. "Plugged  "
-        end
-        widget:set_markup(markup.font(theme.font, markup(theme.dark_blue_main_dark, bat_header .. bat_p)))
+        widget.text_widget:set_markup(space3 .. markup.font(theme.font, string.format("%02d", bat_now.capacity)
+                          .. "%") .. markup.font("Roboto 5", " "))
     end
 })
+battery_indicator.update()
+local bat_widget = battery_indicator.widget
 
 -- Pulseaudio volume arc
 theme.volume = pulsearc({
@@ -134,7 +138,7 @@ local cpuwidget = wibox.container.margin(
     ),
     dpi(0),
     dpi(0),
-    dpi(10),
+    dpi(8),
     dpi(5)
 )
 cpuwidget:connect_signal("button::press", function() awful.spawn.with_shell("alacritty -e htop") end)
@@ -294,13 +298,14 @@ function theme.at_screen_connect(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
+                border_cont(wibox.container.margin(bat_widget, 4, 4)),
                 border_cont(wibox.container.margin(wibox.widget {
                     layout = wibox.layout.fixed.horizontal,
                     s.mysystray,
                     s.mysystraybutton,
                     cpuwidget,
                 }, 8, 4)),
-                border_cont(wibox.container.margin(volumewidget, 4, 4)),
+                border_cont(wibox.container.margin(volumewidget, 8, 8)),
                 border_cont(wibox.container.margin(wibox.widget {
                     layout = wibox.layout.fixed.horizontal,
                     calendarwidget,
@@ -312,6 +317,7 @@ function theme.at_screen_connect(s)
         },
         left = theme.useless_gap + dpi(3),
         right = theme.useless_gap + dpi(3),
+        top = dpi(4),
         layout = wibox.container.margin,
     }
 end
