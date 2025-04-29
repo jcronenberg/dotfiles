@@ -49,7 +49,7 @@ theme.awesome_icon_launcher                     = theme.icon_dir .. "/awesome_ic
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = false
 theme.tasklist_disable_task_name                = true
-theme.useless_gap                               = dpi(6)
+theme.useless_gap                               = dpi(2)
 theme.gap_single_client                         = true
 theme.master_width_factor                       = 0.5
 theme.layout_machi                              = gears.color.recolor_image(theme.icon_dir .. "/machi.png", theme.dark_blue_main_light)
@@ -119,8 +119,8 @@ local volumewidget = wibox.container.margin(
     ),
     dpi(0),
     dpi(0),
-    dpi(9),
-    dpi(9)
+    dpi(4),
+    dpi(4)
 )
 volumewidget:connect_signal("button::press", function() awful.spawn.with_shell("pavucontrol") end)
 
@@ -247,7 +247,7 @@ function theme.at_screen_connect(s)
                     id     = 'clienticon',
                     widget = awful.widget.clienticon,
                 },
-                margins = 10,
+                margins = 6,
                 widget  = wibox.container.margin
             },
             id            = 'background_role',
@@ -260,7 +260,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = border_cont(mytasklist)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(40) })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(32) })
 
     -- Create systray
     s.mysystraywidget = wibox.widget.systray()
@@ -316,8 +316,8 @@ function theme.at_screen_connect(s)
             },
             expand = "none",
         },
-        left = theme.useless_gap + dpi(3),
-        right = theme.useless_gap + dpi(3),
+        left = theme.useless_gap + theme.useless_gap / 2,
+        right = theme.useless_gap + theme.useless_gap / 2,
         top = dpi(4),
         layout = wibox.container.margin,
     }
