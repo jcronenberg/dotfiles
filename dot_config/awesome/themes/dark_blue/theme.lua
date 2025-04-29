@@ -1,6 +1,6 @@
 --[[
 
-     Dark Blue AwesomeWM Theme
+     Blossom AwesomeWM Theme
 
 --]]
 
@@ -18,7 +18,7 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
-theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/dark_blue/icons"
+theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/icons"
 theme.wallpaper1                                = os.getenv("HOME") .. "/.config/awesome/themes/dark_blue/wall.jpg"
 theme.wallpaper2                                = os.getenv("HOME") .. "/.config/awesome/themes/dark_blue/wall.jpg"
 theme.font                                      = "Roboto Bold 10"
@@ -90,8 +90,8 @@ theme.cal = lain.widget.cal({
 -- Battery
 local battery_indicator = bat({
     icons = {
-        full = theme.icon_dir .. "/Ic_battery_full_48px.svg",
-        charging = theme.icon_dir .. "/Ic_battery_charging_full_48px.svg"
+        full = theme.icon_dir .. "/battery_full.svg",
+        charging = theme.icon_dir .. "/battery_charging_full.svg"
     },
     color = theme.dark_blue_main_dark,
     settings = function()
@@ -104,7 +104,7 @@ local bat_widget = battery_indicator.widget
 
 -- Pulseaudio volume arc
 theme.volume = pulsearc({
-    icon = theme.icon_dir .. "/audio-volume-high-symbolic.svg",
+    icon = theme.icon_dir .. "/volume_high.svg",
     colors = {
         icon       = theme.dark_blue_main_dark,
         unmute     = theme.dark_blue_main_light,
