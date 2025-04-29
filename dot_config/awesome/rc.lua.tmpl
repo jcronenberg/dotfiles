@@ -5,7 +5,7 @@
 
 --]]
 
--- {{ "{{{" }} Required libraries
+-- Required libraries
 local awesome, client, mouse, screen, tag = awesome, client, mouse, screen, tag
 local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, table, tostring, tonumber, type
 
@@ -22,9 +22,8 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 local dpi           = require("beautiful.xresources").apply_dpi
--- {{ "}}}" }}
 
--- {{ "{{{" }} Error handling
+-- Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -46,9 +45,8 @@ do
         in_error = false
     end)
 end
--- {{ "}}}" }}
 
--- {{ "{{{" }} Autostart windowless processes
+-- Autostart windowless processes
 
 -- This function will run once every time Awesome is started
 local function run_once(cmd_arr)
@@ -68,20 +66,79 @@ awful.spawn.with_shell(
     'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
 )
 --]]
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
 
--- {{ "}}}" }}
+    return false
+end
 
--- {{ "{{{" }} Variable definitions
 
+-- Theme stuff
 local themes = {
-    "holo",             -- 1
-    "tron",             -- 2
-    "neon",             -- 3
-    "dark_blue",        -- 4
-    "blossom",          -- 5
+    "holo",
+    "tron",
+    "neon",
+    "dark_blue",
+    "blossom",
 }
 
-local chosen_theme = themes[5]
+local theme_file   = os.getenv("HOME") .. "/.cache/awesome/current_theme"
+local chosen_theme = themes[2]
+
+function get_current_theme_name()
+    local file = io.open(theme_file)
+    if not file then
+        return
+    end
+    local new_theme = file:read("*l")
+    if has_value(themes, new_theme) then
+        chosen_theme = new_theme
+    end
+    file:close()
+end
+
+function set_next_theme()
+    local file = io.open(theme_file, "w")
+    local next_theme
+    for i, name in ipairs(themes) do
+        if name == chosen_theme then
+            next_theme = themes[i % #themes + 1]
+            break
+        end
+    end
+    if file then
+        file:write(next_theme)
+        file:close()
+    else
+        print("Failed to open the theme file for writing!")
+    end
+    awesome.restart()
+end
+
+function set_prev_theme()
+    local file = io.open(theme_file, "w")
+    local next_theme
+    for i, name in ipairs(themes) do
+        if name == chosen_theme then
+            next_theme = themes[i % #themes - 1]
+            break
+        end
+    end
+    if file then
+        file:write(next_theme)
+        file:close()
+    else
+        print("Failed to open the theme file for writing!")
+    end
+    awesome.restart()
+end
+get_current_theme_name()
+
+-- Variable definitions
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "alacritty"
@@ -213,9 +270,9 @@ lain.layout.cascade.tile.nmaster       = 5
 lain.layout.cascade.tile.ncol          = 2
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
--- {{ "}}}" }}
 
--- {{ "{{{" }} Menu
+
+-- Menu
 local myawesomemenu = {
     { "Hotkeys", function() return false, hotkeys_popup.show_help end },
     { "Manual", terminal .. " -e man awesome" },
@@ -245,9 +302,9 @@ awful.util.mymainmenu = freedesktop.menu.build({
 --awful.util.mymainmenu.wibox:connect_signal("mouse::leave", function() awful.util.mymainmenu:hide() end)
 
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
--- {{ "}}}" }}
 
--- {{ "{{{" }} Screen
+
+-- Screen
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", function(s)
     -- Wallpaper
@@ -318,22 +375,22 @@ awful.screen.connect_for_each_screen(function(s)
         if out == "HDMI-A-0" then s.mywibox.visible = not s.mywibox.visible end
     end
 end)
--- {{ "}}}" }}
 
--- {{ "{{{" }} Mouse bindings
+
+-- Mouse bindings
 root.buttons(my_table.join(
     awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
--- {{ "}}}" }}
+
 
 -- machi stuff
 local editor = machi.editor.create()
 -- machina
 local machina = require('machina')()
 local machina_methods = require("machina.methods")
--- {{ "{{{" }} Key bindings
+-- Key bindings
 globalkeys = my_table.join(
     -- machi
     awful.key({modkey}, "/", editor.start_interactive, {description = "open machi editor", group = "machi"}),
@@ -633,7 +690,11 @@ globalkeys = my_table.join(
     awful.key({ modkey, "Control" }, "m", function ()
            awful.spawn.with_shell("sh ~/.screenlayout/main.sh")
         end,
-        {description = "apply monitor layout main", group = "screen"})
+        {description = "apply monitor layout main", group = "screen"}),
+    awful.key({ modkey, "Control" }, "i", set_next_theme,
+        {description = "next theme", group = "screen"}),
+    awful.key({ modkey, "Control" }, "o", set_prev_theme,
+        {description = "prev theme", group = "screen"})
 )
 
 clientkeys = my_table.join(
@@ -771,9 +832,9 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- {{ "}}}" }}
 
--- {{ "{{{" }} Rules
+
+-- Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
@@ -804,9 +865,9 @@ awful.rules.rules = {
     { rule = { class = "DreamDeck" },
       properties = { border_width = dpi(0) } },
 }
--- {{ "}}}" }}
 
--- {{ "{{{" }} Signals
+
+-- Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
@@ -882,7 +943,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- possible workaround for tag preservation when switching back to default screen:
 -- https://github.com/lcpz/awesome-copycats/issues/251
--- {{ "}}}" }}
+
 
 -- Theme stuff
 --beautiful.useless_gap = 4
