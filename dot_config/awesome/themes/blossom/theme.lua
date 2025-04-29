@@ -99,7 +99,6 @@ local battery_indicator = bat({
                           .. "%") .. markup.font("Roboto 5", " "))
     end
 })
-battery_indicator.update()
 local bat_widget = battery_indicator.widget
 
 -- Pulseaudio volume arc
@@ -290,6 +289,13 @@ function theme.at_screen_connect(s)
         s.mysystraybutton.visible = s == screen.primary
     end)
 
+    local bat_cont = border_cont(wibox.container.margin(bat_widget, 4, 4))
+    -- Will be made visible by the widget, this makes it so it is hidden when no battery is present
+    bat_cont.visible = false
+    bat_widget:connect_signal("visibility_changed", function()
+        bat_cont.visible = bat_widget.visible
+    end)
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         {
@@ -299,7 +305,7 @@ function theme.at_screen_connect(s)
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
-                border_cont(wibox.container.margin(bat_widget, 4, 4)),
+                bat_cont,
                 border_cont(wibox.container.margin(wibox.widget {
                     layout = wibox.layout.fixed.horizontal,
                     s.mysystray,

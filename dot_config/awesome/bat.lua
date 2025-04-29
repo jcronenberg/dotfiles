@@ -83,6 +83,8 @@ local function factory(args)
     }
 
     function bat.update()
+        bat.widget.visible = #batteries == 0
+        bat.widget:emit_signal("visibility_changed")
         local sum_cap = 0
         local charging = false
         local bat_amount = 0
