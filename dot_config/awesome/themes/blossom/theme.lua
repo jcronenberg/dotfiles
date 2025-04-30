@@ -303,8 +303,13 @@ function theme.at_screen_connect(s)
     s.mywibox:setup {
         {
             layout = wibox.layout.align.horizontal,
-            s.mytag, -- Left widget
-            s.mytasklist, -- Middle widget
+            { -- Left widgets
+                layout = wibox.layout.fixed.horizontal,
+                spacing = 4,
+                s.mytag,
+                s.mytasklist,
+            },
+            wibox.widget {}, -- Middle widget
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
