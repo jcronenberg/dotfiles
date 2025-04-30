@@ -60,6 +60,9 @@ theme.layout_centerwork                         = gears.color.recolor_image(them
 theme.layout_tilebottom                         = gears.color.recolor_image(theme.icon_dir .. "/tilebottom.png", theme.dark_blue_main_light)
 theme.wibar_border_width                        = 2
 theme.border_cont_bg                            = "#000000A0"
+theme.notification_border_width                 = 2
+theme.notification_border_color                 = theme.dark_blue_main_dark
+theme.notification_shape                        = function(cr, width, height) gears.shape.rounded_rect(cr, width, height, 6) end
 
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
 
