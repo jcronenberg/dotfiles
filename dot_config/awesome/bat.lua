@@ -47,7 +47,7 @@ local function factory(args)
                    forced_height = 24,
                },
                id = "icon_margin",
-               top = 10,
+               top = 5,
                left = -2,
                right = -4,
                widget = wibox.container.margin,
