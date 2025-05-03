@@ -411,19 +411,20 @@ root.buttons(my_table.join(
 -- machi stuff
 local editor = machi.editor.create()
 -- machina
-local machina = require('machina')()
-local machina_methods = require("machina.methods")
+-- Unfortunately machina seems to mess with floating windows
+--local machina = require('machina')()
+--local machina_methods = require("machina.methods")
 -- Key bindings
 globalkeys = my_table.join(
     -- machi
     awful.key({modkey}, "/", editor.start_interactive, {description = "open machi editor", group = "machi"}),
     awful.key({altkey}, "/", function () machi.switcher.start() end, {description = "open machi switcher", group = "machi"}),
 
-    ---- machina
-    awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
-              {description = "shuffle in group", group = "machina"}),
-    awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
-              {description = "shuffle in group", group = "machina"}),
+    -- machina
+    --awful.key({altkey}, "Tab", machina_methods.shuffle("backward"),
+    --          {description = "shuffle in group", group = "machina"}),
+    --awful.key({modkey}, "Tab", machina_methods.shuffle("backward"),
+    --          {description = "shuffle in group", group = "machina"}),
     --awful.key({altkey}, "[", machina_methods.my_shifter("backward"),
     --          {description = "shift backward", group = "machina"}),
     --awful.key({altkey}, "]", machina_methods.my_shifter("forward"),
