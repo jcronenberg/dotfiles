@@ -394,6 +394,7 @@ awful.screen.connect_for_each_screen(function(s)
         height = 0.6,
         border = dpi(1),
     })
+    -- Hide wibox by default on DreamDeck screen
     for out, _ in pairs(s.outputs) do
         if out == "HDMI-A-0" then s.mywibox.visible = not s.mywibox.visible end
     end
@@ -402,9 +403,9 @@ end)
 
 -- Mouse bindings
 root.buttons(my_table.join(
-    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end)
+    --awful.button({ }, 4, awful.tag.viewnext),
+    --awful.button({ }, 5, awful.tag.viewprev)
 ))
 
 
