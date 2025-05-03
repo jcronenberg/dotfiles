@@ -693,7 +693,7 @@ globalkeys = my_table.join(
             -- Desired dimensions
             -- If something in e.g. firefox changes adjust these values
             local desired_width = 1920
-            local desired_height = 1165
+            local desired_height = 1176
 
             -- Get the currently focused (active) window
             local c = client.focus
@@ -702,11 +702,11 @@ globalkeys = my_table.join(
                 local wa = c.screen.workarea
 
                 -- Set the master width factor
-                local new_mwfact = (desired_width - (3 * beautiful.useless_gap) - 1) / wa.width
+                local new_mwfact = (desired_width - (4 * beautiful.useless_gap) - 1) / wa.width
                 c.screen.selected_tag.master_width_factor = new_mwfact
 
                 -- Set the client's height
-                local hfact = (desired_height + (3 * beautiful.useless_gap)) / wa.height
+                local hfact = (desired_height + (4 * beautiful.useless_gap)) / wa.height
                 awful.client.setwfact(hfact, c)
             end
         end,
