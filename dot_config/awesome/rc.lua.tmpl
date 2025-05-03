@@ -176,7 +176,30 @@ awful.layout.layouts = {
     --lain.layout.centerwork.horizontal,
     --lain.layout.termfair,
     --lain.layout.termfair.center,
-    machi.default_layout,
+    --machi.default_layout,
+    machi.layout.create{ new_placement_cb = function(c, instance, areas, geometry)
+        -- Extremely specific, but this works around a issue with the debug build spawned from
+        -- the godot editor. It wants to position the window, which messes with the empty
+        -- area selection of machi. This makes it so the placement gets deferred until later
+        -- so the godot placement shenanigans are done.
+        -- (c.name seems to be "Godot" on startup and only gets changed to the proper title afterwards)
+        if c.instance == "Godot_Engine" and c.name == "Godot" then
+            gears.timer {
+                timeout = 1,
+                autostart = true,
+                single_shot = true,
+                callback = function()
+                    -- This modifies geometry
+                    machi.layout.placement.empty(c, instance, areas, geometry)
+                    -- And we can then apply it to the client
+                    -- I have absolutely no clue why this isn't done automatically, but hey it works
+                    c:geometry(geometry)
+                end
+            }
+        else
+            machi.layout.placement.empty(c, instance, areas, geometry)
+        end
+    end },
 }
 
 -- define monitor specific tags
