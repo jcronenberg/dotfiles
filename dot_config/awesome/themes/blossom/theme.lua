@@ -19,8 +19,8 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 local theme                                     = {}
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
 theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/icons"
-theme.wallpaper1                                = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
-theme.wallpaper2                                = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
+theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
+--theme.wallpaper2                                = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
 theme.font                                      = "Roboto Bold 10"
 theme.taglist_font                              = "Roboto Condensed Regular 10"
 theme.dark_blue_accent                          = "#76eada"
@@ -169,37 +169,37 @@ cpuwidget:connect_signal("button::press", function() awful.spawn.with_shell("ala
 --local mylauncher = awful.widget.button({ image = theme.awesome_icon_launcher })
 --mylauncher:connect_signal("button::press", function() awful.util.mymainmenu:toggle() end)
 
-local fadeout_timer
-
 function theme.at_screen_connect(s)
-    theme.wallpapers = {theme.wallpaper1,
-		        theme.wallpaper2}
+    -- Per monitor wallpaper
+    --theme.wallpapers = {theme.wallpaper1,
+    --    	        theme.wallpaper2}
 
-    -- Wallpapers for specific outputs
-    local wallpapers = {}
-    wallpapers["DisplayPort-1"] = theme.wallpaper2
-    wallpapers["DisplayPort-0"] = theme.wallpaper1
-    wallpapers["HDMI-A-0"] = theme.wallpaper2
+    ---- Wallpapers for specific outputs
+    --local wallpapers = {}
+    --wallpapers["DisplayPort-1"] = theme.wallpaper2
+    --wallpapers["DisplayPort-0"] = theme.wallpaper1
+    --wallpapers["HDMI-A-0"] = theme.wallpaper2
 
-    theme.wallpaper = function( s )
-        -- match s.outputs to a output in wallpapers
-        for output, wp in pairs(wallpapers) do
-            for out, _ in pairs(s.outputs) do
-                if out == output then
-                    return wp
-                end
-            end
-        end
-        -- default if output not in wallpapers
-        return theme.wallpapers[2]
-    end
+    --theme.wallpaper = function( s )
+    --    -- match s.outputs to a output in wallpapers
+    --    for output, wp in pairs(wallpapers) do
+    --        for out, _ in pairs(s.outputs) do
+    --            if out == output then
+    --                return wp
+    --            end
+    --        end
+    --    end
+    --    -- default if output not in wallpapers
+    --    return theme.wallpapers[2]
+    --end
 
-    -- If wallpaper is a function, call it with the screen
-    local wallpaper = theme.wallpaper
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
+    ---- If wallpaper is a function, call it with the screen
+    --local wallpaper = theme.wallpaper
+    --if type(wallpaper) == "function" then
+    --    wallpaper = wallpaper(s)
+    --end
+
+    gears.wallpaper.maximized(theme.wallpaper, s, true)
 
     -- Tags
     awful.tag(awful.util.tagnames, s, awful.util.layouts)
