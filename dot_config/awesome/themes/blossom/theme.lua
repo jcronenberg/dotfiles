@@ -269,7 +269,7 @@ function theme.at_screen_connect(s)
     beautiful.bg_systray = theme.systray_bg
     beautiful.systray_icon_spacing = theme.systray_icon_spacing
     mysystraycont = wibox.container.background(s.mysystraywidget, theme.bg_focus, gears.shape.rectangle)
-    s.mysystray = wibox.container.margin(mysystraycont, dpi(0), dpi(4), dpi(10), dpi(10))
+    s.mysystray = wibox.container.margin(mysystraycont, dpi(0), dpi(4), dpi(6), dpi(6))
     -- systray will only be shown when systraybutton is pressed
     s.mysystray.visible = false
     s.mywibox:connect_signal('mouse::leave', function ()
