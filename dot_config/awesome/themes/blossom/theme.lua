@@ -16,31 +16,71 @@ local bat = require("bat")
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
+-- Init theme
 local theme                                     = {}
+
+-- Color handling
+local colors = require("themes.colors")
+
+local selected_color = "dark_blue"
+local colorscheme = colors[selected_color]
+
+
+-- Wallpaper handling
+local wallpaper_dir = os.getenv("HOME") .. "/.config/awesome/themes/wallpapers"
+
+local function list_files_in_dir(dir_path)
+    local files = {}
+    local p = io.popen('find "' .. dir_path .. '" -maxdepth 1 -type f 2>/dev/null')
+    if p then
+        for file in p:lines() do
+            local filename = file:match("^.*/(.*)$") or file
+            table.insert(files, filename)
+        end
+        p:close()
+    end
+    return files
+end
+
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+local selected_wallpaper = "evening_lake" .. ".png"
+theme.wallpaper = wallpaper_dir .. "/blossom.png"
+if has_value(list_files_in_dir(wallpaper_dir), selected_wallpaper) then
+    theme.wallpaper = wallpaper_dir .. "/" .. selected_wallpaper
+end
+
+
+-- Populate theme
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
 theme.icon_dir                                  = os.getenv("HOME") .. "/.config/awesome/themes/icons"
-theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
+--theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
 --theme.wallpaper2                                = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
 theme.font                                      = "Roboto Bold 10"
 theme.taglist_font                              = "Roboto Condensed Regular 10"
-theme.dark_blue_accent                          = "#76eada"
-theme.dark_blue_main_light                      = "#EA76CB"
-theme.dark_blue_main_dark                       = "#EA76CB"
-theme.fg_normal                                 = theme.dark_blue_main_dark -- unselected text color, includes clock, cal etc.
-theme.fg_focus                                  = theme.dark_blue_main_light
+theme.fg_normal                                 = colorscheme.main -- unselected text color, includes clock, cal etc.
+theme.fg_focus                                  = colorscheme.main
 theme.bg_focus                                  = "#00000000" -- background color for taglist and clock, cal etc.
 theme.bg_normal                                 = "#00000000" -- background color for the whole wibar
 theme.fg_urgent                                 = "#000000" -- text color for alert
-theme.bg_urgent                                 = theme.dark_blue_accent -- background color for alert
+theme.bg_urgent                                 = colorscheme.accent -- background color for alert
 theme.systray_bg                                = "#000032" -- background for the systray (try to match to wallpaper, as this has not transparency)
 theme.systray_icon_spacing                      = 2
 theme.border_width                              = dpi(1)
 theme.border_normal                             = "#000000A0"
-theme.border_focus                              = theme.dark_blue_main_dark
+theme.border_focus                              = colorscheme.main
 theme.taglist_fg_focus                          = "#ffffff"
 theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_bg_focus                         = theme.dark_blue_main_light .. "A0"
---theme.tasklist_fg_focus                         = theme.dark_blue_accent .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
+theme.tasklist_bg_focus                         = colorscheme.main .. "A0"
+--theme.tasklist_fg_focus                         = colorscheme.accent .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
 --theme.tasklist_fg_focus                         = "#ffffff" -- color for selected task (needs to be transparent, but even then somehow has effect)
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(160)
@@ -52,16 +92,16 @@ theme.tasklist_disable_task_name                = true
 theme.useless_gap                               = dpi(2)
 theme.gap_single_client                         = true
 theme.master_width_factor                       = 0.5
-theme.layout_machi                              = gears.color.recolor_image(theme.icon_dir .. "/machi.png", theme.dark_blue_main_light)
-theme.layout_tile                               = gears.color.recolor_image(theme.icon_dir .. "/tile.png", theme.dark_blue_main_light)
-theme.layout_fairv                              = gears.color.recolor_image(theme.icon_dir .. "/fairv.png", theme.dark_blue_main_light)
-theme.layout_magnifier                          = gears.color.recolor_image(theme.icon_dir .. "/magnifier.png", theme.dark_blue_main_light)
-theme.layout_centerwork                         = gears.color.recolor_image(theme.icon_dir .. "/centerwork.png", theme.dark_blue_main_light)
-theme.layout_tilebottom                         = gears.color.recolor_image(theme.icon_dir .. "/tilebottom.png", theme.dark_blue_main_light)
+theme.layout_machi                              = gears.color.recolor_image(theme.icon_dir .. "/machi.png", colorscheme.main)
+theme.layout_tile                               = gears.color.recolor_image(theme.icon_dir .. "/tile.png", colorscheme.main)
+theme.layout_fairv                              = gears.color.recolor_image(theme.icon_dir .. "/fairv.png", colorscheme.main)
+theme.layout_magnifier                          = gears.color.recolor_image(theme.icon_dir .. "/magnifier.png", colorscheme.main)
+theme.layout_centerwork                         = gears.color.recolor_image(theme.icon_dir .. "/centerwork.png", colorscheme.main)
+theme.layout_tilebottom                         = gears.color.recolor_image(theme.icon_dir .. "/tilebottom.png", colorscheme.main)
 theme.wibar_border_width                        = 2
 theme.border_cont_bg                            = "#000000A0"
 theme.notification_border_width                 = 2
-theme.notification_border_color                 = theme.dark_blue_main_dark
+theme.notification_border_color                 = colorscheme.main
 theme.notification_shape                        = function(cr, width, height) gears.shape.rounded_rect(cr, width, height, 6) end
 
 theme.musicplr = string.format("%s -e ncmpcpp", awful.util.terminal)
@@ -96,7 +136,7 @@ local battery_indicator = bat({
         full = theme.icon_dir .. "/battery_full.svg",
         charging = theme.icon_dir .. "/battery_charging_full.svg"
     },
-    color = theme.dark_blue_main_dark,
+    color = colorscheme.main,
     settings = function()
         widget.text_widget:set_markup(space3 .. markup.font(theme.font, string.format("%02d", bat_now.capacity)
                           .. "%") .. markup.font("Roboto 5", " "))
@@ -108,9 +148,9 @@ local bat_widget = battery_indicator.widget
 theme.volume = pulsearc({
     icon = theme.icon_dir .. "/volume_high.svg",
     colors = {
-        icon       = theme.dark_blue_main_dark,
-        unmute     = theme.dark_blue_main_light,
-        mute       = theme.dark_blue_accent
+        icon       = colorscheme.main,
+        unmute     = colorscheme.main,
+        mute       = colorscheme.accent
     },
 })
 local volumewidget = wibox.container.margin(
