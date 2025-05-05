@@ -89,16 +89,21 @@ local themes = {
 local theme_file   = os.getenv("HOME") .. "/.cache/awesome/current_theme"
 local chosen_theme = themes[5]
 
-function get_current_theme_name()
+function read_file(file_name)
     local file = io.open(theme_file)
     if not file then
         return
     end
-    local new_theme = file:read("*l")
+    local file_content = file:read("*l")
+    file:close()
+    return file_content
+end
+
+function get_current_theme_name()
+    local new_theme = read_file(theme_file)
     if has_value(themes, new_theme) then
         chosen_theme = new_theme
     end
-    file:close()
 end
 
 function set_next_theme()
