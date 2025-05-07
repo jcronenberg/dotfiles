@@ -155,7 +155,7 @@ local browser      = os.getenv("BROWSER") or "firefox"
 local scrlocker    = "slock"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "Web", "Emacs", "Terminal" }
+awful.util.tagnames = { "●", "○", "○" }
 awful.util.layouts = { awful.layout.suit.tile, awful.layout.suit.tile.bottom, awful.layout.suit.fair }
 local machi = require("layout-machi")
 awful.layout.layouts = {
@@ -208,30 +208,16 @@ awful.layout.layouts = {
 }
 
 -- define monitor specific tags
-monitor_tags = {}
-monitor_layouts = {}
-{{- if (eq .chezmoi.hostname "tmpworkstation") }}
-monitor_tags["DP-2"] = { "Email", "VMs", "Other" }
-monitor_layouts["DP-2"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
-monitor_tags["DP-0.1"] = { "Spotify", "Other" }
-monitor_layouts["DP-0.1"] = { awful.layout.suit.fair, awful.layout.suit.fair }
-monitor_tags["eDP-1"] = { "Macroboard" }
-monitor_layouts["eDP-1"] = { awful.layout.suit.fair }
-{{- else if (eq .chezmoi.hostname "ws-laptop") }}
-monitor_tags[3840] = { "Email", "VMs", "Other" }
-monitor_layouts[3840] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
-monitor_tags[1080] = { "Music", "Other" }
-monitor_layouts[1080] = { awful.layout.suit.fair, awful.layout.suit.fair }
-monitor_tags[1920] = { "Email", "VMs", "Music", "Other" }
-monitor_layouts[1920] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
-{{- else if (eq .chezmoi.osRelease.id "arch") }}
-monitor_tags["DisplayPort-1"] = { "Other" }
-monitor_layouts["DisplayPort-1"] = { awful.layout.suit.fair }
-monitor_tags["DisplayPort-0"] = { "Music", "Chat", "Other" }
-monitor_layouts["DisplayPort-0"] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
-monitor_tags["HDMI-A-0"] = { "Macroboard" }
-monitor_layouts["HDMI-A-0"] = { awful.layout.suit.fair }
-{{- end }}
+--monitor_tags = {}
+--monitor_layouts = {}
+--monitor_tags[3840] = { "Email", "VMs", "Other" }
+--monitor_layouts[3840] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
+--monitor_tags[1080] = { "Music", "Other" }
+--monitor_layouts[1080] = { awful.layout.suit.fair, awful.layout.suit.fair }
+--monitor_tags[1920] = { "Email", "VMs", "Music", "Other" }
+--monitor_layouts[1920] = { awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair, awful.layout.suit.fair }
+monitor_extra_tags = {}
+monitor_extra_tags[3840] = 2
 
 awful.util.taglist_buttons = my_table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -363,25 +349,32 @@ awful.screen.connect_for_each_screen(function(s)
     -- wibox
     beautiful.at_screen_connect(s)
     -- Add monitor specific tags
-    for output, tags in pairs(monitor_tags) do
-{{- if (eq .chezmoi.hostname "ws-laptop") }}
+    --for output, tags in pairs(monitor_tags) do
+    --    if output == s.workarea.width then
+    --        for i, tag in ipairs(tags) do
+    --            awful.tag.add(tag, { layout = monitor_layouts[output][i],
+    --    	    	          screen = s, selected = false } )
+    --        end
+    --    end
+    --end
+    for output, amount in pairs(monitor_extra_tags) do
         if output == s.workarea.width then
-            for i, tag in ipairs(tags) do
-                awful.tag.add(tag, { layout = monitor_layouts[output][i],
-		    	          screen = s, selected = false } )
+            for i=1,amount do
+                awful.tag.add("○", { layout = awful.layout.layouts[1], screen = s })
             end
         end
-{{- else }}
-        for out, _ in pairs(s.outputs) do
-            if out == output then
-                for i, tag in ipairs(tags) do
-                    awful.tag.add(tag, { layout = monitor_layouts[output][i],
-	    	    	          screen = s, selected = false } )
-                end
-            end
-        end
-{{- end }}
     end
+
+    -- Update tag labels based on selection
+    s:connect_signal("tag::history::update", function()
+        for i, t in ipairs(s.tags) do
+            if t.selected then
+                t.name = "●"
+            else
+                t.name = "○"
+            end
+        end
+    end)
     --if s.index <= #monitor_tags then
     --    for i, name in ipairs(monitor_tags[s.index].names) do
     --        awful.tag.add(name, { layout = awful.layout.layouts[1],
@@ -555,7 +548,7 @@ globalkeys = my_table.join(
         {description = "toggle wibox", group = "awesome"}),
 
     -- Dynamic tagging
-    awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag(awful.layout.layouts[1]) end,
+    awful.key({ modkey, "Shift" }, "n", function () awful.tag.add("●", { layout = awful.layout.layouts[1], screen = awful.screen.focused() }):view_only() end,
               {description = "add new tag", group = "tag"}),
     awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
               {description = "rename tag", group = "tag"}),
@@ -751,13 +744,7 @@ clientkeys = my_table.join(
             for s in screen do
                 if s.index == new_index then
                     for out, _ in pairs(s.outputs) do
-{{- if (or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch")) }}
                         if out == "HDMI-A-0" then
-{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-                        if out == "eDP-1" then
-{{- else }}
-                        if out == "HDMI-A-0" then
-{{- end }}
                             new_index = new_index + 1
                         end
                     end
@@ -884,13 +871,6 @@ awful.rules.rules = {
     -- Titlebars
     --{ rule_any = { type = { "dialog", "normal" } },
     --  properties = { titlebars_enabled = true } },
-
-    -- Set Firefox to always map on the first tag on screen 1.
-    { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = awful.util.tagnames[1] } },
-
-    { rule = { class = "Signal.*" },
-      properties = { screen = 2, tag = "Chat" } },
 
     { rule = { class = "DreamDeck" },
       properties = { border_width = dpi(0) } },

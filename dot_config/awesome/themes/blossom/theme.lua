@@ -12,12 +12,13 @@ local dpi   = require("beautiful.xresources").apply_dpi
 local beautiful = require("beautiful")
 local pulsearc = require("pulsearc")
 local bat = require("bat")
+local fancy_taglist = require("fancy_taglist")
 
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 -- Init theme
-local theme                                     = {}
+local theme = {}
 
 -- Color handling
 local colors = require("themes.colors")
@@ -65,7 +66,7 @@ theme.icon_dir                                  = os.getenv("HOME") .. "/.config
 --theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
 --theme.wallpaper2                                = os.getenv("HOME") .. "/.config/awesome/themes/blossom/wall.jpg"
 theme.font                                      = "Roboto Bold 10"
-theme.taglist_font                              = "Roboto Condensed Regular 10"
+theme.taglist_font                              = "Roboto Condensed Regular 24"
 theme.fg_normal                                 = colorscheme.main -- unselected text color, includes clock, cal etc.
 theme.fg_focus                                  = colorscheme.main
 theme.bg_focus                                  = "#00000000" -- background color for taglist and clock, cal etc.
@@ -77,7 +78,7 @@ theme.systray_icon_spacing                      = 2
 theme.border_width                              = dpi(1)
 theme.border_normal                             = "#000000A0"
 theme.border_focus                              = colorscheme.main
-theme.taglist_fg_focus                          = "#ffffff"
+theme.taglist_fg_focus                          = colorscheme.main
 theme.tasklist_bg_normal                        = "#00000000"
 theme.tasklist_bg_focus                         = colorscheme.main .. "A0"
 --theme.tasklist_fg_focus                         = colorscheme.accent .. "00" -- color for selected task (needs to be transparent, but even then somehow has effect)
@@ -271,35 +272,12 @@ function theme.at_screen_connect(s)
     end
 
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons, { bg_focus = theme.fg_focus })
-    s.mytag = border_cont(wibox.container.margin(s.mytaglist, dpi(1), dpi(1), dpi(0), dpi(0)))
-
-    -- Create a tasklist widget
-    local mytasklist = awful.widget.tasklist {
-        screen   = s,
-        filter   = awful.widget.tasklist.filter.currenttags,
-        buttons  = awful.util.tasklist_buttons,
-        layout   = {
-            spacing = 0,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        widget_template = {
-            {
-                {
-                    id     = 'clienticon',
-                    widget = awful.widget.clienticon,
-                },
-                margins = 6,
-                widget  = wibox.container.margin
-            },
-            id            = 'background_role',
-            widget        = wibox.container.background,
-            create_callback = function(self, c, index, objects)
-                self:get_children_by_id('clienticon')[1].client = c
-            end,
-        },
-    }
-    s.mytasklist = border_cont(mytasklist)
+    s.mytaglist = fancy_taglist.new({
+        screen = s,
+        taglist_buttons = awful.util.taglist_buttons,
+        tasklist_buttons = awful.util.tasklist_buttons,
+    })
+    s.mytag = border_cont(wibox.container.margin(s.mytaglist, dpi(-2), dpi(-2), dpi(0), dpi(0)))
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(32) })
@@ -347,7 +325,6 @@ function theme.at_screen_connect(s)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
                 s.mytag,
-                s.mytasklist,
             },
             wibox.widget {}, -- Middle widget
             { -- Right widgets
