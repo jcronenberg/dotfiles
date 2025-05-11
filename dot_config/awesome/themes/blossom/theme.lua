@@ -14,6 +14,7 @@ local pulsearc = require("pulsearc")
 local bat = require("bat")
 local fancy_taglist = require("fancy_taglist")
 local wallpaper_button = require("wallpaper_button")
+local power_button = require("power_button")
 
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -119,6 +120,12 @@ local wallpaper_widget = wallpaper_button({
     change_wallpaper = change_wallpaper,
     wallpaper_dir = wallpaper_dir,
     icon = theme.icon_dir .. "/wallpaper_icon.svg",
+    color = colorscheme.main,
+})
+
+-- Power button
+local power_button_widget = power_button({
+    icon = theme.icon_dir .. "/power.svg",
     color = colorscheme.main,
 })
 
@@ -336,6 +343,7 @@ function theme.at_screen_connect(s)
             {
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
+                border_cont(wibox.container.margin(power_button_widget, 8, 8, 4)),
                 border_cont(wibox.container.margin(wallpaper_widget, 8, 8, 4)),
             },
             { -- Left widgets
