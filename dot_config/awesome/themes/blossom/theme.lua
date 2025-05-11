@@ -13,6 +13,7 @@ local beautiful = require("beautiful")
 local pulsearc = require("pulsearc")
 local bat = require("bat")
 local fancy_taglist = require("fancy_taglist")
+local wallpaper_button = require("wallpaper_button")
 
 local string, os = string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -28,7 +29,7 @@ local colorscheme = colors[selected_color]
 
 
 -- Wallpaper handling
-local wallpaper_dir = os.getenv("HOME") .. "/.config/awesome/themes/wallpapers"
+local wallpaper_dir = os.getenv("HOME") .. "/.config/awesome/themes/wallpapers/"
 
 local function list_files_in_dir(dir_path)
     local files = {}
@@ -53,12 +54,7 @@ local function has_value (tab, val)
     return false
 end
 
-local selected_wallpaper = "evening_lake" .. ".png"
-theme.wallpaper = wallpaper_dir .. "/blossom.png"
-if has_value(list_files_in_dir(wallpaper_dir), selected_wallpaper) then
-    theme.wallpaper = wallpaper_dir .. "/" .. selected_wallpaper
-end
-
+theme.wallpaper = wallpaper_dir .. "cloud_sundown.png"
 
 -- Populate theme
 theme.default_dir                               = require("awful.util").get_themes_dir() .. "default"
@@ -111,6 +107,21 @@ local markup = lain.util.markup
 local blue   = "#80CCE6"
 local space3 = markup.font("Roboto 3", " ")
 
+function change_wallpaper(new_wallpaper_path)
+    for s in screen do
+        gears.wallpaper.maximized(new_wallpaper_path, s, true)
+    end
+end
+
+-- Wallpaper button
+local wallpaper_widget = wallpaper_button({
+    wallpapers = list_files_in_dir(wallpaper_dir),
+    change_wallpaper = change_wallpaper,
+    wallpaper_dir = wallpaper_dir,
+    icon = theme.icon_dir .. "/wallpaper_icon.svg",
+    color = colorscheme.main,
+})
+
 -- Clock
 local mytextclock = wibox.widget.textclock(markup(theme.fg_normal, space3 .. "%H:%M:%S" .. markup.font("Roboto 4", " ")),1)
 mytextclock.font = theme.font
@@ -123,7 +134,6 @@ local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.s
 local calendarwidget = wibox.container.margin(calbg, dpi(0), dpi(0), dpi(5), dpi(5))
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
-    followtag = true,
     notification_preset = {
         fg = theme.fg_normal,
         bg = theme.bg_normal,
@@ -322,12 +332,17 @@ function theme.at_screen_connect(s)
     s.mywibox:setup {
         {
             layout = wibox.layout.align.horizontal,
+            --wibox.widget {}, -- Middle widget
+            {
+                layout = wibox.layout.fixed.horizontal,
+                spacing = 4,
+                border_cont(wibox.container.margin(wallpaper_widget, 8, 8, 4)),
+            },
             { -- Left widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
                 s.mytag,
             },
-            wibox.widget {}, -- Middle widget
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
