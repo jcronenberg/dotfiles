@@ -81,6 +81,7 @@ local function create_power_button(args)
     }
 
     power_button:connect_signal("button::press", function()
+        power_popup.screen = awful.screen.focused()
         power_popup.visible = not power_popup.visible
     end)
 
@@ -88,6 +89,3 @@ local function create_power_button(args)
 end
 
 return create_power_button
--- Usage example:
--- local my_power_button = create_power_button("/usr/share/icons/your-icon.png")
-

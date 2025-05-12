@@ -113,6 +113,7 @@ local function create_wallpaper_widget(args)
 
     -- Toggle popup on button press
     open_popup_button:connect_signal("button::press", function()
+        wallpaper_popup.screen = awful.screen.focused()
         wallpaper_popup.visible = not wallpaper_popup.visible
     end)
 
