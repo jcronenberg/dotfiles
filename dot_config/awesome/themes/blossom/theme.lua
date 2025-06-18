@@ -141,6 +141,7 @@ local calbg = wibox.container.background(mytextcalendar, theme.bg_focus, gears.s
 local calendarwidget = wibox.container.margin(calbg, dpi(0), dpi(0), dpi(5), dpi(5))
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock, mytextcalendar },
+    followtag = true,
     notification_preset = {
         fg = theme.fg_normal,
         bg = theme.bg_normal,
