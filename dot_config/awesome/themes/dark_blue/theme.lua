@@ -142,7 +142,7 @@ local cpuwidget = wibox.container.margin(
     dpi(8),
     dpi(5)
 )
-cpuwidget:connect_signal("button::press", function() awful.spawn.with_shell("alacritty -e htop") end)
+cpuwidget:connect_signal("button::press", function() awful.spawn.with_shell("alacritty -e btop || alacritty -e htop") end)
 
 -- Net
 --local net = lain.widget.net({
