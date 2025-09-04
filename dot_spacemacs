@@ -51,6 +51,10 @@ This function should only modify configuration layer settings."
      ranger
      treemacs
      xclipboard
+     (tree-sitter :variables
+                  tree-sitter-syntax-highlight-enable t
+                  tree-sitter-fold-enable t
+                  tree-sitter-fold-indicators-enable nil)
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
