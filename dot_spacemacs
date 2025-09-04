@@ -905,7 +905,7 @@ This function is called at the very end of Spacemacs initialization."
    '(lsp-enable-on-type-formatting nil)
    '(lsp-rust-all-features t)
    '(lsp-rust-analyzer-cargo-watch-command "clippy")
-   '(lua-indent-level 4)
+   '(lua-indent-level 4 t)
    '(magit-bury-buffer-function 'magit-mode-quit-window)
    '(magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
    '(magit-status-sections-hook
@@ -937,10 +937,10 @@ This function is called at the very end of Spacemacs initialization."
    '(org-ellipsis " ▾")
    '(org-fontify-done-headline nil)
    '(org-fontify-todo-headline nil)
-   '(org-log-done nil)
+   '(org-log-done nil t)
    '(org-log-done-with-time nil)
    '(org-roam-capture-templates
-     '(("d" "default" plain "\12* ${title}%?" :if-new
+     '(("d" "default" plain "\12* %?" :if-new
         (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\12#+filetags:")
         :empty-lines-before 1 :unnarrowed t)
        ("g" "Roam goal" plain
