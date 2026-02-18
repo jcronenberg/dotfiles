@@ -245,8 +245,13 @@ keycode 252 =
 keycode 253 =
 keycode 254 = XF86WWAN NoSymbol XF86WWAN
 keycode 255 = XF86RFKill NoSymbol XF86RFKill
+! Redefine capslock as a modifier key
 clear lock
 keycode 66 = Mode_switch NoSymbol Mode_switch
+! Imitate german keyboard special sybmols when modifier key is pressed
+keycode 47 = semicolon colon odiaeresis Odiaeresis
+keycode 48 = apostrophe quotedbl adiaeresis Adiaeresis
+keycode 34 = bracketleft braceleft udiaeresis Udiaeresis
 keycode 39 = s S ssharp
 keycode 38 = a A adiaeresis Adiaeresis
 keycode 30 = u U udiaeresis Udiaeresis
@@ -264,4 +269,10 @@ keycode 19 = 0 parenright degree masculine
 keycode 10 = 1 exclam exclamdown onehalf
 keycode 54 = c C ccedilla Ccedilla
 keycode 24 = q Q at at
+! Vim style arrow keys
+keycode  43 = h H Left Left Left Left
+keycode  44 = j J Down Down Down Down
+keycode  45 = k K Up Up Up Up
+keycode  46 = l L Right Right Right Right
+! Special key for my mouse config
 keycode 201 = F23 F23 F23 F23
