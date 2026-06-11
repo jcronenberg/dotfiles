@@ -135,3 +135,5 @@ fi
 
 # Budget caffeine, moves mouse every 10 minutes to prevent sleep and screen blanking
 alias caffeine='while true; do xdotool mousemove_relative -- 5 5; sleep 600; xdotool mousemove_relative -- -5 -5; sleep 600; done'
+
+test -f "$HOME/ai_container/eaic.sh" && source "$HOME/ai_container/eaic.sh"
