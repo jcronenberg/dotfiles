@@ -4,6 +4,14 @@ export LANG=en_US.utf8
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_R_OPTS="
+--height 30%
+--preview 'echo {2..} | cat'
+--preview-window 'wrap,up,5'
+--bind 'ctrl-/:change-preview-window(70%|)'
+--color header:italic
+--header 'CTRL-/ to enlarge preview'
+"
 export FZF_DEFAULT_OPTS="
 --layout=reverse
 --info=inline
