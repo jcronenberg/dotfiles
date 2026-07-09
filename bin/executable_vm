@@ -87,13 +87,25 @@ function vm-t {
     eval "vm-toggle $@"
 }
 
+# Find the private IP of the currently selected VM, printed on stdout.
+# Returns non-zero and prints an error to stderr if none is found.
+function vm-get-ip {
+    local ip=$(virsh domifaddr ${machines[0]} \
+    | grep -oP '(192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(?=/)' \
+    | head -n 1)
+    if [ -z "$ip" ]; then
+        echo "Error: could not find a private IP for ${machines[0]}" >&2
+        return 1
+    fi
+    echo "$ip"
+}
+
 # SSH into a VM
 function vm-ssh {
-    ssh root@$((virsh domifaddr ${machines[0]} \
-    | grep -oP '192.168.*.+?(?=\/)' \
-    || grep -oP '10.*.+?(?=\/)' \
-    || grep -oP '172.*.+?(?=\/)') \
-    | head -n 1)
+    local ip
+    ip=$(vm-get-ip) || exit 1
+    echo "Connecting to $ip"
+    ssh root@$ip
 }
 
 function vm-s {
@@ -102,10 +114,9 @@ function vm-s {
 
 # Copy ssh id to vm, then ssh into said vm
 function vm-ssh-copy-id {
-    ssh-copy-id root@$(virsh domifaddr ${machines[0]} \
-    | grep -oP '192.168.*.+?(?=\/)' \
-    || grep -oP '10.*.+?(?=\/)' \
-    || grep -oP '172.*.+?(?=\/)')
+    local ip
+    ip=$(vm-get-ip) || exit 1
+    ssh-copy-id root@$ip
 
     eval "vm-ssh $@"
 }
